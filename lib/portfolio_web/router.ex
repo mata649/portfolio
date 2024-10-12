@@ -19,7 +19,6 @@ defmodule PortfolioWeb.Router do
 
   scope "/", PortfolioWeb do
     pipe_through :browser
-
     get "/", PageController, :home
   end
 
@@ -70,9 +69,5 @@ defmodule PortfolioWeb.Router do
     pipe_through [:browser]
 
     delete "/users/log_out", UserSessionController, :delete
-
-    live_session :current_user,
-      on_mount: [{PortfolioWeb.UserAuth, :mount_current_user}] do
-    end
   end
 end
