@@ -62,6 +62,7 @@ defmodule PortfolioWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{PortfolioWeb.UserAuth, :ensure_authenticated}] do
+      live "/admin", Admin
     end
   end
 
