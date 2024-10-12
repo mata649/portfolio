@@ -15,7 +15,7 @@ defmodule PortfolioWeb.UserSessionControllerTest do
         })
 
       assert get_session(conn, :user_token)
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/admin"
 
       # Now do a logged in request and assert on the menu
       conn = get(conn, ~p"/")
@@ -35,7 +35,7 @@ defmodule PortfolioWeb.UserSessionControllerTest do
         })
 
       assert conn.resp_cookies["_portfolio_web_user_remember_me"]
-      assert redirected_to(conn) == ~p"/"
+      assert redirected_to(conn) == ~p"/admin"
     end
 
     test "logs the user in with return to", %{conn: conn, user: user} do
