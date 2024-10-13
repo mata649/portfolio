@@ -1,0 +1,27 @@
+<.header>
+  Skill <%= @skill.id %>
+  <:subtitle>This is a skill record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/skills/#{@skill}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit skill</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @skill.name %></:item>
+  <:item title="Color"><%= @skill.color %></:item>
+</.list>
+
+<.back navigate={~p"/skills"}>Back to skills</.back>
+
+<.modal :if={@live_action == :edit} id="skill-modal" show on_cancel={JS.patch(~p"/skills/#{@skill}")}>
+  <.live_component
+    module={PortfolioWeb.SkillLive.FormComponent}
+    id={@skill.id}
+    title={@page_title}
+    action={@live_action}
+    skill={@skill}
+    patch={~p"/skills/#{@skill}"}
+  />
+</.modal>

@@ -1,0 +1,42 @@
+<.header>
+  Listing Skills
+  <:actions>
+    <.link patch={~p"/skills/new"}>
+      <.button>New Skill</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="skills"
+  rows={@streams.skills}
+  row_click={fn {_id, skill} -> JS.navigate(~p"/skills/#{skill}") end}
+>
+  <:col :let={{_id, skill}} label="Name"><%= skill.name %></:col>
+  <:col :let={{_id, skill}} label="Color"><%= skill.color %></:col>
+  <:action :let={{_id, skill}}>
+    <div class="sr-only">
+      <.link navigate={~p"/skills/#{skill}"}>Show</.link>
+    </div>
+    <.link patch={~p"/skills/#{skill}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, skill}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: skill.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="skill-modal" show on_cancel={JS.patch(~p"/skills")}>
+  <.live_component
+    module={PortfolioWeb.SkillLive.FormComponent}
+    id={@skill.id || :new}
+    title={@page_title}
+    action={@live_action}
+    skill={@skill}
+    patch={~p"/skills"}
+  />
+</.modal>
