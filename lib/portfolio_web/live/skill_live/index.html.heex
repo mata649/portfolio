@@ -13,7 +13,9 @@
   row_click={fn {_id, skill} -> JS.navigate(~p"/skills/#{skill}") end}
 >
   <:col :let={{_id, skill}} label="Name"><%= skill.name %></:col>
-  <:col :let={{_id, skill}} label="Color"><%= skill.color %></:col>
+  <:col :let={{_id, skill}} label="Color">
+    <span class="px-4 py-2" style={"background-color: #{skill.color}"}></span>
+  </:col>
   <:action :let={{_id, skill}}>
     <div class="sr-only">
       <.link navigate={~p"/skills/#{skill}"}>Show</.link>
@@ -29,8 +31,13 @@
     </.link>
   </:action>
 </.table>
-
-<.modal :if={@live_action in [:new, :edit]} id="skill-modal" show on_cancel={JS.patch(~p"/skills")}>
+<.back navigate={~p"/admin"}>Back to administration</.back>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="skill-modal"
+  show
+  on_cancel={JS.patch(~p"/skills")}
+>
   <.live_component
     module={PortfolioWeb.SkillLive.FormComponent}
     id={@skill.id || :new}

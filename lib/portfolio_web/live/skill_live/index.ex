@@ -28,7 +28,7 @@ defmodule PortfolioWeb.SkillLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Skills")
+    |> assign(:page_title, "Skills")
     |> assign(:skill, nil)
   end
 

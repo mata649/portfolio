@@ -6,10 +6,9 @@ defmodule PortfolioWeb.SkillLive.FormComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div>
-      <.header>
+    <div class="bg-yellow-50">
+      <.header class="text-center">
         <%= @title %>
-        <:subtitle>Use this form to manage skill records in your database.</:subtitle>
       </.header>
 
       <.simple_form
@@ -18,9 +17,10 @@ defmodule PortfolioWeb.SkillLive.FormComponent do
         phx-target={@myself}
         phx-change="validate"
         phx-submit="save"
+        class="flex flex-col items-center"
       >
         <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:color]} type="text" label="Color" />
+        <.input field={@form[:color]} type="color" label="Color" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Skill</.button>
         </:actions>
@@ -42,6 +42,7 @@ defmodule PortfolioWeb.SkillLive.FormComponent do
   @impl true
   def handle_event("validate", %{"skill" => skill_params}, socket) do
     changeset = Skills.change_skill(socket.assigns.skill, skill_params)
+
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
