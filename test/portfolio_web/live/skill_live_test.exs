@@ -17,7 +17,7 @@ defmodule PortfolioWeb.SkillLiveTest do
   describe "Index" do
     setup [:create_skill]
 
-    test "Redirects if user is not logged in", %{conn: conn} do
+    test "redirects if user is not logged in", %{conn: conn} do
       {:error, redirect} = live(conn, ~p"/skills")
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/"
@@ -89,7 +89,7 @@ defmodule PortfolioWeb.SkillLiveTest do
   describe "Show" do
     setup [:create_skill]
 
-    test "Redirects if user is not logged in", %{conn: conn, skill: skill} do
+    test "redirects if user is not logged in", %{conn: conn, skill: skill} do
       {:error, redirect} = live(conn, ~p"/skills/#{skill}")
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/"
