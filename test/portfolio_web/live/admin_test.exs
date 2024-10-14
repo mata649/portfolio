@@ -6,7 +6,7 @@ defmodule PortfolioWeb.AdminTest do
   describe "Admin page" do
     test "renders admin page", %{conn: conn} do
       {:ok, _lv, html} = conn |> log_in_user(user_fixture()) |> live(~p"/admin")
-      assert html =~ "Jose Mata"
+      assert html =~ "Administration"
     end
 
     test "redirects if user not logged in", %{conn: conn} do
