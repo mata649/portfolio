@@ -3,9 +3,18 @@ defmodule PortfolioWeb.ProjectLiveTest do
 
   import Phoenix.LiveViewTest
   import Portfolio.ProjectsFixtures
+  import Portfolio.AccountsFixtures
 
-  @create_attrs %{name: "some name", description: "some description", githubURL: "some githubURL"}
-  @update_attrs %{name: "some updated name", description: "some updated description", githubURL: "some updated githubURL"}
+  @create_attrs %{
+    name: "some name",
+    description: "some description",
+    githubURL: "https://github.com/example/example_project"
+  }
+  @update_attrs %{
+    name: "some updated name",
+    description: "some updated description",
+    githubURL: "https://github.com/example/example_project2"
+  }
   @invalid_attrs %{name: nil, description: nil, githubURL: nil}
 
   defp create_project(_) do
@@ -16,15 +25,23 @@ defmodule PortfolioWeb.ProjectLiveTest do
   describe "Index" do
     setup [:create_project]
 
+    test "redirects if user is not logged in", %{conn: conn} do
+      {:error, redirect} = live(conn, ~p"/projects")
+      assert {:redirect, %{to: path, flash: flash}} = redirect
+      assert path == ~p"/"
+      assert %{"error" => message} = flash
+      assert message == "Nope!"
+    end
+
     test "lists all projects", %{conn: conn, project: project} do
-      {:ok, _index_live, html} = live(conn, ~p"/projects")
+      {:ok, _index_live, html} = conn |> log_in_user(user_fixture()) |> live(~p"/projects")
 
       assert html =~ "Listing Projects"
       assert html =~ project.name
     end
 
     test "saves new project", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/projects")
+      {:ok, index_live, _html} = conn |> log_in_user(user_fixture()) |> live(~p"/projects")
 
       assert index_live |> element("a", "New Project") |> render_click() =~
                "New Project"
@@ -47,7 +64,7 @@ defmodule PortfolioWeb.ProjectLiveTest do
     end
 
     test "updates project in listing", %{conn: conn, project: project} do
-      {:ok, index_live, _html} = live(conn, ~p"/projects")
+      {:ok, index_live, _html} = conn |> log_in_user(user_fixture()) |> live(~p"/projects")
 
       assert index_live |> element("#projects-#{project.id} a", "Edit") |> render_click() =~
                "Edit Project"
@@ -70,7 +87,7 @@ defmodule PortfolioWeb.ProjectLiveTest do
     end
 
     test "deletes project in listing", %{conn: conn, project: project} do
-      {:ok, index_live, _html} = live(conn, ~p"/projects")
+      {:ok, index_live, _html} = conn |> log_in_user(user_fixture()) |> live(~p"/projects")
 
       assert index_live |> element("#projects-#{project.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#projects-#{project.id}")
@@ -80,15 +97,25 @@ defmodule PortfolioWeb.ProjectLiveTest do
   describe "Show" do
     setup [:create_project]
 
-    test "displays project", %{conn: conn, project: project} do
-      {:ok, _show_live, html} = live(conn, ~p"/projects/#{project}")
+    test "redirects if user is not logged in", %{conn: conn, project: project} do
+      {:error, redirect} = live(conn, ~p"/projects/#{project}")
+      assert {:redirect, %{to: path, flash: flash}} = redirect
+      assert path == ~p"/"
+      assert %{"error" => message} = flash
+      assert message == "Nope!"
+    end
+
+    test "displays project when user is logged in", %{conn: conn, project: project} do
+      {:ok, _show_live, html} =
+        conn |> log_in_user(user_fixture()) |> live(~p"/projects/#{project}")
 
       assert html =~ "Show Project"
       assert html =~ project.name
     end
 
     test "updates project within modal", %{conn: conn, project: project} do
-      {:ok, show_live, _html} = live(conn, ~p"/projects/#{project}")
+      {:ok, show_live, _html} =
+        conn |> log_in_user(user_fixture()) |> live(~p"/projects/#{project}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Project"

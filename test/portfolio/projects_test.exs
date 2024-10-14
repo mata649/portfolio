@@ -21,12 +21,16 @@ defmodule Portfolio.ProjectsTest do
     end
 
     test "create_project/1 with valid data creates a project" do
-      valid_attrs = %{name: "some name", description: "some description", githubURL: "some githubURL"}
+      valid_attrs = %{
+        name: "some name",
+        description: "some description",
+        githubURL: "https://github.com/example/example_project"
+      }
 
       assert {:ok, %Project{} = project} = Projects.create_project(valid_attrs)
       assert project.name == "some name"
       assert project.description == "some description"
-      assert project.githubURL == "some githubURL"
+      assert project.githubURL == "https://github.com/example/example_project"
     end
 
     test "create_project/1 with invalid data returns error changeset" do
@@ -35,12 +39,17 @@ defmodule Portfolio.ProjectsTest do
 
     test "update_project/2 with valid data updates the project" do
       project = project_fixture()
-      update_attrs = %{name: "some updated name", description: "some updated description", githubURL: "some updated githubURL"}
+
+      update_attrs = %{
+        name: "some updated name",
+        description: "some updated description",
+        githubURL: "https://github.com/example/example_project2"
+      }
 
       assert {:ok, %Project{} = project} = Projects.update_project(project, update_attrs)
       assert project.name == "some updated name"
       assert project.description == "some updated description"
-      assert project.githubURL == "some updated githubURL"
+      assert project.githubURL == "https://github.com/example/example_project2"
     end
 
     test "update_project/2 with invalid data returns error changeset" do

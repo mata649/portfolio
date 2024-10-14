@@ -12,7 +12,7 @@ defmodule Portfolio.ProjectsFixtures do
       attrs
       |> Enum.into(%{
         description: "some description",
-        githubURL: "some githubURL",
+        githubURL: "https://github.com/example/example_project",
         name: "some name"
       })
       |> Portfolio.Projects.create_project()
