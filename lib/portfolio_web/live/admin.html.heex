@@ -1,1 +1,18 @@
-<h1>Jose Mata</h1>
+<div class="flex flex-col items-center">
+  <img class="h-72" src="images/admin-top.png" />
+  <h1 class="text-4xl">Administration</h1>
+  <div class="grid grid-cols-3 gap-2 mt-10">
+    <.admin_link url={~p"/skills"}>
+      Spells
+    </.admin_link>
+    <.admin_link url={~p"/"}>
+      Projects
+    </.admin_link>
+    <.admin_link url={~p"/"}>
+      Experience
+    </.admin_link>
+    <.admin_link url={~p"/"}>
+      Content
+    </.admin_link>
+  </div>
+</div>

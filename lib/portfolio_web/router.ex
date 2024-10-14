@@ -1,5 +1,6 @@
 defmodule PortfolioWeb.Router do
   use PortfolioWeb, :router
+  alias PortfolioWeb
 
   import PortfolioWeb.UserAuth
 
@@ -63,6 +64,11 @@ defmodule PortfolioWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{PortfolioWeb.UserAuth, :ensure_authenticated}] do
       live "/admin", Admin
+      live "/skills", SkillLive.Index, :index
+      live "/skills/:id/edit", SkillLive.Index, :edit
+      live "/skills/new", SkillLive.Index, :new
+      live "/skills/:id", SkillLive.Show, :show
+      live "/skills/:id/show/edit", SkillLive.Show, :edit
     end
   end
 
