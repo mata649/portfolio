@@ -64,11 +64,19 @@ defmodule PortfolioWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{PortfolioWeb.UserAuth, :ensure_authenticated}] do
       live "/admin", Admin
+      # Skills
       live "/skills", SkillLive.Index, :index
       live "/skills/:id/edit", SkillLive.Index, :edit
       live "/skills/new", SkillLive.Index, :new
       live "/skills/:id", SkillLive.Show, :show
       live "/skills/:id/show/edit", SkillLive.Show, :edit
+
+      # Projects
+      live "/projects", ProjectLive.Index, :index
+      live "/projects/:id/edit", ProjectLive.Index, :edit
+      live "/projects/new", ProjectLive.Index, :new
+      live "/projects/:id", ProjectLive.Show, :show
+      live "/projects/:id/show/edit", ProjectLive.Show, :edit
     end
   end
 
