@@ -17,12 +17,16 @@
     <%= String.slice(project.description, 0..40) <>
       if String.length(project.description) > 40 do
         "..."
+      else
+        ""
       end %>
   </:col>
   <:col :let={{_id, project}} label="Github URL">
     <%= String.slice(project.githubURL, 0..30) <>
-      if String.length(project.description) > 30 do
+      if String.length(project.githubURL) > 30 do
         "..."
+      else
+        ""
       end %>
   </:col>
   <:action :let={{_id, project}}>
