@@ -11,7 +11,7 @@ defmodule Portfolio.SkillsFixtures do
     {:ok, skill} =
       attrs
       |> Enum.into(%{
-        color: "some color",
+        color: "#FFFFFF",
         name: "some name"
       })
       |> Portfolio.Skills.create_skill()

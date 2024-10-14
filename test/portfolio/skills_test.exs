@@ -21,11 +21,11 @@ defmodule Portfolio.SkillsTest do
     end
 
     test "create_skill/1 with valid data creates a skill" do
-      valid_attrs = %{name: "some name", color: "some color"}
+      valid_attrs = %{name: "some name", color: "#FFFFFF"}
 
       assert {:ok, %Skill{} = skill} = Skills.create_skill(valid_attrs)
       assert skill.name == "some name"
-      assert skill.color == "some color"
+      assert skill.color == "#FFFFFF"
     end
 
     test "create_skill/1 with invalid data returns error changeset" do
@@ -34,11 +34,11 @@ defmodule Portfolio.SkillsTest do
 
     test "update_skill/2 with valid data updates the skill" do
       skill = skill_fixture()
-      update_attrs = %{name: "some updated name", color: "some updated color"}
+      update_attrs = %{name: "some updated name", color: "#FFFFFF"}
 
       assert {:ok, %Skill{} = skill} = Skills.update_skill(skill, update_attrs)
       assert skill.name == "some updated name"
-      assert skill.color == "some updated color"
+      assert skill.color == "#FFFFFF"
     end
 
     test "update_skill/2 with invalid data returns error changeset" do

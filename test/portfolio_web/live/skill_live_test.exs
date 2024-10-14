@@ -3,9 +3,10 @@ defmodule PortfolioWeb.SkillLiveTest do
 
   import Phoenix.LiveViewTest
   import Portfolio.SkillsFixtures
+  import Portfolio.AccountsFixtures
 
-  @create_attrs %{name: "some name", color: "some color"}
-  @update_attrs %{name: "some updated name", color: "some updated color"}
+  @create_attrs %{name: "some name", color: "#FFFFFF"}
+  @update_attrs %{name: "some updated name", color: "#FFFFFF"}
   @invalid_attrs %{name: nil, color: nil}
 
   defp create_skill(_) do
@@ -16,15 +17,23 @@ defmodule PortfolioWeb.SkillLiveTest do
   describe "Index" do
     setup [:create_skill]
 
+    test "Redirects if user is not logged in", %{conn: conn} do
+      {:error, redirect} = live(conn, ~p"/skills")
+      assert {:redirect, %{to: path, flash: flash}} = redirect
+      assert path == ~p"/"
+      assert %{"error" => message} = flash
+      assert message == "Nope!"
+    end
+
     test "lists all skills", %{conn: conn, skill: skill} do
-      {:ok, _index_live, html} = live(conn, ~p"/skills")
+      {:ok, _index_live, html} = conn |> log_in_user(user_fixture()) |> live(~p"/skills")
 
       assert html =~ "Listing Skills"
       assert html =~ skill.name
     end
 
-    test "saves new skill", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/skills")
+    test "saves new skill when user is logged in", %{conn: conn} do
+      {:ok, index_live, _html} = conn |> log_in_user(user_fixture()) |> live(~p"/skills")
 
       assert index_live |> element("a", "New Skill") |> render_click() =~
                "New Skill"
@@ -46,8 +55,8 @@ defmodule PortfolioWeb.SkillLiveTest do
       assert html =~ "some name"
     end
 
-    test "updates skill in listing", %{conn: conn, skill: skill} do
-      {:ok, index_live, _html} = live(conn, ~p"/skills")
+    test "updates skill in listing when the user is logged", %{conn: conn, skill: skill} do
+      {:ok, index_live, _html} = conn |> log_in_user(user_fixture()) |> live(~p"/skills")
 
       assert index_live |> element("#skills-#{skill.id} a", "Edit") |> render_click() =~
                "Edit Skill"
@@ -70,7 +79,7 @@ defmodule PortfolioWeb.SkillLiveTest do
     end
 
     test "deletes skill in listing", %{conn: conn, skill: skill} do
-      {:ok, index_live, _html} = live(conn, ~p"/skills")
+      {:ok, index_live, _html} = conn |> log_in_user(user_fixture()) |> live(~p"/skills")
 
       assert index_live |> element("#skills-#{skill.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#skills-#{skill.id}")
@@ -80,15 +89,23 @@ defmodule PortfolioWeb.SkillLiveTest do
   describe "Show" do
     setup [:create_skill]
 
+    test "Redirects if user is not logged in", %{conn: conn, skill: skill} do
+      {:error, redirect} = live(conn, ~p"/skills/#{skill}")
+      assert {:redirect, %{to: path, flash: flash}} = redirect
+      assert path == ~p"/"
+      assert %{"error" => message} = flash
+      assert message == "Nope!"
+    end
+
     test "displays skill", %{conn: conn, skill: skill} do
-      {:ok, _show_live, html} = live(conn, ~p"/skills/#{skill}")
+      {:ok, _show_live, html} = conn |> log_in_user(user_fixture()) |> live(~p"/skills/#{skill}")
 
       assert html =~ "Show Skill"
       assert html =~ skill.name
     end
 
     test "updates skill within modal", %{conn: conn, skill: skill} do
-      {:ok, show_live, _html} = live(conn, ~p"/skills/#{skill}")
+      {:ok, show_live, _html} = conn |> log_in_user(user_fixture()) |> live(~p"/skills/#{skill}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
                "Edit Skill"
