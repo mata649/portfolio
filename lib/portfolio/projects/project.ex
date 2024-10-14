@@ -15,5 +15,8 @@ defmodule Portfolio.Projects.Project do
     project
     |> cast(attrs, [:name, :description, :githubURL])
     |> validate_required([:name, :description, :githubURL])
+    |> validate_length(:description, max: 255)
+    |> validate_length(:name, max: 50)
+    |> validate_format(:githubURL, ~r/^https:\/\/github\.com(?:\/[^\s\/]+){2}$/)
   end
 end
