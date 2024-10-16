@@ -13,7 +13,7 @@ defmodule PortfolioWeb.SkillLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:skill, Skills.get_skill!(id))}
+     |> assign(:skill, Skills.get_skill!(id, [:projects]))}
   end
 
   defp page_title(:show), do: "Show Skill"
