@@ -11,6 +11,19 @@
   <:item title="Name"><%= @project.name %></:item>
   <:item title="Description"><%= @project.description %></:item>
   <:item title="Github URL"><%= @project.githubURL %></:item>
+  <:item title="Skills">
+    <div class="flex gap-3">
+      <%= for skill <- @project.skills do %>
+        <span
+          id={"skill-#{skill.id}"}
+          class="p-1 text-white transition ease-in-out border-2 rounded-full cursor-pointer hover:scale-110"
+          style={"background-color: #{skill.color}"}
+        >
+          <%= skill.name %>
+        </span>
+      <% end %>
+    </div>
+  </:item>
 </.list>
 
 <.back navigate={~p"/projects"}>Back to projects</.back>
