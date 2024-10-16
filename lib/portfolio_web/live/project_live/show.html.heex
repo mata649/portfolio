@@ -1,0 +1,45 @@
+<.header>
+  Project <%= @project.id %>
+  <:actions>
+    <.link patch={~p"/projects/#{@project}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit project</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @project.name %></:item>
+  <:item title="Description"><%= @project.description %></:item>
+  <:item title="Github URL"><%= @project.githubURL %></:item>
+  <:item title="Skills">
+    <div class="flex gap-3">
+      <%= for skill <- @project.skills do %>
+        <span
+          id={"skill-#{skill.id}"}
+          class="p-1 text-white transition ease-in-out border-2 rounded-full cursor-pointer hover:scale-110"
+          style={"background-color: #{skill.color}"}
+        >
+          <%= skill.name %>
+        </span>
+      <% end %>
+    </div>
+  </:item>
+</.list>
+
+<.back navigate={~p"/projects"}>Back to projects</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  id="project-modal"
+  show
+  on_cancel={JS.patch(~p"/projects/#{@project}")}
+>
+  <.live_component
+    module={PortfolioWeb.ProjectLive.FormComponent}
+    id={@project.id}
+    title={@page_title}
+    action={@live_action}
+    project={@project}
+    patch={~p"/projects/#{@project}"}
+  />
+</.modal>

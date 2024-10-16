@@ -1,7 +1,7 @@
-defmodule PortfolioWeb.SkillLive.Show do
+defmodule PortfolioWeb.ProjectLive.Show do
   use PortfolioWeb, :live_view
 
-  alias Portfolio.Skills
+  alias Portfolio.Projects
 
   @impl true
   def mount(_params, _session, socket) do
@@ -13,9 +13,9 @@ defmodule PortfolioWeb.SkillLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:skill, Skills.get_skill!(id, [:projects]))}
+     |> assign(:project, Projects.get_project!(id, [:skills]))}
   end
 
-  defp page_title(:show), do: "Show Skill"
-  defp page_title(:edit), do: "Edit Skill"
+  defp page_title(:show), do: "Show Project"
+  defp page_title(:edit), do: "Edit Project"
 end
