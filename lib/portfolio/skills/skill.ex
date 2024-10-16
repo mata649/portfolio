@@ -5,7 +5,7 @@ defmodule Portfolio.Skills.Skill do
   schema "skills" do
     field :name, :string
     field :color, :string
-
+    many_to_many :projects, Portfolio.Projects.Project, join_through: "skills_projects"
     timestamps(type: :utc_datetime)
   end
 
