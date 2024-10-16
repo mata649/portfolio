@@ -17,8 +17,8 @@ defmodule Portfolio.Projects do
       [%Project{}, ...]
 
   """
-  def list_projects do
-    Repo.all(Project)
+  def list_projects(preloads \\ []) do
+    Repo.all(Project) |> Repo.preload(preloads)
   end
 
   @doc """
@@ -35,7 +35,7 @@ defmodule Portfolio.Projects do
       ** (Ecto.NoResultsError)
 
   """
-  def get_project!(id), do: Repo.get!(Project, id)
+  def get_project!(id, preloads \\ []), do: Repo.get!(Project, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a project.
@@ -50,9 +50,7 @@ defmodule Portfolio.Projects do
 
   """
   def create_project(attrs \\ %{}) do
-    %Project{}
-    |> Project.changeset(attrs)
-    |> Repo.insert()
+    %Project{} |> Project.changeset(attrs) |> Repo.insert()
   end
 
   @doc """

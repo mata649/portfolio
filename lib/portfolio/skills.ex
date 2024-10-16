@@ -17,8 +17,8 @@ defmodule Portfolio.Skills do
       [%Skill{}, ...]
 
   """
-  def list_skills do
-    Repo.all(Skill)
+  def list_skills(preloads \\ []) do
+    Repo.all(Skill) |> Repo.preload(preloads)
   end
 
   @doc """
@@ -35,7 +35,7 @@ defmodule Portfolio.Skills do
       ** (Ecto.NoResultsError)
 
   """
-  def get_skill!(id), do: Repo.get!(Skill, id)
+  def get_skill!(id, preloads \\ []), do: Repo.get!(Skill, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a skill.
