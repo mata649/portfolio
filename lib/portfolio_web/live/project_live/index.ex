@@ -6,7 +6,7 @@ defmodule PortfolioWeb.ProjectLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :projects, Projects.list_projects())}
+    {:ok, stream(socket, :projects, Projects.list_projects([:skills]))}
   end
 
   @impl true
@@ -17,7 +17,7 @@ defmodule PortfolioWeb.ProjectLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Project")
-    |> assign(:project, Projects.get_project!(id))
+    |> assign(:project, Projects.get_project!(id, [:skills]))
   end
 
   defp apply_action(socket, :new, _params) do
