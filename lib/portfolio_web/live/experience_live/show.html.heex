@@ -1,0 +1,32 @@
+<.header>
+  Experience <%= @experience.id %>
+  <:subtitle>This is a experience record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/experiences/#{@experience}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit experience</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Company"><%= @experience.company %></:item>
+  <:item title="Position"><%= @experience.position %></:item>
+  <:item title="Description"><%= @experience.description %></:item>
+  <:item title="From"><%= @experience.from %></:item>
+  <:item title="To"><%= @experience.to %></:item>
+  <:item title="Currentjob"><%= @experience.currentJob %></:item>
+  <:item title="Location"><%= @experience.location %></:item>
+</.list>
+
+<.back navigate={~p"/experiences"}>Back to experiences</.back>
+
+<.modal :if={@live_action == :edit} id="experience-modal" show on_cancel={JS.patch(~p"/experiences/#{@experience}")}>
+  <.live_component
+    module={PortfolioWeb.ExperienceLive.FormComponent}
+    id={@experience.id}
+    title={@page_title}
+    action={@live_action}
+    experience={@experience}
+    patch={~p"/experiences/#{@experience}"}
+  />
+</.modal>

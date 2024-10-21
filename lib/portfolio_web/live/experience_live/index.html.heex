@@ -1,0 +1,47 @@
+<.header>
+  Listing Experiences
+  <:actions>
+    <.link patch={~p"/experiences/new"}>
+      <.button>New Experience</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="experiences"
+  rows={@streams.experiences}
+  row_click={fn {_id, experience} -> JS.navigate(~p"/experiences/#{experience}") end}
+>
+  <:col :let={{_id, experience}} label="Company"><%= experience.company %></:col>
+  <:col :let={{_id, experience}} label="Position"><%= experience.position %></:col>
+  <:col :let={{_id, experience}} label="Description"><%= experience.description %></:col>
+  <:col :let={{_id, experience}} label="From"><%= experience.from %></:col>
+  <:col :let={{_id, experience}} label="To"><%= experience.to %></:col>
+  <:col :let={{_id, experience}} label="Currentjob"><%= experience.currentJob %></:col>
+  <:col :let={{_id, experience}} label="Location"><%= experience.location %></:col>
+  <:action :let={{_id, experience}}>
+    <div class="sr-only">
+      <.link navigate={~p"/experiences/#{experience}"}>Show</.link>
+    </div>
+    <.link patch={~p"/experiences/#{experience}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, experience}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: experience.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="experience-modal" show on_cancel={JS.patch(~p"/experiences")}>
+  <.live_component
+    module={PortfolioWeb.ExperienceLive.FormComponent}
+    id={@experience.id || :new}
+    title={@page_title}
+    action={@live_action}
+    experience={@experience}
+    patch={~p"/experiences"}
+  />
+</.modal>
