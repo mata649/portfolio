@@ -7,13 +7,18 @@ defmodule Portfolio.Projects.Project do
     field :name, :string
     field :description, :string
     field :githubURL, :string
-    many_to_many :skills, Skill, join_through: "skills_projects", on_replace: :delete
+
+    many_to_many :skills, Skill,
+      join_through: "skills_projects",
+      on_replace: :delete,
+      on_delete: :delete_all
+
     timestamps(type: :utc_datetime)
   end
 
   @doc false
   def changeset(project, attrs) do
-    skills = attrs["skills"]
+    skills = get_skills(attrs)
 
     project
     |> cast(attrs, [:name, :description, :githubURL])
@@ -24,4 +29,8 @@ defmodule Portfolio.Projects.Project do
     |> put_assoc(:skills, skills, required: true)
     |> validate_length(:skills, min: 1)
   end
+
+  defp get_skills(%{skills: skills}), do: skills
+  defp get_skills(%{"skills" => skills}), do: skills
+  defp get_skills(_attrs), do: []
 end

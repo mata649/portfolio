@@ -4,6 +4,7 @@ defmodule PortfolioWeb.ProjectLiveTest do
   import Phoenix.LiveViewTest
   import Portfolio.ProjectsFixtures
   import Portfolio.AccountsFixtures
+  import Portfolio.SkillsFixtures
 
   @create_attrs %{
     name: "some name",
@@ -18,8 +19,9 @@ defmodule PortfolioWeb.ProjectLiveTest do
   @invalid_attrs %{name: nil, description: nil, githubURL: nil}
 
   defp create_project(_) do
-    project = project_fixture()
-    %{project: project}
+    skill = skill_fixture()
+    project = project_fixture(%{skills: [skill.id]})
+    %{project: project, skill: skill}
   end
 
   describe "Index" do
@@ -40,7 +42,7 @@ defmodule PortfolioWeb.ProjectLiveTest do
       assert html =~ project.name
     end
 
-    test "saves new project", %{conn: conn} do
+    test "saves new project", %{conn: conn, skill: skill} do
       {:ok, index_live, _html} = conn |> log_in_user(user_fixture()) |> live(~p"/projects")
 
       assert index_live |> element("a", "New Project") |> render_click() =~
@@ -53,8 +55,8 @@ defmodule PortfolioWeb.ProjectLiveTest do
              |> render_change() =~ "can&#39;t be blank"
 
       assert index_live
-             |> form("#project-form", project: @create_attrs)
-             |> render_submit()
+             |> form("#project-form")
+             |> render_submit(%{project: Map.put(@create_attrs, :skills, [skill.id])})
 
       assert_patch(index_live, ~p"/projects")
 

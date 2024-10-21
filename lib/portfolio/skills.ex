@@ -22,6 +22,20 @@ defmodule Portfolio.Skills do
   end
 
   @doc """
+  Returns the list of skills by name.
+
+  ## Examples
+
+      iex> search_skills_by_name("C")
+      [%Skill{}, ...]
+
+  """
+  def search_skills_by_name(name) do
+    query = "%#{name}%"
+    Repo.all(from s in Skill, where: like(s.name, ^query))
+  end
+
+  @doc """
   Gets a single skill.
 
   Raises `Ecto.NoResultsError` if the Skill does not exist.
