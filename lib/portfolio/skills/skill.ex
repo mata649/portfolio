@@ -10,6 +10,10 @@ defmodule Portfolio.Skills.Skill do
       join_through: "skills_projects",
       on_delete: :delete_all
 
+    many_to_many :experiences, Portfolio.Experiences.Experience,
+      join_through: "skills_experiences",
+      on_delete: :delete_all
+
     timestamps(type: :utc_datetime)
   end
 
