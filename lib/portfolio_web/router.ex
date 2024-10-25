@@ -77,6 +77,13 @@ defmodule PortfolioWeb.Router do
       live "/projects/new", ProjectLive.Index, :new
       live "/projects/:id", ProjectLive.Show, :show
       live "/projects/:id/show/edit", ProjectLive.Show, :edit
+
+      # Experiences
+      live "/experiences", ExperienceLive.Index, :index
+      live "/experiences/:id/edit", ExperienceLive.Index, :edit
+      live "/experiences/new", ExperienceLive.Index, :new
+      live "/experiences/:id", ExperienceLive.Show, :show
+      live "/experiences/:id/show/edit", ExperienceLive.Show, :edit
     end
   end
 
