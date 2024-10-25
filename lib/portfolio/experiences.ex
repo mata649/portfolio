@@ -69,10 +69,9 @@ defmodule Portfolio.Experiences do
 
   """
   def update_experience(%Experience{} = experience, attrs) do
-    changeset =
-      experience
-      |> Experience.changeset(attrs |> Skills.load_skills())
-      |> Repo.update()
+    experience
+    |> Experience.changeset(attrs |> Skills.load_skills())
+    |> Repo.update()
   end
 
   @doc """
