@@ -15,12 +15,6 @@ defmodule Portfolio.ProjectsTest do
       __owner__: Portfolio.Projects.Project
     }
 
-    test "list_projects/0 returns all projects with skills" do
-      skill = skill_fixture()
-      project = project_fixture(%{skills: [skill.id]})
-      assert Projects.list_projects([:skills]) == [project]
-    end
-
     test "list_projects/0 returns all projects without skills" do
       skill = skill_fixture()
       project = project_fixture(%{skills: [skill.id]})
@@ -30,13 +24,19 @@ defmodule Portfolio.ProjectsTest do
              ]
     end
 
+    test "list_projects/1 returns all projects with skills" do
+      skill = skill_fixture()
+      project = project_fixture(%{skills: [skill.id]})
+      assert Projects.list_projects([:skills]) == [project]
+    end
+
     test "get_project!/1 returns the project with given id with skills" do
       skill = skill_fixture()
       project = project_fixture(%{skills: [skill.id]})
       assert Projects.get_project!(project.id, [:skills]) == project
     end
 
-    test "get_project!/1 returns the project with given id without skills" do
+    test "get_project!/2 returns the project with given id without skills" do
       skill = skill_fixture()
       project = project_fixture(%{skills: [skill.id]})
       assert Projects.get_project!(project.id) == %Project{project | skills: @skills_not_loaded}
