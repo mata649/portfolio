@@ -4,6 +4,7 @@ defmodule Portfolio.Experiences do
   """
 
   import Ecto.Query, warn: false
+  alias Portfolio.Skills
   alias Portfolio.Repo
 
   alias Portfolio.Experiences.Experience
@@ -17,8 +18,8 @@ defmodule Portfolio.Experiences do
       [%Experience{}, ...]
 
   """
-  def list_experiences do
-    Repo.all(Experience)
+  def list_experiences(preloads \\ []) do
+    Repo.all(Experience) |> Repo.preload(preloads)
   end
 
   @doc """
@@ -35,7 +36,7 @@ defmodule Portfolio.Experiences do
       ** (Ecto.NoResultsError)
 
   """
-  def get_experience!(id), do: Repo.get!(Experience, id)
+  def get_experience!(id, preloads \\ []), do: Repo.get!(Experience, id) |> Repo.preload(preloads)
 
   @doc """
   Creates a experience.
@@ -51,7 +52,7 @@ defmodule Portfolio.Experiences do
   """
   def create_experience(attrs \\ %{}) do
     %Experience{}
-    |> Experience.changeset(attrs)
+    |> Experience.changeset(attrs |> Skills.load_skills())
     |> Repo.insert()
   end
 
@@ -68,9 +69,10 @@ defmodule Portfolio.Experiences do
 
   """
   def update_experience(%Experience{} = experience, attrs) do
-    experience
-    |> Experience.changeset(attrs)
-    |> Repo.update()
+    changeset =
+      experience
+      |> Experience.changeset(attrs |> Skills.load_skills())
+      |> Repo.update()
   end
 
   @doc """
