@@ -6,7 +6,7 @@ defmodule PortfolioWeb.ExperienceLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :experiences, Experiences.list_experiences())}
+    {:ok, stream(socket, :experiences, Experiences.list_experiences([:skills]))}
   end
 
   @impl true
@@ -17,7 +17,7 @@ defmodule PortfolioWeb.ExperienceLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Experience")
-    |> assign(:experience, Experiences.get_experience!(id))
+    |> assign(:experience, Experiences.get_experience!(id, [:skills]))
   end
 
   defp apply_action(socket, :new, _params) do

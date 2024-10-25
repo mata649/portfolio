@@ -14,10 +14,7 @@
 >
   <:col :let={{_id, experience}} label="Company"><%= experience.company %></:col>
   <:col :let={{_id, experience}} label="Position"><%= experience.position %></:col>
-  <:col :let={{_id, experience}} label="Description"><%= experience.description %></:col>
-  <:col :let={{_id, experience}} label="From"><%= experience.from %></:col>
-  <:col :let={{_id, experience}} label="To"><%= experience.to %></:col>
-  <:col :let={{_id, experience}} label="Currentjob"><%= experience.currentJob %></:col>
+
   <:col :let={{_id, experience}} label="Location"><%= experience.location %></:col>
   <:action :let={{_id, experience}}>
     <div class="sr-only">
@@ -34,8 +31,13 @@
     </.link>
   </:action>
 </.table>
-
-<.modal :if={@live_action in [:new, :edit]} id="experience-modal" show on_cancel={JS.patch(~p"/experiences")}>
+<.back navigate={~p"/admin"}>Back to administration</.back>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="experience-modal"
+  show
+  on_cancel={JS.patch(~p"/experiences")}
+>
   <.live_component
     module={PortfolioWeb.ExperienceLive.FormComponent}
     id={@experience.id || :new}

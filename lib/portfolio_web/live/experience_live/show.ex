@@ -13,7 +13,7 @@ defmodule PortfolioWeb.ExperienceLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:experience, Experiences.get_experience!(id))}
+     |> assign(:experience, Experiences.get_experience!(id, [:skills]))}
   end
 
   defp page_title(:show), do: "Show Experience"

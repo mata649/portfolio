@@ -14,13 +14,31 @@
   <:item title="Description"><%= @experience.description %></:item>
   <:item title="From"><%= @experience.from %></:item>
   <:item title="To"><%= @experience.to %></:item>
-  <:item title="Currentjob"><%= @experience.currentJob %></:item>
+  <:item title="Current"><%= @experience.current_job %></:item>
   <:item title="Location"><%= @experience.location %></:item>
+  <:item title="Skills">
+    <div class="flex gap-3">
+      <%= for skill <- @experience.skills do %>
+        <span
+          id={"skill-#{skill.id}"}
+          class="p-1 text-white transition ease-in-out border-2 rounded-full cursor-pointer hover:scale-110"
+          style={"background-color: #{skill.color}"}
+        >
+          <%= skill.name %>
+        </span>
+      <% end %>
+    </div>
+  </:item>
 </.list>
 
 <.back navigate={~p"/experiences"}>Back to experiences</.back>
 
-<.modal :if={@live_action == :edit} id="experience-modal" show on_cancel={JS.patch(~p"/experiences/#{@experience}")}>
+<.modal
+  :if={@live_action == :edit}
+  id="experience-modal"
+  show
+  on_cancel={JS.patch(~p"/experiences/#{@experience}")}
+>
   <.live_component
     module={PortfolioWeb.ExperienceLive.FormComponent}
     id={@experience.id}
