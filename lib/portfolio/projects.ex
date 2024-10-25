@@ -4,7 +4,7 @@ defmodule Portfolio.Projects do
   """
 
   import Ecto.Query, warn: false
-  alias Portfolio.Skills.Skill
+  alias Portfolio.Skills
   alias Portfolio.Repo
 
   alias Portfolio.Projects.Project
@@ -51,7 +51,7 @@ defmodule Portfolio.Projects do
 
   """
   def create_project(attrs \\ %{}) do
-    %Project{} |> Project.changeset(attrs |> load_skills) |> Repo.insert()
+    %Project{} |> Project.changeset(attrs |> Skills.load_skills()) |> Repo.insert()
   end
 
   @doc """
@@ -68,7 +68,7 @@ defmodule Portfolio.Projects do
   """
   def update_project(%Project{} = project, attrs) do
     project
-    |> Project.changeset(attrs |> load_skills)
+    |> Project.changeset(attrs |> Skills.load_skills())
     |> Repo.update()
   end
 
@@ -99,19 +99,5 @@ defmodule Portfolio.Projects do
   """
   def change_project(%Project{} = project, attrs \\ %{}) do
     Project.changeset(project, attrs)
-  end
-
-  defp load_skills(%{"skills" => skills} = attrs) do
-    skills = Repo.all(from s in Skill, where: s.id in ^skills)
-    attrs |> Map.put("skills", skills)
-  end
-
-  defp load_skills(%{skills: skills} = attrs) do
-    skills = Repo.all(from s in Skill, where: s.id in ^skills)
-    attrs |> Map.put(:skills, skills)
-  end
-
-  defp load_skills(attrs) do
-    attrs |> Map.put("skills", [])
   end
 end

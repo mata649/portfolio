@@ -115,4 +115,18 @@ defmodule Portfolio.Skills do
   def change_skill(%Skill{} = skill, attrs \\ %{}) do
     Skill.changeset(skill, attrs)
   end
+
+  def load_skills(%{"skills" => skills} = attrs) do
+    skills = Repo.all(from s in Skill, where: s.id in ^skills)
+    attrs |> Map.put("skills", skills)
+  end
+
+  def load_skills(%{skills: skills} = attrs) do
+    skills = Repo.all(from s in Skill, where: s.id in ^skills)
+    attrs |> Map.put(:skills, skills)
+  end
+
+  def load_skills(attrs) do
+    attrs |> Map.put("skills", [])
+  end
 end
