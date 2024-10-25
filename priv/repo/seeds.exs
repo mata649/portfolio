@@ -9,3 +9,12 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+alias Portfolio.Repo
+alias Portfolio.Accounts.User
+
+Repo.insert!(
+  User.registration_changeset(%User{}, %{
+    email: System.get_env("ADMIN_EMAIL"),
+    password: System.get_env("ADMIN_PASSWORD")
+  })
+)
