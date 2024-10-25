@@ -127,6 +127,6 @@ defmodule Portfolio.Skills do
   end
 
   def load_skills(attrs) do
-    attrs |> Map.put("skills", [])
+    attrs |> Map.put(:skills, [])
   end
 end
