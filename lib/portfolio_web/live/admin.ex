@@ -11,7 +11,7 @@ defmodule PortfolioWeb.Admin do
   def admin_link(assigns) do
     ~H"""
     <.link
-      class="p-1 text-xl text-center transition ease-out border-2 border-black rounded-3xl hover:scale-105"
+      class="px-2 py-1 text-xl text-center transition ease-out border-2 border-black rounded-3xl hover:text-slate-800 hover:bg-slate-100"
       navigate={@url}
     >
       <%= render_slot(@inner_block) %>
