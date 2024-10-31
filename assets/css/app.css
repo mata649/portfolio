@@ -3,3 +3,34 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+html {
+    font-family: 'Cinzel', serif;
+
+}
+
+.card { perspective: 800px;}
+.card__content {transform-style: preserve-3d;}
+.card:hover .card__content {transform: rotateY(.5turn);}
+
+.card__front,
+.card__back { backface-visibility: hidden;}
+.card__back{ transform: rotateY(.5turn);}
+
+::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
