@@ -1,1 +1,110 @@
-<h1>Jose Mata</h1>
+<section class="grid grid-cols-6 ">
+  <div class="flex flex-col items-center col-span-4 col-start-2">
+    <h1 class="text-4xl font-bold">
+      Alchemist of Applications
+    </h1>
+    <h1 class="text-2xl font-bold">Keeper of the Digital Arcane</h1>
+  </div>
+  <div class="flex flex-col items-center col-span-4 col-start-2 gap-2 ">
+    <img class="h-auto" src="images/hero-section.png" />
+    <h1 class="text-5xl font-bold ">Jose Alberto Mata</h1>
+  </div>
+  <p class="col-span-6 py-4 mb-8 text-justify">
+    I’m a passionate software developer with a strong interest in software architecture and a dedication to continuous learning. I’ve had the opportunity to work with various programming languages, including C#, Java, Python, and Go. Currently, I’m focusing on Elixir as I expand my skills and explore new approaches to building scalable and maintainable applications. I’m always looking for new challenges to deepen my expertise and deliver robust, high-quality solutions.
+  </p>
+</section>
+<section class="mt-10 ">
+  <h1 class="text-4xl font-bold text-center">Spells</h1>
+  <div class="grid grid-cols-3 mt-8">
+    <div class="flex flex-col items-end justify-around">
+      <%= for {skill, index} <- @skills_first_half  do %>
+        <.live_component
+          module={PortfolioWeb.DefaultLive.SkillItem}
+          id={"skill-#{skill.id}"}
+          skill={skill}
+          index={index}
+          half_length={length(@skills_first_half)}
+          margin="right"
+          selected={Enum.member?(@skills_filter, Integer.to_string(skill.id))}
+        />
+      <% end %>
+    </div>
+    <img class="h-auto " src="images/spells-section.png" />
+    <div class="flex flex-col items-start justify-around">
+      <%= for {skill, index} <- @skills_second_half do %>
+        <.live_component
+          module={PortfolioWeb.DefaultLive.SkillItem}
+          id={"skill-#{skill.id}"}
+          skill={skill}
+          index={index}
+          half_length={length(@skills_first_half)}
+          margin="left"
+          selected={Enum.member?(@skills_filter, Integer.to_string(skill.id))}
+        />
+      <% end %>
+    </div>
+  </div>
+</section>
+<section class="mt-10">
+  <h1 class="text-4xl font-bold text-center">The Deck of Creations</h1>
+  <div class="grid w-full h-full grid-cols-1 gap-6 mt-10 xl:grid-cols-3 sm:grid-cols-2">
+    <%= for {project, card} <- Enum.zip(@projects, get_random_cards(length(@projects))) do %>
+      <.live_component
+        module={PortfolioWeb.DefaultLive.ProjectCard}
+        id={"project-card-#{project.id}"}
+        card={card}
+        project={project}
+      />
+    <% end %>
+  </div>
+  <div class="mt-10">
+    <.live_component
+      id="projects-paginator"
+      module={PortfolioWeb.DefaultLive.Paginator}
+      meta={@projects_meta}
+    />
+  </div>
+</section>
+<section class="mt-10">
+  <h1 class="text-4xl font-bold text-center">Path of the Arcane</h1>
+
+  <ol class="relative mt-10 border-gray-200 border-s dark:border-gray-700">
+    <%= for experience <- @experiences do %>
+      <.live_component
+        id={"experience-line-#{experience.id}"}
+        module={PortfolioWeb.DefaultLive.ExperienceLine}
+        experience={experience}
+      />
+    <% end %>
+  </ol>
+</section>
+
+<section class="mt-10 mb-20">
+  <h1 class="text-4xl font-bold text-center">Magical Links</h1>
+  <div class="flex flex-col items-center justify-center gap-10 mt-10 sm:flex-row">
+    <.link
+      href="https://github.com/mata649"
+      target="_blank"
+      class="flex flex-col items-center justify-center transition delay-75 hover:scale-105"
+    >
+      <img src="images/github-icon.png" class="h-24" />
+      <p>Github</p>
+    </.link>
+    <.link
+      href="https://www.linkedin.com/in/jose-alberto-mata-mena-a06761198/"
+      target="_blank"
+      class="flex flex-col items-center justify-center transition duration-500 delay-75 hover:scale-105"
+    >
+      <img src="images/linkedin-icon.png" class="h-24" />
+      <p>Linkedin</p>
+    </.link>
+    <.link
+      href="mailto:mata649@hotmail.com"
+      target="_blank"
+      class="flex flex-col items-center justify-center transition duration-500 delay-75 hover:scale-105"
+    >
+      <img src="images/email-icon.png" class="h-24" />
+      <p>Email</p>
+    </.link>
+  </div>
+</section>
