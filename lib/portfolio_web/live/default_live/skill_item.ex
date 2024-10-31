@@ -6,7 +6,7 @@ defmodule PortfolioWeb.DefaultLive.SkillItem do
     ~H"""
     <span
       id={"skill-#{@skill.id}"}
-      class={"p-1 transition ease-out rounded-full cursor-pointer hover:scale-110 #{if @skill.name == "Elixir", do: "animate-pulse"}"}
+      class={"p-1 transition ease-out rounded-full cursor-pointer hover:scale-110 #{if @skill.name == "Elixir", do: "animate-pulse font-bold"}"}
       style={"margin-#{@margin}: #{get_get_margin_percentage(@index, @half_length)}%; #{get_skill_glow(@selected, @skill.color)}"}
       phx-click={
         JS.push("add_skill_filter")
