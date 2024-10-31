@@ -3,6 +3,10 @@ defmodule Portfolio.Projects.Project do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {
+    Flop.Schema,
+    filterable: [:name], sortable: [:name]
+  }
   schema "projects" do
     field :name, :string
     field :description, :string
