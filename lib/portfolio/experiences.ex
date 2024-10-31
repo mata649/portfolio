@@ -102,4 +102,32 @@ defmodule Portfolio.Experiences do
   def change_experience(%Experience{} = experience, attrs \\ %{}) do
     Experience.changeset(experience, attrs)
   end
+
+  @doc """
+  Fetches all experiences that have the specified skills.
+
+  ## Parameters
+
+    - skills: A list of skill IDs to filter experiences by. If an empty list is provided, all experiences are returned.
+
+  ## Examples
+
+      iex> get_experiences_by_skills([1, 2, 3])
+      [%Experience{}, %Experience{}]
+
+      iex> get_experiences_by_skills([])
+      [%Experience{}, %Experience{}]
+
+  Returns a list of experiences that have the specified skills or all experiences if no skills are specified.
+
+  """
+  def get_experiences_by_skills() do
+    Repo.all(
+      from e in Experience,
+        join: s in assoc(e, :skills),
+        distinct: true,
+        preload: [:skills],
+        order_by: [desc: e.from]
+    )
+  end
 end
