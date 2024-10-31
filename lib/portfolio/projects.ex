@@ -100,4 +100,41 @@ defmodule Portfolio.Projects do
   def change_project(%Project{} = project, attrs \\ %{}) do
     Project.changeset(project, attrs)
   end
+
+  @doc """
+  Fetches all projects that have the specified skills.
+
+  ## Parameters
+
+    - skills: A list of skill IDs to filter projects by.
+
+  ## Examples
+
+      iex> get_projects_by_skills([1, 2, 3])
+      [%Project{}, %Project{}]
+
+  Returns a list of projects that have the specified skills.
+
+  """
+  def get_projects_by_skills([], params) do
+    query =
+      from p in Project,
+        join: s in assoc(p, :skills),
+        distinct: true,
+        preload: [:skills]
+
+    Flop.validate_and_run(query, params, repo: Portfolio.Repo)
+  end
+
+  def get_projects_by_skills(skills, params) do
+    query =
+      from p in Project,
+        join: s in assoc(p, :skills),
+        distinct: true,
+        preload: [:skills]
+
+    query = from [p, s] in query, where: s.id in ^skills
+
+    Flop.validate_and_run(query, params, repo: Portfolio.Repo)
+  end
 end
