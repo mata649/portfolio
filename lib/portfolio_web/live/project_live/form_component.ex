@@ -28,7 +28,7 @@ defmodule PortfolioWeb.ProjectLive.FormComponent do
           Skills
           <.live_select
             container_extra_class="mt-2"
-            dropdown_extra_class="border bg-yellow-100"
+            dropdown_extra_class="border bg-slate-100"
             field={@form[:skills]}
             phx-target={@myself}
             mode={:tags}

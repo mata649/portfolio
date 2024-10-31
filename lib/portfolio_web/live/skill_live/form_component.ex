@@ -6,7 +6,7 @@ defmodule PortfolioWeb.SkillLive.FormComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="bg-yellow-50">
+    <div class="bg-slate-50">
       <.header class="text-center">
         <%= @title %>
       </.header>

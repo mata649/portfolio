@@ -52,7 +52,7 @@ defmodule PortfolioWeb.CoreComponents do
     >
       <div
         id={"#{@id}-bg"}
-        class="fixed inset-0 transition-opacity bg-yellow-50/90"
+        class="fixed inset-0 transition-opacity bg-slate-50/90"
         aria-hidden="true"
       />
       <div
@@ -70,7 +70,7 @@ defmodule PortfolioWeb.CoreComponents do
               phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
               phx-key="escape"
               phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-              class="relative hidden transition shadow-lg bg-yellow-50 shadow-zinc-700/10 ring-zinc-700/10 rounded-2xl p-14 ring-1"
+              class="relative hidden transition shadow-lg bg-slate-50 shadow-zinc-700/10 ring-zinc-700/10 rounded-2xl p-14 ring-1"
             >
               <div class="absolute top-6 right-5">
                 <button
@@ -206,7 +206,7 @@ defmodule PortfolioWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-yellow-50">
+      <div class="mt-10 space-y-8 bg-slate-50">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="flex items-center justify-between gap-6 mt-2">
           <%= render_slot(action, f) %>
@@ -499,7 +499,7 @@ defmodule PortfolioWeb.CoreComponents do
               class={["relative p-0", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pr-6">
-                <span class="absolute right-0 -inset-y-px -left-4 group-hover:bg-yellow-100 sm:rounded-l-xl" />
+                <span class="absolute right-0 -inset-y-px -left-4 group-hover:bg-slate-100 sm:rounded-l-xl" />
                 <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
                   <%= render_slot(col, @row_item.(row)) %>
                 </span>
@@ -507,7 +507,7 @@ defmodule PortfolioWeb.CoreComponents do
             </td>
             <td :if={@action != []} class="relative p-0 w-14">
               <div class="relative py-4 text-sm font-medium text-right whitespace-nowrap">
-                <span class="absolute left-0 -inset-y-px -right-4 group-hover:bg-yellow-100 sm:rounded-r-xl" />
+                <span class="absolute left-0 -inset-y-px -right-4 group-hover:bg-slate-100 sm:rounded-r-xl" />
                 <span
                   :for={action <- @action}
                   class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"

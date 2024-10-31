@@ -4,14 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title suffix=" · Phoenix Framework">
+    <.live_title suffix=" - Jose Mata">
       <%= assigns[:page_title] || "Portfolio" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body class="bg-yellow-50">
+  <body class="bg-slate-50">
     <ul class="relative z-10 flex items-center justify-end gap-4 px-4 sm:px-6 lg:px-8">
       <%= if @current_user do %>
         <li class="text-[0.8125rem] leading-6 text-zinc-900">
