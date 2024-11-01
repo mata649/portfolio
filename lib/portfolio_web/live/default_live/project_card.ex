@@ -20,7 +20,7 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
         <div class="absolute top-0 bottom-0 left-0 right-0 cursor-pointer card__front">
           <img
             class="h-96"
-            src={"images/tarot/#{@card}.png"}
+            src={"images/tarot/#{@card}.webp"}
             style={get_tarot_glow_color(@project.skills)}
           />
         </div>
