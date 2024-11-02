@@ -11,7 +11,7 @@ defmodule PortfolioWeb.DefaultLive.SkillItem do
       phx-click={
         JS.push("add_skill_filter")
         |> JS.toggle_class(
-          " shadow-2xl text-white  #{if @skill.name == "Elixir", do: "animate-pulse"}"
+          "shadow-2xl text-white  #{if @skill.name == "Elixir", do: "animate-pulse"}"
         )
       }
       phx-value-id={@skill.id}
@@ -27,6 +27,7 @@ defmodule PortfolioWeb.DefaultLive.SkillItem do
     if selected do
       "background-color: #{color};
       box-shadow: 0px 0px 41px 17px #{color};
+      color: white;
       "
     end
   end
