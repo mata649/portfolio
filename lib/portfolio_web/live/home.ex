@@ -22,12 +22,39 @@ defmodule PortfolioWeb.Home do
       |> assign(:projects, projects)
       |> assign(:projects_meta, projects_meta)
       |> assign(:experiences, experiences)
+      |> assign(:loading?, false)
 
     {:ok, socket}
   end
 
   def handle_event("add_skill_filter", %{"id" => id}, socket) do
+    send(self(), {:add_skill_filter, id})
+
+    {:noreply, socket |> assign(:loading?, true)}
+  end
+
+  def handle_event("change_page", %{"page" => page}, socket) do
+    send(self(), {:change_page, page})
+    {:noreply, socket |> assign(:loading?, true)}
+  end
+
+  def handle_info({:change_page, page}, socket) do
     skills_filter = socket.assigns.skills_filter
+
+    {projects, projects_meta} = get_projects(skills_filter, %Flop{page_size: 3, page: page})
+
+    socket =
+      socket
+      |> assign(:projects, projects)
+      |> assign(:projects_meta, projects_meta)
+      |> assign(:loading?, false)
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:add_skill_filter, id}, socket) do
+    skills_filter = socket.assigns.skills_filter
+    :timer.sleep(400)
 
     skills_filter = skills_filter |> toggle_skill_id_from_list(id)
 
@@ -38,19 +65,7 @@ defmodule PortfolioWeb.Home do
       |> assign(:skills_filter, skills_filter)
       |> assign(:projects, projects)
       |> assign(:projects_meta, projects_meta)
-
-    {:noreply, socket}
-  end
-
-  def handle_event("change_page", %{"page" => page}, socket) do
-    skills_filter = socket.assigns.skills_filter
-
-    {projects, projects_meta} = get_projects(skills_filter, %Flop{page_size: 3, page: page})
-
-    socket =
-      socket
-      |> assign(:projects, projects)
-      |> assign(:projects_meta, projects_meta)
+      |> assign(:loading?, false)
 
     {:noreply, socket}
   end
