@@ -20,12 +20,14 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
       phx-mounted={JS.show(transition: {"ease-in duration-75", "opacity-0", "opacity-100"}, time: 75)}
     >
       <div class="relative w-56 h-auto transition-all duration-700 delay-75 card__content ">
-        <div class="absolute top-0 bottom-0 left-0 right-0 cursor-pointer card__front">
-          <img
-            class="h-96"
-            src={"images/tarot/#{@card}.png"}
-            style={get_tarot_glow_color(@project.skills)}
-          />
+        <div
+          class="absolute top-0 bottom-0 left-0 right-0 h-full border cursor-pointer bg-slate-900 tarot-card card__front"
+          style={get_tarot_glow_color(@project.skills)}
+        >
+          <h2 class="text-2xl"><%= @card.name %></h2>
+          <div class="pixel-image p-1">
+            <img class="rounded" src={"images/tarot/#{@card.num}.webp"} />
+          </div>
         </div>
         <div
           class="absolute top-0 bottom-0 left-0 right-0 w-56 text-white bg-slate-900 h-fit card__back"
