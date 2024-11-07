@@ -2,35 +2,112 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* This file is for your main application CSS */
-html {
-    font-family: 'Cinzel', serif;
 
+html {
+    font-family: "VT323", monospace;
+    color: white;
 }
 
-.card { perspective: 800px;}
-.card__content {transform-style: preserve-3d;}
-.card:hover .card__content {transform: rotateY(.5turn);}
+
+.card {
+    perspective: 800px;
+}
+
+.card__content {
+    transform-style: preserve-3d;
+}
+
+.card:hover .card__content {
+    transform: rotateY(.5turn);
+}
 
 .card__front,
-.card__back { backface-visibility: hidden;}
-.card__back{ transform: rotateY(.5turn);}
+.card__back {
+    backface-visibility: hidden;
+}
+
+.card__back {
+    transform: rotateY(.5turn);
+}
 
 ::-webkit-scrollbar {
     width: 4px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
+}
+
+/* Track */
+::-webkit-scrollbar-track {
     background: #f1f1f1;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #888;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #555;
-  }
+}
+
+.tarot-card {
+    width: 200px;
+    height: 384px;
+    border: 2px solid #222;
+    /* Neon border */
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+
+/* Pixel art image placeholder */
+.pixel-image {
+    width: 100px;
+    height: 100px;
+    background: repeating-linear-gradient(45deg,
+            #ff00ff 0,
+            #ff00ff 1px,
+            #222 1px,
+            #222 3px);
+    /* Simulated pixel art pattern */
+    /* Neon cyan glow */
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+/* Card border effects */
+.tarot-card::before,
+.tarot-card::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    pointer-events: none;
+    animation: neon-border 2s infinite alternate;
+}
+
+/* Neon border animation */
+@keyframes neon-border {
+    from {
+        border-color: #ff00ff;
+        box-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 30px #ff00ff;
+    }
+
+    to {
+        border-color: #00ffff;
+        box-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 30px #00ffff;
+    }
+}
+

@@ -9,4 +9,10 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=portfolio_dev
-
+  portfolio-web:
+    image: portfolio
+    env_file:
+      - .env
+    command: ["/app/bin/server", "eval", "'MyApp.Release.migrate()'"]
+    ports:
+      - 8080:8080

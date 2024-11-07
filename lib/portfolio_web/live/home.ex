@@ -73,6 +73,36 @@ defmodule PortfolioWeb.Home do
     end
   end
 
-  defp get_random_cards(amount),
-    do: 1..22 |> Enum.to_list() |> Enum.shuffle() |> Enum.take(amount)
+  def get_random_cards(hand_size) do
+    cards = [
+      "The Fool",
+      "The Magician",
+      "The High Priestess",
+      "The Empress",
+      "The Emperor",
+      "The Hierophant",
+      "The Lovers",
+      "The Chariot",
+      "Strength",
+      "The Hermit",
+      "Wheel of Fortune",
+      "Justice",
+      "The Hanged Man",
+      "Death",
+      "Temperance",
+      "The Devil",
+      "The Tower",
+      "The Star",
+      "The Moon",
+      "The Sun",
+      "Judgement",
+      "The World"
+    ]
+
+    cards
+    |> Enum.with_index()
+    |> Enum.map(fn {name, index} -> %{name: name, num: index} end)
+    |> Enum.shuffle()
+    |> Enum.take(hand_size)
+  end
 end
