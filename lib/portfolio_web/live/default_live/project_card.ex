@@ -4,7 +4,10 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
   use Phoenix.LiveComponent
 
   def mount(socket) do
-    socket = socket |> assign(:truncate, true)
+    socket =
+      socket
+      |> assign(:truncate, true)
+
     {:ok, socket}
   end
 
@@ -17,20 +20,22 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
       phx-mounted={JS.show(transition: {"ease-in duration-75", "opacity-0", "opacity-100"}, time: 75)}
     >
       <div class="relative w-56 h-auto transition-all duration-700 delay-75 card__content ">
-        <div class="absolute top-0 bottom-0 left-0 right-0 cursor-pointer card__front">
-          <img
-            class="h-96"
-            src={"images/tarot/#{@card}.png"}
-            style={get_tarot_glow_color(@project.skills)}
-          />
+        <div
+          class="absolute top-0 bottom-0 left-0 right-0 h-full border cursor-pointer bg-slate-900 tarot-card card__front"
+          style={get_tarot_glow_color(@project.skills)}
+        >
+          <h2 class="text-2xl"><%= @card.name %></h2>
+          <div class="pixel-image p-1">
+            <img class="rounded" src={"images/tarot/#{@card.num}.webp"} />
+          </div>
         </div>
         <div
-          class="absolute top-0 bottom-0 left-0 right-0 w-56 text-white bg-black h-fit card__back "
+          class="absolute top-0 bottom-0 left-0 right-0 w-56 text-white bg-slate-900 h-fit card__back"
           style={get_tarot_glow_color(@project.skills)}
         >
           <div class="flex flex-col items-center w-56 h-80">
             <h1
-              class={"font-bold text-center mt-2 #{if String.length(@project.name) >= 15, do: "cursor-pointer"}"}
+              class={"font-bold text-2xl text-center mt-2 #{if String.length(@project.name) >= 15, do: "cursor-pointer"}"}
               phx-click="toggle_truncate"
               phx-target={@myself}
             >
@@ -38,14 +43,15 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
                 do: String.slice(@project.name, 0..15) <> "...",
                 else: @project.name %>
             </h1>
-            <div class="mx-4 overflow-auto">
-              <p><%= @project.description %></p>
+            <div class="mx-4 overflow-auto text-lg">
+              <p class="text-xl"><%= @project.description %></p>
+
             </div>
           </div>
           <div class="flex items-end justify-center h-10 gap-3">
             <%= for skill <- @project.skills do %>
               <span
-                class="px-2 pt-1 mb-1 text-sm rounded-full h-6l"
+                class="px-2 pt-1 mb-1 text-xl rounded-full "
                 style={get_skill_glow(skill.color)}
               >
                 <%= skill.name %>
@@ -75,29 +81,18 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
   defp get_tarot_glow_color(skills) do
     colors = skills |> Enum.map(fn %Skill{color: color} -> color end) |> get_four_colors()
 
-    "box-shadow:
-          0px -5px 31px 7px #{colors |> Enum.at(0)},
-          -5px 0px 31px 7px #{colors |> Enum.at(1)},
-          5px 0px 31px 7px #{colors |> Enum.at(2)},
-          0px 5px 31px 7px #{colors |> Enum.at(3)};
-         "
+    "box-shadow: 0 0 5px #{colors |> Enum.at(0)}, 0 0 10px  #{colors |> Enum.at(1)}, 0 0 20px  #{colors |> Enum.at(2)}, 0 0 40px  #{colors |> Enum.at(3)};"
   end
 
   defp get_skill_glow(color) do
-    "background-color: #{color};
-      box-shadow: 0px 0px 41px 17px #{color};
-      "
+    "color: #{color};
+    text-shadow: 0 0 5px #{color}, 0 0 10px #{color}, 0 0 20px #{color}, 0 0 40px #{color};"
   end
 
-  defp get_four_colors(colors) do
-    colors
-    |> Enum.take(4)
-    |> fill_to_four()
-  end
+  defp get_four_colors(colors), do: colors |> Enum.take(4) |> fill_to_four()
 
-  defp fill_to_four(colors) when length(colors) < 4 do
-    colors ++ (Stream.cycle(colors) |> Enum.take(4 - length(colors)))
-  end
+  defp fill_to_four(colors) when length(colors) < 4,
+    do: colors ++ (Stream.cycle(colors) |> Enum.take(4 - length(colors)))
 
   defp fill_to_four(colors), do: colors
 end

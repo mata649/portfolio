@@ -16,11 +16,10 @@ defmodule PortfolioWeb.DefaultLive.Paginator do
         <% end %>
         <%= for i <- Enum.to_list(1..@meta.total_pages) do %>
           <span
-            class="transition ease-out delay-75 cursor-pointer hover:scale-110"
+            class="transition ease-out delay-75 text-2xl cursor-pointer hover:scale-110"
             style={
               if i == @meta.current_page,
-                do:
-                  "background-color: rgba(186, 192, 6, 0.53); box-shadow: 0px 0px 21px 5px rgba(186, 192, 6, 1);"
+                do: "color: #ffff08; text-shadow: 0 0 5px #ffff08, 0 0 10px #ffff08, 0 0 20px #ffff08, 0 0 40px #ffff08;"
             }
             phx-click="change_page"
             phx-value-page={i}
