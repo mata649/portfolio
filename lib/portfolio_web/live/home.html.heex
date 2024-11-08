@@ -19,16 +19,16 @@
 </section>
 <section class="mt-10">
   <h1 class="text-6xl text-center">Spells</h1>
-  <div class="grid grid-cols-3 mt-8">
-    <div class="flex flex-col items-end justify-around">
+  <div class="grid grid-cols-2 sm:grid-cols-3 mt-8">
+    <div class="flex flex-col items-center sm:items-end justify-center sm:justify-around order-2 sm:order-1">
       <%= for {skill, index} <- @skills_first_half do %>
         <.live_component module={PortfolioWeb.DefaultLive.SkillItem} id={"skill-#{skill.id}"} skill={skill}
           index={index} half_length={length(@skills_first_half)} margin="right" selected={ Enum.member?( @skills_filter,
           Integer.to_string(skill.id) ) } />
         <% end %>
     </div>
-    <img class="h-auto" src="images/spells-section.webp" />
-    <div class="flex flex-col items-start justify-around">
+    <img class="h-auto order-1 col-span-2 sm:col-span-1" src="images/spells-section.webp" />
+    <div class="flex flex-col items-center sm:items-start justify-center sm:justify-around order-3">
       <%= for {skill, index} <- @skills_second_half do %>
         <.live_component module={PortfolioWeb.DefaultLive.SkillItem} id={"skill-#{skill.id}"} skill={skill}
           index={index} half_length={length(@skills_first_half)} margin="left" selected={ Enum.member?( @skills_filter,

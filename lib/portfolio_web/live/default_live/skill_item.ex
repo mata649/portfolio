@@ -15,6 +15,7 @@ defmodule PortfolioWeb.DefaultLive.SkillItem do
         )
       }
       phx-value-id={@skill.id}
+      phx-hook="SkillItem"
     >
       <%= @skill.name %>
     </span>

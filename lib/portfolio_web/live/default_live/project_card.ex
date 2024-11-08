@@ -15,9 +15,6 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
     ~H"""
     <div
       class="flex justify-center my-6 card h-96"
-      phx-remove={JS.hide(transition: {"ease-out duration-75", "opacity-100", "opacity-0"}, time: 75)}
-      style="display: none"
-      phx-mounted={JS.show(transition: {"ease-in duration-75", "opacity-0", "opacity-100"}, time: 75)}
     >
       <div class="relative w-56 h-auto transition-all duration-700 delay-75 card__content ">
         <div
