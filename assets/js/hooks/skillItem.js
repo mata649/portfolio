@@ -2,10 +2,13 @@ const SkillItem = {
 
     mounted() {
         if (innerWidth <= 639) {
-
             this.el.style.marginLeft = "0px";
             this.el.style.marginRight = "0px";
         }
+    },
+    updated() {
+        this.el.style.marginLeft = "0px";
+        this.el.style.marginRight = "0px";
     }
 
 }
