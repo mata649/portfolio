@@ -7,8 +7,11 @@ const SkillItem = {
         }
     },
     updated() {
-        this.el.style.marginLeft = "0px";
-        this.el.style.marginRight = "0px";
+        if (innerWidth <= 639) {
+            this.el.style.marginLeft = "0px";
+            this.el.style.marginRight = "0px";
+        }
+
     }
 
 }
