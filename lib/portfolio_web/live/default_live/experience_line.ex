@@ -4,21 +4,22 @@ defmodule PortfolioWeb.DefaultLive.ExperienceLine do
   def render(assigns) do
     ~H"""
     <li class="mb-10 ms-4">
-      <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
+      <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white">
       </div>
       <time class="mb-1 text-2xl font-normal leading-none text-white dark:text-gray-500">
         <%= Calendar.strftime(@experience.from, "%B %Y") %>
       </time>
       -
-      <time class="mb-1 text-2xl font-normal leading-none dark:text-gray-500">
+      <time class="mb-1 text-2xl font-normal leading-none">
         <%= if @experience.current_job,
           do: "Current",
           else: Calendar.strftime(@experience.to, "%B %Y") %>
       </time>
-      <h3 class="text-4xl font-semibold dark:text-white">
+      <h3 class="text-4xl font-semibold">
         <%= @experience.position %>
       </h3>
-      <p class="mb-4 text-2xl font-normal dark:text-gray-400">
+      <h4 class="text-3xl"><%= @experience.location %></h4>
+      <p class="mb-4 text-2xl font-normal">
         <%= @experience.description %>
       </p>
       <div class="flex gap-3">
