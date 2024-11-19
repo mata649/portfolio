@@ -1,5 +1,4 @@
 defmodule PortfolioWeb.DefaultLive.ProjectCard do
-  alias Phoenix.LiveView.JS
   alias Portfolio.Skills.Skill
   use Phoenix.LiveComponent
 
@@ -13,21 +12,19 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
 
   def render(assigns) do
     ~H"""
-    <div
-      class="flex justify-center my-6 card h-96"
-    >
+    <div class="flex justify-center my-6 card h-96">
       <div class="relative w-56 h-auto transition-all duration-700 delay-75 card__content ">
         <div
-          class="absolute top-0 bottom-0 left-0 right-0 h-full border cursor-pointer bg-slate-900 tarot-card card__front"
+          class="absolute top-0 bottom-0 left-0 right-0 h-full border-8 cursor-pointer bg-yellow-50 tarot-card card__front"
           style={get_tarot_glow_color(@project.skills)}
         >
-          <h2 class="text-2xl"><%= @card.name %></h2>
-          <div class="pixel-image p-1">
+          <h2 class="text-2xl text-black"><%= @card.name %></h2>
+          <div class="p-1 pixel-image">
             <img class="rounded" src={"images/tarot/#{@card.num}.webp"} />
           </div>
         </div>
         <div
-          class="absolute top-0 bottom-0 left-0 right-0 w-56 text-white bg-slate-900 h-fit card__back"
+          class="absolute top-0 bottom-0 left-0 right-0 w-56 bg-yellow-50 h-fit card__back"
           style={get_tarot_glow_color(@project.skills)}
         >
           <div class="flex flex-col items-center w-56 h-80">
@@ -42,15 +39,11 @@ defmodule PortfolioWeb.DefaultLive.ProjectCard do
             </h1>
             <div class="mx-4 overflow-auto text-lg">
               <p class="text-xl"><%= @project.description %></p>
-
             </div>
           </div>
           <div class="flex items-end justify-center h-10 gap-3">
             <%= for skill <- @project.skills do %>
-              <span
-                class="px-2 pt-1 mb-1 text-xl rounded-full "
-                style={get_skill_glow(skill.color)}
-              >
+              <span class="px-2 pt-1 mb-1 text-xl rounded-full " style={get_skill_glow(skill.color)}>
                 <%= skill.name %>
               </span>
             <% end %>

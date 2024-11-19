@@ -6,7 +6,7 @@ defmodule PortfolioWeb.DefaultLive.ExperienceLine do
     <li class="mb-10 ms-4">
       <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white">
       </div>
-      <time class="mb-1 text-2xl font-normal leading-none text-white dark:text-gray-500">
+      <time class="mb-1 text-2xl font-normal leading-none dark:text-gray-500">
         <%= Calendar.strftime(@experience.from, "%B %Y") %>
       </time>
       -

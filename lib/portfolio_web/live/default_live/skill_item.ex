@@ -10,9 +10,7 @@ defmodule PortfolioWeb.DefaultLive.SkillItem do
       style={"margin-#{@margin}: #{get_get_margin_percentage(@index, @half_length)}%; #{get_skill_glow(@selected, @skill.color)}"}
       phx-click={
         JS.push("add_skill_filter")
-        |> JS.toggle_class(
-          " shadow-2xl text-white  #{if @skill.name == "Elixir", do: "animate-pulse"}"
-        )
+        |> JS.toggle_class(" shadow-2xl   #{if @skill.name == "Elixir", do: "animate-pulse"}")
       }
       phx-value-id={@skill.id}
       phx-hook="SkillItem"
@@ -26,7 +24,7 @@ defmodule PortfolioWeb.DefaultLive.SkillItem do
 
   defp get_skill_glow(selected, color) do
     if selected do
-    "color: #{color};
+      "color: #{color};
     text-shadow: 0 0 5px #{color}, 0 0 10px #{color}, 0 0 20px #{color}, 0 0 40px #{color};"
     end
   end

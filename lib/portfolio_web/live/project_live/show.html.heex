@@ -16,7 +16,7 @@
       <%= for skill <- @project.skills do %>
         <span
           id={"skill-#{skill.id}"}
-          class="p-1 text-white transition ease-in-out border-2 rounded-full cursor-pointer hover:scale-110"
+          class="p-1 transition ease-in-out border-2 rounded-full cursor-pointer hover:scale-110"
           style={"background-color: #{skill.color}"}
         >
           <%= skill.name %>
