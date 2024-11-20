@@ -100,8 +100,6 @@ defmodule PortfolioWeb.Home do
     ]
 
     cards
-    |> Enum.with_index()
-    |> Enum.map(fn {name, index} -> %{name: name, num: index} end)
     |> Enum.shuffle()
     |> Enum.take(hand_size)
   end

@@ -4,7 +4,7 @@
 
 
 html {
-    font-family: "VT323", monospace;
+    font-family: "Roboto", monospace;
     color: rgb(29, 20, 0);
 }
 
@@ -56,7 +56,6 @@ html {
     /* Neon border */
     border-radius: 10px;
     position: relative;
-    box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -68,20 +67,6 @@ html {
 }
 
 
-/* Pixel art image placeholder */
-.pixel-image {
-    width: 100px;
-    height: 100px;
-    background: repeating-linear-gradient(45deg,
-            #ff00ff 0,
-            #ff00ff 1px,
-            #222 1px,
-            #222 3px);
-    /* Simulated pixel art pattern */
-    /* Neon cyan glow */
-    margin: 10px 0;
-    border-radius: 5px;
-}
 
 /* Card border effects */
 .tarot-card::before,
@@ -98,16 +83,5 @@ html {
     animation: neon-border 2s infinite alternate;
 }
 
-/* Neon border animation */
-@keyframes neon-border {
-    from {
-        border-color: #ff00ff;
-        box-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 30px #ff00ff;
-    }
 
-    to {
-        border-color: #00ffff;
-        box-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 30px #00ffff;
-    }
-}
 

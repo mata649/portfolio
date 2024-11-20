@@ -6,12 +6,9 @@ defmodule PortfolioWeb.DefaultLive.SkillItem do
     ~H"""
     <span
       id={"skill-#{@skill.id}"}
-      class={"p-1 transition ease-out rounded-full text-3xl cursor-pointer hover:scale-110 #{if @skill.name == "Elixir", do: "animate-pulse font-bold"}"}
-      style={"margin-#{@margin}: #{get_get_margin_percentage(@index, @half_length)}%; #{get_skill_glow(@selected, @skill.color)}"}
-      phx-click={
-        JS.push("add_skill_filter")
-        |> JS.toggle_class(" shadow-2xl   #{if @skill.name == "Elixir", do: "animate-pulse"}")
-      }
+      class={"p-1 transition ease-out rounded-full cursor-pointer hover:scale-110 #{elixir?(@skill.name)} #{selected?(@selected)}"}
+      style={"margin-#{@margin}: #{get_get_margin_percentage(@index, @half_length)}%;"}
+      phx-click="add_skill_filter"
       phx-value-id={@skill.id}
       phx-hook="SkillItem"
     >
@@ -22,10 +19,11 @@ defmodule PortfolioWeb.DefaultLive.SkillItem do
 
   defp get_get_margin_percentage(index, half_length), do: (10 - abs(index - half_length / 2)) * 5
 
-  defp get_skill_glow(selected, color) do
-    if selected do
-      "color: #{color};
-    text-shadow: 0 0 5px #{color}, 0 0 10px #{color}, 0 0 20px #{color}, 0 0 40px #{color};"
-    end
+  defp selected?(selected) do
+    if selected, do: "font-bold text-2xl", else: "text-xl"
+  end
+
+  defp elixir?(skill) do
+    if String.downcase(skill) == "elixir", do: "animate-pulse font-bold", else: ""
   end
 end
