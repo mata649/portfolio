@@ -1,55 +1,20 @@
-<section class="grid grid-cols-6">
+<section class="grid grid-cols-6 mt-10">
   <div class="col-span-6">
-    <h1 class="text-4xl text-center">
-      Alchemist of Applications
-    </h1>
-    <h1 class="text-2xl text-center">Keeper of the Digital Arcane</h1>
+    <h1 class="font-bold text-center text-7xl">Jose Alberto Mata Mena</h1>
+    <p class="col-span-6 py-4 mx-10 my-16 text-2xl text-justify">
+      I’m a passionate software developer with a strong interest in software architecture and a dedication to continuous
+      learning. I’ve had the opportunity to work with various programming languages, including C#, Java, Python, and Go.
+    </p>
   </div>
-  <div class="flex flex-col items-center col-span-4 col-start-2 gap-2">
-    <img class="h-auto" src="images/hero-section.webp" />
-    <h1 class="text-4xl">Jose Alberto Mata Mena</h1>
-  </div>
-  <p class="col-span-6 py-4 mb-8 text-xl text-justify">
-    I’m a passionate software developer with a strong interest in software architecture and a dedication to continuous
-    learning. I’ve had the opportunity to work with various programming languages, including C#, Java, Python, and Go.
-    Currently, I’m focusing on Elixir as I expand my skills and explore new approaches to building scalable and
-    maintainable applications. I’m always looking for new challenges to deepen my expertise and deliver robust,
-    high-quality solutions.
-  </p>
 </section>
-<section class="mt-10">
-  <h1 class="text-4xl text-center">Spells</h1>
-  <div class="grid grid-cols-2 mt-8 sm:grid-cols-3">
-    <div class="flex flex-col items-center justify-center order-2 sm:items-end sm:justify-around sm:order-1">
-      <%= for {skill, index} <- @skills_first_half do %>
-        <.live_component
-          module={PortfolioWeb.DefaultLive.SkillItem}
+<section>
+  <h1 class="text-6xl font-bold text-center">Skills</h1>
+  <div class="flex justify-center">
+    <div class="grid w-5/6 gap-3 mt-5 text-center lg:grid-flow-col lg:grid-rows-3">
+      <%= for skill <- @skills do %>
+        <.skill_item
           id={"skill-#{skill.id}"}
           skill={skill}
-          index={index}
-          half_length={length(@skills_first_half)}
-          margin="right"
-          selected={
-            Enum.member?(
-              @skills_filter,
-              Integer.to_string(skill.id)
-            )
-          }
-        />
-      <% end %>
-    </div>
-    <div class="flex justify-center order-1 h-auto col-span-2 sm:col-span-1">
-      <img class="" src="images/spells-section.webp" />
-    </div>
-    <div class="flex flex-col items-center justify-center order-3 sm:items-start sm:justify-around">
-      <%= for {skill, index} <- @skills_second_half do %>
-        <.live_component
-          module={PortfolioWeb.DefaultLive.SkillItem}
-          id={"skill-#{skill.id}"}
-          skill={skill}
-          index={index}
-          half_length={length(@skills_first_half)}
-          margin="left"
           selected={
             Enum.member?(
               @skills_filter,
@@ -61,14 +26,13 @@
     </div>
   </div>
 </section>
-<section class="mt-10">
-  <h1 class="text-4xl text-center">The Deck of Creations</h1>
-  <div class="grid w-full h-full grid-cols-1 gap-6 mt-10 xl:grid-cols-3 sm:grid-cols-2">
-    <%= for {project, card} <- Enum.zip(@projects, get_random_cards(length(@projects))) do %>
+<section>
+  <h1 class="text-6xl font-bold text-center">Projects</h1>
+  <div class="grid lg:grid-cols-2">
+    <%= for project <- @projects do %>
       <.live_component
         module={PortfolioWeb.DefaultLive.ProjectCard}
         id={"project-card-#{project.id}"}
-        card={card}
         project={project}
       />
     <% end %>
@@ -82,7 +46,7 @@
   </div>
 </section>
 <section class="mt-10">
-  <h1 class="text-4xl text-center">Path of the Arcane</h1>
+  <h1 class="text-4xl text-center">Experience</h1>
 
   <ol class="relative mt-10 border-gray-200 border-s dark:border-gray-700">
     <%= for experience <- @experiences do %>

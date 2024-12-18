@@ -6,18 +6,12 @@ defmodule PortfolioWeb.Home do
 
   def mount(_params, _session, socket) do
     skills = Skills.list_skills()
-    middle_index = ceil(length(skills) / 2)
-    skills_first_half = skills |> Enum.slice(0..(middle_index - 1)) |> Enum.with_index()
-    skills_second_half = skills |> Enum.slice(middle_index..length(skills)) |> Enum.with_index()
-
     {projects, projects_meta} = get_projects()
     experiences = Experiences.get_experiences_by_skills()
 
     socket =
       socket
       |> assign(:skills, skills)
-      |> assign(:skills_first_half, skills_first_half)
-      |> assign(:skills_second_half, skills_second_half)
       |> assign(:skills_filter, [])
       |> assign(:projects, projects)
       |> assign(:projects_meta, projects_meta)
@@ -45,7 +39,7 @@ defmodule PortfolioWeb.Home do
   def handle_event("change_page", %{"page" => page}, socket) do
     skills_filter = socket.assigns.skills_filter
 
-    {projects, projects_meta} = get_projects(skills_filter, %Flop{page_size: 3, page: page})
+    {projects, projects_meta} = get_projects(skills_filter, %Flop{page_size: 2, page: page})
 
     socket =
       socket
@@ -55,7 +49,7 @@ defmodule PortfolioWeb.Home do
     {:noreply, socket}
   end
 
-  defp get_projects(skills_filter \\ [], flop_params \\ %Flop{page_size: 3}) do
+  defp get_projects(skills_filter \\ [], flop_params \\ %Flop{page_size: 2}) do
     case Projects.get_projects_by_skills(skills_filter, flop_params) do
       {:ok, res} ->
         res
@@ -73,34 +67,22 @@ defmodule PortfolioWeb.Home do
     end
   end
 
-  def get_random_cards(hand_size) do
-    cards = [
-      "The Fool",
-      "The Magician",
-      "The High Priestess",
-      "The Empress",
-      "The Emperor",
-      "The Hierophant",
-      "The Lovers",
-      "The Chariot",
-      "Strength",
-      "The Hermit",
-      "Wheel of Fortune",
-      "Justice",
-      "The Hanged Man",
-      "Death",
-      "Temperance",
-      "The Devil",
-      "The Tower",
-      "The Star",
-      "The Moon",
-      "The Sun",
-      "Judgement",
-      "The World"
-    ]
+  def skill_item(assigns) do
+    ~H"""
+    <div class="p-1">
+      <div
+        id={"skill-#{@skill.id}"}
+        class={"transition ease-out rounded-full cursor-pointer hover:scale-110  #{selected?(@selected)}"}
+        phx-click="add_skill_filter"
+        phx-value-id={@skill.id}
+      >
+        <%= @skill.name %>
+      </div>
+    </div>
+    """
+  end
 
-    cards
-    |> Enum.shuffle()
-    |> Enum.take(hand_size)
+  defp selected?(selected) do
+    if selected, do: "font-bold text-4xl", else: "text-4xl"
   end
 end
