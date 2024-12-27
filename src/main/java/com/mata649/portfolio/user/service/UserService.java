@@ -10,6 +10,7 @@ import jakarta.validation.Validator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,9 +26,12 @@ public class UserService {
 
     public UserResponse create(CreateUserRequest request) {
 
-        userRepository
-                .findByEmail(request.email())
-                .orElseThrow(() -> new EmailAlreadyTakenException(request.email()));
+        Optional<User> optionalUser = userRepository
+                .findByEmail(request.email());
+
+        if (optionalUser.isPresent()) {
+            throw new EmailAlreadyTakenException(request.email());
+        }
 
         User user = new User();
         user.setId(UUID.randomUUID());
