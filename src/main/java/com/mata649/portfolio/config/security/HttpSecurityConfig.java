@@ -37,6 +37,10 @@ public class HttpSecurityConfig {
 
 
                     httpRequest.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+                    // Skills
+                    httpRequest.requestMatchers(HttpMethod.GET, "/skills").permitAll();
+                    httpRequest.requestMatchers(HttpMethod.GET, "/skills/*").permitAll();
+
                     for (String profile : environment.getActiveProfiles()) {
                         if (profile.equals("dev")) {
                             httpRequest.requestMatchers(HttpMethod.GET, SWAGGER_WHITELIST).permitAll();
