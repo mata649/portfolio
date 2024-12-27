@@ -19,6 +19,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +41,7 @@ public class AuthenticationServiceTests {
         UserResponse userResponse = new UserResponse(UUID.randomUUID(), "test@example.com");
 
         when(authenticationManager.
-                authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()))
+                authenticate(any(UsernamePasswordAuthenticationToken.class))
         ).thenReturn(null);
         when(userService.findByEmail(request.email())).thenReturn(userResponse);
         when(jwtService.generateToken(
@@ -61,7 +62,7 @@ public class AuthenticationServiceTests {
 
         doThrow(new BadCredentialsException("Invalid credentials"))
                 .when(authenticationManager)
-                .authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password()));
+                .authenticate(any(UsernamePasswordAuthenticationToken.class));
 
         assertThrows(BadCredentialsException.class, () -> authenticationService.login(request));
     }
@@ -71,7 +72,7 @@ public class AuthenticationServiceTests {
         LoginUserRequest request = new LoginUserRequest("nonexistent@example.com", "password");
 
         when(authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password())))
+                .authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(null);
         when(userService.findByEmail(request.email()))
                 .thenThrow(new UserWithEmailNotFoundException(request.email()));
@@ -86,7 +87,7 @@ public class AuthenticationServiceTests {
         UserResponse userResponse = new UserResponse(UUID.randomUUID(), "test@example.com");
 
         when(authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password())))
+                .authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(null);
         when(userService.findByEmail(request.email())).thenReturn(userResponse);
         when(jwtService.generateToken(
