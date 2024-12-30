@@ -37,9 +37,14 @@ public class HttpSecurityConfig {
 
 
                     httpRequest.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+
                     // Skills
                     httpRequest.requestMatchers(HttpMethod.GET, "/skills").permitAll();
                     httpRequest.requestMatchers(HttpMethod.GET, "/skills/*").permitAll();
+
+                    // Projects
+                    httpRequest.requestMatchers(HttpMethod.GET, "/projects").permitAll();
+                    httpRequest.requestMatchers(HttpMethod.GET, "/projects/*").permitAll();
 
                     for (String profile : environment.getActiveProfiles()) {
                         if (profile.equals("dev")) {
