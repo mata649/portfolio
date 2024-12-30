@@ -1,19 +1,20 @@
 package com.mata649.portfolio.skill.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.mata649.portfolio.project.model.Project;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "skills")
 public class Skill {
     @Id
@@ -21,4 +22,8 @@ public class Skill {
 
     @Column(name = "name", length = 30, nullable = false)
     private String name;
+
+    @ManyToMany(mappedBy = "skills")
+    private List<Project> projects;
+
 }
