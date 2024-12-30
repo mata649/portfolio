@@ -75,8 +75,8 @@ public class SkillServiceTests {
     public void findAll_shouldReturnListOfSkillResponses_whenSkillsExist() {
 
         List<Skill> skills = List.of(
-                new Skill(UUID.randomUUID(), "Java"),
-                new Skill(UUID.randomUUID(), "Python")
+                Skill.builder().id(UUID.randomUUID()).name("Java").build(),
+                Skill.builder().id(UUID.randomUUID()).name("Python").build()
         );
 
         when(skillRepository.findAll()).thenReturn(skills);
