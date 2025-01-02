@@ -47,7 +47,7 @@ public class ProjectServiceTests {
                 List.of(UUID.randomUUID())
         );
 
-        List<Skill> skills = List.of(new Skill(UUID.randomUUID(), "Java", List.of()));
+        List<Skill> skills = List.of(Skill.builder().id(UUID.randomUUID()).name("Java").build());
         Project project = Project.builder()
                 .id(UUID.randomUUID())
                 .name(request.name())
@@ -168,7 +168,7 @@ public class ProjectServiceTests {
                 .skills(List.of())
                 .build();
 
-        List<Skill> skills = List.of(new Skill(UUID.randomUUID(), "Python", List.of()));
+        List<Skill> skills = List.of(Skill.builder().id(UUID.randomUUID()).name("Python").build());
 
         when(projectRepository.findById(id)).thenReturn(Optional.of(project));
         when(skillRepository.findAllById(request.skills())).thenReturn(skills);
