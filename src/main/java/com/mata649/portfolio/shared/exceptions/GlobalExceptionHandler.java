@@ -98,6 +98,17 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiError> badRequestExceptionHandler(BadRequestException exc, ServletWebRequest request) {
+        return new ResponseEntity<>(
+                ApiError.builder().message(exc.getFieldErrors())
+                        .statusCode(HttpStatus.BAD_REQUEST.value())
+                        .path(request.getRequest().getRequestURL().toString())
+                        .method(request.getRequest().getMethod())
+                        .build(),
+                HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApiError> runtimeExceptionHandler(RuntimeException ex, ServletWebRequest request) {
         return new ResponseEntity<>(
