@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,10 +34,10 @@ public class Experience {
     private String description;
 
     @Column(name = "start_time", nullable = false)
-    private Date startTime;
+    private LocalDate startTime;
 
     @Column(name = "end_time", nullable = false)
-    private Date endTime;
+    private LocalDate endTime;
 
     @Column(name = "current_job", nullable = false)
     private Boolean currentJob;

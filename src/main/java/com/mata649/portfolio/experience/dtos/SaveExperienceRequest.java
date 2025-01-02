@@ -1,9 +1,8 @@
 package com.mata649.portfolio.experience.dtos;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,9 +21,9 @@ public record SaveExperienceRequest(
         String description,
         @NotNull
         @PastOrPresent
-        Date startTime,
+        LocalDate startTime,
         @PastOrPresent
-        Date endTime,
+        LocalDate endTime,
         @NotNull
         Boolean currentJob,
         @NotEmpty

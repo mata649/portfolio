@@ -2,9 +2,8 @@ package com.mata649.portfolio.experience.dtos;
 
 import com.mata649.portfolio.experience.model.Experience;
 import com.mata649.portfolio.skill.dtos.SkillReponse;
-import com.mata649.portfolio.skill.model.Skill;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,8 +13,8 @@ public record ExperienceResponse(
         String company,
         String location,
         String description,
-        Date startTime,
-        Date endTime,
+        LocalDate startTime,
+        LocalDate endTime,
         Boolean currentJob,
         List<SkillReponse> skills
 ) {
