@@ -46,6 +46,10 @@ public class HttpSecurityConfig {
                     httpRequest.requestMatchers(HttpMethod.GET, "/projects").permitAll();
                     httpRequest.requestMatchers(HttpMethod.GET, "/projects/*").permitAll();
 
+                    // Experiences
+                    httpRequest.requestMatchers(HttpMethod.GET, "/experiences").permitAll();
+                    httpRequest.requestMatchers(HttpMethod.GET, "/experiences/*").permitAll();
+
                     for (String profile : environment.getActiveProfiles()) {
                         if (profile.equals("dev")) {
                             httpRequest.requestMatchers(HttpMethod.GET, SWAGGER_WHITELIST).permitAll();
