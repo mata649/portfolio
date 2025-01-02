@@ -1,5 +1,6 @@
 package com.mata649.portfolio.skill.model;
 
+import com.mata649.portfolio.experience.model.Experience;
 import com.mata649.portfolio.project.model.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,8 @@ public class Skill {
 
     @ManyToMany(mappedBy = "skills")
     private List<Project> projects;
+
+    @ManyToMany(mappedBy = "skills")
+    private List<Experience> experiences;
 
 }
