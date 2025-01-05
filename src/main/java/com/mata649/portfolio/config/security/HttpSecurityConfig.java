@@ -1,5 +1,6 @@
 package com.mata649.portfolio.config.security;
 
+import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -10,12 +11,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.Arrays;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class HttpSecurityConfig {
+public class HttpSecurityConfig extends VaadinWebSecurity {
     private final Environment environment;
     private static final String[] SWAGGER_WHITELIST = {
             "/swagger-ui/**",
@@ -29,33 +29,42 @@ public class HttpSecurityConfig {
         this.environment = environment;
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(httpRequest -> {
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+//        return http.csrf(AbstractHttpConfigurer::disable)
+//                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(httpRequest -> {
+//
+//
+//                    httpRequest.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+//
+//                    // Skills
+//                    httpRequest.requestMatchers(HttpMethod.GET, "/skills").permitAll();
+//                    httpRequest.requestMatchers(HttpMethod.GET, "/skills/*").permitAll();
+//
+//                    // Projects
+//                    httpRequest.requestMatchers(HttpMethod.GET, "/projects").permitAll();
+//                    httpRequest.requestMatchers(HttpMethod.GET, "/projects/*").permitAll();
+//
+//                    // Experiences
+//                    httpRequest.requestMatchers(HttpMethod.GET, "/experiences").permitAll();
+//                    httpRequest.requestMatchers(HttpMethod.GET, "/experiences/*").permitAll();
+//
+//                    for (String profile : environment.getActiveProfiles()) {
+//                        if (profile.equals("dev")) {
+//                            httpRequest.requestMatchers(HttpMethod.GET, SWAGGER_WHITELIST).permitAll();
+//                        }
+//                    }
+//                    httpRequest.anyRequest().authenticated();
+//                }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
+//    }
 
 
-                    httpRequest.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
-
-                    // Skills
-                    httpRequest.requestMatchers(HttpMethod.GET, "/skills").permitAll();
-                    httpRequest.requestMatchers(HttpMethod.GET, "/skills/*").permitAll();
-
-                    // Projects
-                    httpRequest.requestMatchers(HttpMethod.GET, "/projects").permitAll();
-                    httpRequest.requestMatchers(HttpMethod.GET, "/projects/*").permitAll();
-
-                    // Experiences
-                    httpRequest.requestMatchers(HttpMethod.GET, "/experiences").permitAll();
-                    httpRequest.requestMatchers(HttpMethod.GET, "/experiences/*").permitAll();
-
-                    for (String profile : environment.getActiveProfiles()) {
-                        if (profile.equals("dev")) {
-                            httpRequest.requestMatchers(HttpMethod.GET, SWAGGER_WHITELIST).permitAll();
-                        }
-                    }
-                    httpRequest.anyRequest().authenticated();
-                }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
-    }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeHttpRequests(auth -> {
+//            auth.requestMatchers(new AntPathRequestMatcher("/")).permitAll();
+//        });
+//        super.configure(http);
+//    }
 }
