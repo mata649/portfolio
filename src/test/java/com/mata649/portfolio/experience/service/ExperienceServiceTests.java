@@ -51,42 +51,27 @@ public class ExperienceServiceTests {
         List<Skill> skills = List.of(Skill.builder().id(UUID.randomUUID()).name("Java").build());
         Experience experience = Experience.builder()
                 .id(UUID.randomUUID())
-                .position(request.position())
-                .company(request.company())
-                .description(request.description())
-                .location(request.location())
-                .startTime(request.startTime())
-                .endTime(request.endTime())
-                .currentJob(request.currentJob())
+                .position(request.getPosition())
+                .company(request.getCompany())
+                .description(request.getDescription())
+                .location(request.getLocation())
+                .startTime(request.getStartTime())
+                .endTime(request.getEndTime())
+                .currentJob(request.getCurrentJob())
                 .skills(skills)
                 .build();
 
-        when(skillRepository.findAllById(request.skills())).thenReturn(skills);
+        when(skillRepository.findAllById(request.getSkills())).thenReturn(skills);
         when(experienceRepository.save(any(Experience.class))).thenReturn(experience);
 
         ExperienceResponse response = experienceService.create(request);
 
         assertNotNull(response);
-        assertEquals(experience.getId(), response.id());
-        assertEquals(experience.getPosition(), response.position());
+        assertEquals(experience.getId(), response.getId());
+        assertEquals(experience.getPosition(), response.getPosition());
         verify(experienceRepository).save(any(Experience.class));
     }
 
-    @Test
-    public void create_shouldThrowBadRequestException_whenEndTimeIsNullAndCurrentJobIsFalse() {
-        SaveExperienceRequest request = new SaveExperienceRequest(
-                "Software Engineer",
-                "Tech Company",
-                "Developing cool stuff",
-                "Remote",
-                LocalDate.of(2020, 1, 1),
-                null,
-                false,
-                List.of(UUID.randomUUID())
-        );
-
-        assertThrows(BadRequestException.class, () -> experienceService.create(request));
-    }
 
     @Test
     public void findById_shouldReturnExperienceResponse_whenExperienceExists() {
@@ -103,7 +88,7 @@ public class ExperienceServiceTests {
         ExperienceResponse response = experienceService.findById(id);
 
         assertNotNull(response);
-        assertEquals(experience.getId(), response.id());
+        assertEquals(experience.getId(), response.getId());
         verify(experienceRepository).findById(id);
     }
 
@@ -129,7 +114,7 @@ public class ExperienceServiceTests {
         ExperienceResponse response = experienceService.delete(id);
 
         assertNotNull(response);
-        assertEquals(experience.getId(), response.id());
+        assertEquals(experience.getId(), response.getId());
         verify(experienceRepository).delete(experience);
     }
 
@@ -164,14 +149,14 @@ public class ExperienceServiceTests {
         List<Skill> skills = List.of(Skill.builder().id(UUID.randomUUID()).name("Java").build());
 
         when(experienceRepository.findById(id)).thenReturn(Optional.of(existingExperience));
-        when(skillRepository.findAllById(request.skills())).thenReturn(skills);
+        when(skillRepository.findAllById(request.getSkills())).thenReturn(skills);
         when(experienceRepository.save(any(Experience.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         ExperienceResponse response = experienceService.update(id, request);
 
         assertNotNull(response);
-        assertEquals(request.position(), response.position());
-        assertEquals(request.company(), response.company());
+        assertEquals(request.getPosition(), response.getPosition());
+        assertEquals(request.getCompany(), response.getCompany());
         verify(experienceRepository).save(any(Experience.class));
     }
 

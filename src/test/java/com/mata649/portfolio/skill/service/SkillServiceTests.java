@@ -36,14 +36,14 @@ public class SkillServiceTests {
         SaveSkillRequest request = new SaveSkillRequest("Java");
         Skill skill = new Skill();
         skill.setId(UUID.randomUUID());
-        skill.setName(request.name());
+        skill.setName(request.getName());
 
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
 
         SkillResponse response = skillService.create(request);
 
-        assertEquals(skill.getId(), response.id());
-        assertEquals(skill.getName(), response.name());
+        assertEquals(skill.getId(), response.getId());
+        assertEquals(skill.getName(), response.getName());
     }
 
     @Test
@@ -58,8 +58,8 @@ public class SkillServiceTests {
 
         SkillResponse response = skillService.findById(id);
 
-        assertEquals(skill.getId(), response.id());
-        assertEquals(skill.getName(), response.name());
+        assertEquals(skill.getId(), response.getId());
+        assertEquals(skill.getName(), response.getName());
     }
 
     @Test
@@ -87,8 +87,8 @@ public class SkillServiceTests {
         // Assert
         assertEquals(skills.size(), responses.size());
         for (int i = 0; i < skills.size(); i++) {
-            assertEquals(skills.get(i).getId(), responses.get(i).id());
-            assertEquals(skills.get(i).getName(), responses.get(i).name());
+            assertEquals(skills.get(i).getId(), responses.get(i).getId());
+            assertEquals(skills.get(i).getName(), responses.get(i).getName());
         }
     }
 
@@ -107,8 +107,8 @@ public class SkillServiceTests {
 
         SkillResponse response = skillService.update(request, id);
 
-        assertEquals(skill.getId(), response.id());
-        assertEquals(request.name(), response.name());
+        assertEquals(skill.getId(), response.getId());
+        assertEquals(request.getName(), response.getName());
     }
 
     @Test
@@ -134,8 +134,8 @@ public class SkillServiceTests {
 
         SkillResponse response = skillService.delete(id);
 
-        assertEquals(skill.getId(), response.id());
-        assertEquals(skill.getName(), response.name());
+        assertEquals(skill.getId(), response.getId());
+        assertEquals(skill.getName(), response.getName());
         verify(skillRepository).delete(skill);
     }
 

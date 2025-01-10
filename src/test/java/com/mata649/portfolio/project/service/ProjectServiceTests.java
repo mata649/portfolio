@@ -50,21 +50,21 @@ public class ProjectServiceTests {
         List<Skill> skills = List.of(Skill.builder().id(UUID.randomUUID()).name("Java").build());
         Project project = Project.builder()
                 .id(UUID.randomUUID())
-                .name(request.name())
-                .description(request.description())
-                .githubLink(request.githubLink())
+                .name(request.getName())
+                .description(request.getDescription())
+                .githubLink(request.getGithubLink())
                 .skills(skills)
                 .build();
 
-        when(skillRepository.findAllById(request.skills())).thenReturn(skills);
+        when(skillRepository.findAllById(request.getSkills())).thenReturn(skills);
         when(projectRepository.save(any(Project.class))).thenReturn(project);
 
         ProjectResponse response = projectService.create(request);
 
-        assertEquals(project.getId(), response.id());
-        assertEquals(project.getName(), response.name());
-        assertEquals(project.getDescription(), response.description());
-        assertEquals(project.getGithubLink(), response.githubLink());
+        assertEquals(project.getId(), response.getId());
+        assertEquals(project.getName(), response.getName());
+        assertEquals(project.getDescription(), response.getDescription());
+        assertEquals(project.getGithubLink(), response.getGithubLink());
     }
 
     @Test
@@ -82,9 +82,9 @@ public class ProjectServiceTests {
 
         ProjectResponse response = projectService.findById(id);
 
-        assertEquals(project.getId(), response.id());
-        assertEquals(project.getName(), response.name());
-        assertEquals(project.getDescription(), response.description());
+        assertEquals(project.getId(), response.getId());
+        assertEquals(project.getName(), response.getName());
+        assertEquals(project.getDescription(), response.getDescription());
     }
 
     @Test
@@ -116,9 +116,9 @@ public class ProjectServiceTests {
         // Assert
         assertEquals(1, responses.getTotalElements());
         ProjectResponse response = responses.getContent().get(0);
-        assertEquals(project.getId(), response.id());
-        assertEquals(project.getName(), response.name());
-        assertEquals(project.getDescription(), response.description());
+        assertEquals(project.getId(), response.getId());
+        assertEquals(project.getName(), response.getName());
+        assertEquals(project.getDescription(), response.getDescription());
     }
 
     @Test
@@ -136,8 +136,8 @@ public class ProjectServiceTests {
 
         ProjectResponse response = projectService.delete(id);
 
-        assertEquals(project.getId(), response.id());
-        assertEquals(project.getName(), response.name());
+        assertEquals(project.getId(), response.getId());
+        assertEquals(project.getName(), response.getName());
         verify(projectRepository).delete(project);
     }
 
@@ -171,15 +171,15 @@ public class ProjectServiceTests {
         List<Skill> skills = List.of(Skill.builder().id(UUID.randomUUID()).name("Python").build());
 
         when(projectRepository.findById(id)).thenReturn(Optional.of(project));
-        when(skillRepository.findAllById(request.skills())).thenReturn(skills);
+        when(skillRepository.findAllById(request.getSkills())).thenReturn(skills);
         when(projectRepository.save(any(Project.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         ProjectResponse response = projectService.update(id, request);
 
-        assertEquals(project.getId(), response.id());
-        assertEquals(request.name(), response.name());
-        assertEquals(request.description(), response.description());
-        assertEquals(request.githubLink(), response.githubLink());
+        assertEquals(project.getId(), response.getId());
+        assertEquals(request.getName(), response.getName());
+        assertEquals(request.getDescription(), response.getDescription());
+        assertEquals(request.getGithubLink(), response.getGithubLink());
     }
 
     @Test

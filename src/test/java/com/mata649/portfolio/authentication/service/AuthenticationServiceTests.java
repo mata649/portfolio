@@ -43,17 +43,17 @@ public class AuthenticationServiceTests {
         when(authenticationManager.
                 authenticate(any(UsernamePasswordAuthenticationToken.class))
         ).thenReturn(null);
-        when(userService.findByEmail(request.email())).thenReturn(userResponse);
+        when(userService.findByEmail(request.getEmail())).thenReturn(userResponse);
         when(jwtService.generateToken(
-                Mockito.eq(userResponse.email()),
+                Mockito.eq(userResponse.getEmail()),
                 Mockito.anyMap()
         )).thenReturn("jwt-token");
 
         AuthenticatedUserResponse response = authenticationService.login(request);
 
-        assertEquals(userResponse.id(), response.id());
-        assertEquals(userResponse.email(), response.email());
-        assertEquals("jwt-token", response.jwt());
+        assertEquals(userResponse.getId(), response.getId());
+        assertEquals(userResponse.getEmail(), response.getEmail());
+        assertEquals("jwt-token", response.getJwt());
     }
 
     @Test
@@ -74,8 +74,8 @@ public class AuthenticationServiceTests {
         when(authenticationManager
                 .authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(null);
-        when(userService.findByEmail(request.email()))
-                .thenThrow(new UserWithEmailNotFoundException(request.email()));
+        when(userService.findByEmail(request.getEmail()))
+                .thenThrow(new UserWithEmailNotFoundException(request.getEmail()));
 
         assertThrows(UserWithEmailNotFoundException.class, () -> authenticationService.login(request));
     }
@@ -89,9 +89,9 @@ public class AuthenticationServiceTests {
         when(authenticationManager
                 .authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(null);
-        when(userService.findByEmail(request.email())).thenReturn(userResponse);
+        when(userService.findByEmail(request.getEmail())).thenReturn(userResponse);
         when(jwtService.generateToken(
-                Mockito.eq(userResponse.email()),
+                Mockito.eq(userResponse.getEmail()),
                 Mockito.anyMap()
         )).thenThrow(new RuntimeException("JWT generation failed"));
 

@@ -35,20 +35,20 @@ public class UserServiceTests {
     @Test
     public void create_shouldThrowEmailAlreadyTakenException_whenEmailIsAlreadyTaken() {
         CreateUserRequest request = new CreateUserRequest("john@doe.com", "12345678");
-        when(userRepository.findByEmail(request.email())).thenReturn(Optional.of(new User()));
+        when(userRepository.findByEmail(request.getEmail())).thenReturn(Optional.of(new User()));
 
         EmailAlreadyTakenException expectedException = assertThrows(EmailAlreadyTakenException.class, () -> userService.create(request));
 
-        assertEquals(String.format("The email %s has been already taken", request.email()), expectedException.getMessage());
+        assertEquals(String.format("The email %s has been already taken", request.getEmail()), expectedException.getMessage());
     }
 
     @Test
     public void create_shouldReturnUserResponse_whenRequestIsValid() {
         CreateUserRequest request = new CreateUserRequest("john@doe.com", "12345678");
-        User userSaved = new User(UUID.randomUUID(), request.email(), request.password());
+        User userSaved = new User(UUID.randomUUID(), request.getEmail(), request.getPassword());
         UserResponse expectedResponse = UserResponse.from(userSaved);
 
-        when(userRepository.findByEmail(request.email())).thenReturn(Optional.empty());
+        when(userRepository.findByEmail(request.getEmail())).thenReturn(Optional.empty());
         when(userRepository.save(any(User.class))).thenReturn(userSaved);
         UserResponse response = userService.create(request);
 
