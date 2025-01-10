@@ -31,12 +31,12 @@ public class ProjectService {
     public ProjectResponse create(SaveProjectRequest request) {
         Project project = Project.builder()
                 .id(UUID.randomUUID())
-                .name(request.name())
-                .description(request.description())
-                .githubLink(request.githubLink())
+                .name(request.getName())
+                .description(request.getDescription())
+                .githubLink(request.getGithubLink())
                 .build();
 
-        List<Skill> skills = skillRepository.findAllById(request.skills());
+        List<Skill> skills = skillRepository.findAllById(request.getSkills());
         project.setSkills(skills);
         Project projectSaved = projectRepository.save(project);
         return ProjectResponse.from(projectSaved);
@@ -60,11 +60,11 @@ public class ProjectService {
 
     public ProjectResponse update(UUID id, SaveProjectRequest request) {
         Project project = projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException(id));
-        project.setName(request.name());
-        project.setDescription(request.description());
-        project.setGithubLink(request.githubLink());
+        project.setName(request.getName());
+        project.setDescription(request.getDescription());
+        project.setGithubLink(request.getGithubLink());
 
-        List<Skill> skills = skillRepository.findAllById(request.skills());
+        List<Skill> skills = skillRepository.findAllById(request.getSkills());
 
         project.setSkills(skills);
 

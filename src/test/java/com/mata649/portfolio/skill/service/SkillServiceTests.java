@@ -1,7 +1,7 @@
 package com.mata649.portfolio.skill.service;
 
 import com.mata649.portfolio.skill.dtos.SaveSkillRequest;
-import com.mata649.portfolio.skill.dtos.SkillReponse;
+import com.mata649.portfolio.skill.dtos.SkillResponse;
 import com.mata649.portfolio.skill.exceptions.SkillNotFoundException;
 import com.mata649.portfolio.skill.model.Skill;
 import com.mata649.portfolio.skill.repository.SkillRepository;
@@ -40,7 +40,7 @@ public class SkillServiceTests {
 
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
 
-        SkillReponse response = skillService.create(request);
+        SkillResponse response = skillService.create(request);
 
         assertEquals(skill.getId(), response.id());
         assertEquals(skill.getName(), response.name());
@@ -56,7 +56,7 @@ public class SkillServiceTests {
 
         when(skillRepository.findById(id)).thenReturn(Optional.of(skill));
 
-        SkillReponse response = skillService.findById(id);
+        SkillResponse response = skillService.findById(id);
 
         assertEquals(skill.getId(), response.id());
         assertEquals(skill.getName(), response.name());
@@ -82,7 +82,7 @@ public class SkillServiceTests {
         when(skillRepository.findAll()).thenReturn(skills);
 
         // Act
-        List<SkillReponse> responses = skillService.findAll();
+        List<SkillResponse> responses = skillService.findAll();
 
         // Assert
         assertEquals(skills.size(), responses.size());
@@ -105,7 +105,7 @@ public class SkillServiceTests {
         when(skillRepository.save(any(Skill.class))).thenReturn(skill);
 
 
-        SkillReponse response = skillService.update(request, id);
+        SkillResponse response = skillService.update(request, id);
 
         assertEquals(skill.getId(), response.id());
         assertEquals(request.name(), response.name());
@@ -132,7 +132,7 @@ public class SkillServiceTests {
 
         when(skillRepository.findById(id)).thenReturn(Optional.of(skill));
 
-        SkillReponse response = skillService.delete(id);
+        SkillResponse response = skillService.delete(id);
 
         assertEquals(skill.getId(), response.id());
         assertEquals(skill.getName(), response.name());

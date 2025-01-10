@@ -1,7 +1,7 @@
 package com.mata649.portfolio.skill.controller;
 
 import com.mata649.portfolio.skill.dtos.SaveSkillRequest;
-import com.mata649.portfolio.skill.dtos.SkillReponse;
+import com.mata649.portfolio.skill.dtos.SkillResponse;
 import com.mata649.portfolio.skill.service.SkillService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class SkillController {
     }
 
     @PostMapping
-    public ResponseEntity<SkillReponse> create(@Valid @RequestBody SaveSkillRequest request) {
+    public ResponseEntity<SkillResponse> create(@Valid @RequestBody SaveSkillRequest request) {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -30,23 +30,23 @@ public class SkillController {
 
 
     @GetMapping("")
-    public ResponseEntity<List<SkillReponse>> findAll() {
+    public ResponseEntity<List<SkillResponse>> findAll() {
         return ResponseEntity.ok(skillService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SkillReponse> findById(@PathVariable UUID id) {
+    public ResponseEntity<SkillResponse> findById(@PathVariable UUID id) {
         return ResponseEntity
                 .ok(skillService.findById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SkillReponse> update(@PathVariable UUID id, @Valid @RequestBody SaveSkillRequest request) {
+    public ResponseEntity<SkillResponse> update(@PathVariable UUID id, @Valid @RequestBody SaveSkillRequest request) {
         return ResponseEntity.ok(skillService.update(request, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<SkillReponse> delete(@PathVariable UUID id){
+    public ResponseEntity<SkillResponse> delete(@PathVariable UUID id){
         return ResponseEntity.ok(skillService.delete(id));
     }
 }

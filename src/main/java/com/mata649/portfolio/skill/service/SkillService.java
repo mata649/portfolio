@@ -1,7 +1,7 @@
 package com.mata649.portfolio.skill.service;
 
 import com.mata649.portfolio.skill.dtos.SaveSkillRequest;
-import com.mata649.portfolio.skill.dtos.SkillReponse;
+import com.mata649.portfolio.skill.dtos.SkillResponse;
 import com.mata649.portfolio.skill.exceptions.SkillNotFoundException;
 import com.mata649.portfolio.skill.model.Skill;
 import com.mata649.portfolio.skill.repository.SkillRepository;
@@ -18,38 +18,38 @@ public class SkillService {
         this.skillRepository = skillRepository;
     }
 
-    public SkillReponse create(SaveSkillRequest request) {
+    public SkillResponse create(SaveSkillRequest request) {
         Skill skill = new Skill();
         skill.setId(UUID.randomUUID());
-        skill.setName(request.name());
+        skill.setName(request.getName());
         Skill skillSaved = skillRepository.save(skill);
-        return SkillReponse.from(skillSaved);
+        return SkillResponse.from(skillSaved);
     }
 
 
-    public SkillReponse findById(UUID id) {
+    public SkillResponse findById(UUID id) {
         Skill skill = skillRepository.findById(id).orElseThrow(() -> new SkillNotFoundException(id));
-        return SkillReponse.from(skill);
+        return SkillResponse.from(skill);
     }
 
-    public List<SkillReponse> findAll() {
+    public List<SkillResponse> findAll() {
         return skillRepository
                 .findAll()
                 .stream()
-                .map(SkillReponse::from)
+                .map(SkillResponse::from)
                 .toList();
     }
 
-    public SkillReponse update(SaveSkillRequest request, UUID id) {
+    public SkillResponse update(SaveSkillRequest request, UUID id) {
         Skill skill = skillRepository.findById(id).orElseThrow(() -> new SkillNotFoundException(id));
-        skill.setName(request.name());
+        skill.setName(request.getName());
         Skill skillUpdated = skillRepository.save(skill);
-        return SkillReponse.from(skillUpdated);
+        return SkillResponse.from(skillUpdated);
     }
 
-    public SkillReponse delete(UUID id) {
+    public SkillResponse delete(UUID id) {
         Skill skill = skillRepository.findById(id).orElseThrow(() -> new SkillNotFoundException(id));
         skillRepository.delete(skill);
-        return SkillReponse.from(skill);
+        return SkillResponse.from(skill);
     }
 }

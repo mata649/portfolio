@@ -27,16 +27,16 @@ public class UserService {
     public UserResponse create(CreateUserRequest request) {
 
         Optional<User> optionalUser = userRepository
-                .findByEmail(request.email());
+                .findByEmail(request.getEmail());
 
         if (optionalUser.isPresent()) {
-            throw new EmailAlreadyTakenException(request.email());
+            throw new EmailAlreadyTakenException(request.getEmail());
         }
 
         User user = new User();
         user.setId(UUID.randomUUID());
-        user.setEmail(request.email());
-        user.setPassword(passwordEncoder.encode(request.password()));
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         User userSaved = userRepository.save(user);
 
         return UserResponse.from(userSaved);

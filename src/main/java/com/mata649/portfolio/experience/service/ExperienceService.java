@@ -25,25 +25,18 @@ public class ExperienceService {
     }
 
     public ExperienceResponse create(SaveExperienceRequest request) {
-        if (request.endTime() == null && !request.currentJob()) {
-            throw new BadRequestException("endTime", "The endTime can't be null if the currentJob is false");
-        } else if (request.endTime() != null && request.currentJob()) {
-
-            throw new BadRequestException("currentJob", "The currentJob can't be true if endTime has been set");
-        }
-
         Experience experience = Experience.builder().
                 id(UUID.randomUUID())
-                .position(request.position())
-                .company(request.company())
-                .description(request.description())
-                .location(request.location())
-                .startTime(request.startTime())
-                .endTime(request.endTime())
-                .currentJob(request.currentJob())
+                .position(request.getPosition())
+                .company(request.getCompany())
+                .description(request.getDescription())
+                .location(request.getLocation())
+                .startTime(request.getStartTime())
+                .endTime(request.getEndTime())
+                .currentJob(request.getCurrentJob())
                 .build();
 
-        List<Skill> skills = skillRepository.findAllById(request.skills());
+        List<Skill> skills = skillRepository.findAllById(request.getSkills());
         experience.setSkills(skills);
         Experience experienceSaved = experienceRepository.save(experience);
         return ExperienceResponse.from(experienceSaved);
@@ -67,22 +60,16 @@ public class ExperienceService {
     }
 
     public ExperienceResponse update(UUID id, SaveExperienceRequest request) {
-        if (request.endTime() == null && !request.currentJob()) {
-            throw new BadRequestException("endTime", "The endTime can't be null if the currentJob is false");
-        } else if (request.endTime() != null && request.currentJob()) {
-
-            throw new BadRequestException("currentJob", "The currentJob can't be true if endTime has been set");
-        }
         Experience experience = experienceRepository.findById(id).orElseThrow(() -> new ExperienceNotFoundException(id));
-        experience.setPosition(request.position());
-        experience.setCompany(request.company());
-        experience.setDescription(request.description());
-        experience.setLocation(request.location());
+        experience.setPosition(request.getPosition());
+        experience.setCompany(request.getCompany());
+        experience.setDescription(request.getDescription());
+        experience.setLocation(request.getLocation());
         experience.setStartTime(experience.getStartTime());
         experience.setEndTime(experience.getEndTime());
         experience.setCurrentJob(experience.getCurrentJob());
 
-        List<Skill> skills = skillRepository.findAllById(request.skills());
+        List<Skill> skills = skillRepository.findAllById(request.getSkills());
         experience.setSkills(skills);
         Experience experienceSaved = experienceRepository.save(experience);
         return ExperienceResponse.from(experienceSaved);
