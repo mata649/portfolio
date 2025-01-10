@@ -26,17 +26,17 @@ public class AuthenticationService {
 
     private Map<String, Object> generateExtraClaims(UserResponse response) {
         Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("currentUserID", response.id());
+        extraClaims.put("currentUserID", response.getId());
         return extraClaims;
     }
 
     public AuthenticatedUserResponse login(LoginUserRequest request) {
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
         authenticationManager.authenticate(authenticationToken);
-        UserResponse user = userService.findByEmail(request.email());
-        String jwt = jwtService.generateToken(user.email(), generateExtraClaims(user));
-        return new AuthenticatedUserResponse(user.id(), user.email(), jwt);
+        UserResponse user = userService.findByEmail(request.getEmail());
+        String jwt = jwtService.generateToken(user.getEmail(), generateExtraClaims(user));
+        return new AuthenticatedUserResponse(user.getId(), user.getEmail(), jwt);
 
     }
 
