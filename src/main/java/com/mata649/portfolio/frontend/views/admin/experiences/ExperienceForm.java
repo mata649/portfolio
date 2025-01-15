@@ -50,6 +50,8 @@ public class ExperienceForm extends FormLayout {
         binder.bindInstanceFields(this);
         configureSkillsGroup(skills);
         clearForm();
+
+        configureCurrentJob();
         add(position,
                 company,
                 location,
@@ -58,6 +60,14 @@ public class ExperienceForm extends FormLayout {
                 endTime,
                 currentJob,
                 this.skills, createButtonsLayout());
+    }
+
+    private void configureCurrentJob() {
+    currentJob.addClickListener(event -> toggleEndTime());
+    }
+
+    private void toggleEndTime() {
+        endTime.setVisible(!currentJob.getValue());
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -128,6 +138,7 @@ public class ExperienceForm extends FormLayout {
             save.setText("Edit");
             delete.setEnabled(true);
         }
+        toggleEndTime();
     }
 
     public void clearForm() {
