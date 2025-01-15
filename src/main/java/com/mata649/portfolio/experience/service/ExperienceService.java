@@ -65,9 +65,9 @@ public class ExperienceService {
         experience.setCompany(request.getCompany());
         experience.setDescription(request.getDescription());
         experience.setLocation(request.getLocation());
-        experience.setStartTime(experience.getStartTime());
-        experience.setEndTime(experience.getEndTime());
-        experience.setCurrentJob(experience.getCurrentJob());
+        experience.setStartTime(request.getStartTime());
+        experience.setEndTime(request.getEndTime());
+        experience.setCurrentJob(request.getCurrentJob());
 
         List<Skill> skills = skillRepository.findAllById(request.getSkills());
         experience.setSkills(skills);

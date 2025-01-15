@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -36,6 +36,7 @@ public class SaveExperienceRequest {
     @PastOrPresent
     private LocalDate startTime;
 
+    @NotNull
     @PastOrPresent
     private LocalDate endTime;
 
@@ -43,6 +44,6 @@ public class SaveExperienceRequest {
     private Boolean currentJob;
 
     @NotEmpty
-    private List<UUID> skills;
+    private Set<UUID> skills;
 
 }

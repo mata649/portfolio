@@ -42,7 +42,7 @@ public class Experience {
     @Column(name = "current_job", nullable = false)
     private Boolean currentJob;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "experiences_skills",
             joinColumns = @JoinColumn(name = "experience_id"),
