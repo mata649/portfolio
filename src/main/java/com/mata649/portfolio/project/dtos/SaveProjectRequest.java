@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -29,5 +30,5 @@ public class SaveProjectRequest {
     @Pattern(regexp = "^https:\\/\\/github\\.com(?:\\/[^\\s\\/]+){2}$")
     private String githubLink;
     @NotEmpty
-    private List<UUID> skills;
+    private Set<UUID> skills;
 }

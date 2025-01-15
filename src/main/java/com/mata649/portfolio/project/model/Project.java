@@ -30,7 +30,7 @@ public class Project {
     private String githubLink;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "projects_skills",
             joinColumns = @JoinColumn(name = "project_id"),
