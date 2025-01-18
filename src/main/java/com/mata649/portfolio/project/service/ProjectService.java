@@ -1,10 +1,12 @@
 package com.mata649.portfolio.project.service;
 
+import com.mata649.portfolio.experience.dtos.ExperienceResponse;
 import com.mata649.portfolio.project.dtos.ProjectResponse;
 import com.mata649.portfolio.project.dtos.SaveProjectRequest;
 import com.mata649.portfolio.project.exceptions.ProjectNotFoundException;
 import com.mata649.portfolio.project.model.Project;
 import com.mata649.portfolio.project.repository.ProjectRepository;
+import com.mata649.portfolio.skill.dtos.SkillResponse;
 import com.mata649.portfolio.skill.model.Skill;
 import com.mata649.portfolio.skill.repository.SkillRepository;
 import org.hibernate.Hibernate;
@@ -49,6 +51,14 @@ public class ProjectService {
 
     public Page<ProjectResponse> findAll(Pageable pageable) {
         return projectRepository.findAll(pageable).map(ProjectResponse::from);
+    }
+
+    public Page<ProjectResponse> findBySkills(Pageable pageable, List<UUID> skillIds) {
+        if (skillIds.isEmpty()) {
+            return findAll(pageable);
+        }
+        Page<Project> projects = projectRepository.findBySkills(pageable, skillIds);
+        return projects.map(ProjectResponse::from);
     }
 
     public ProjectResponse delete(UUID id) {
