@@ -3,7 +3,7 @@ package com.mata649.portfolio.frontend.views.admin.experiences;
 import com.mata649.portfolio.experience.dtos.ExperienceResponse;
 import com.mata649.portfolio.experience.service.ExperienceService;
 import com.mata649.portfolio.frontend.views.admin.AdminLayout;
-import com.mata649.portfolio.frontend.views.shared.ConfirmationDialog;
+import com.mata649.portfolio.frontend.views.components.ConfirmationDialog;
 import com.mata649.portfolio.skill.dtos.SkillResponse;
 import com.mata649.portfolio.skill.service.SkillService;
 import com.vaadin.flow.component.ComponentUtil;

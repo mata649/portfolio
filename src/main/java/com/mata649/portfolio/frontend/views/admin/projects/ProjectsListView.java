@@ -1,7 +1,7 @@
 package com.mata649.portfolio.frontend.views.admin.projects;
 
 import com.mata649.portfolio.frontend.views.admin.AdminLayout;
-import com.mata649.portfolio.frontend.views.shared.ConfirmationDialog;
+import com.mata649.portfolio.frontend.views.components.ConfirmationDialog;
 import com.mata649.portfolio.project.dtos.ProjectResponse;
 import com.mata649.portfolio.project.service.ProjectService;
 import com.mata649.portfolio.skill.dtos.SkillResponse;
