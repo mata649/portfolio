@@ -7,6 +7,11 @@ services:
       - portfolio-db:/var/lib/postgresql/data
     env_file:
       - .env
-
+  portfolio:
+    image: portfolio
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
 volumes:
   portfolio-db:

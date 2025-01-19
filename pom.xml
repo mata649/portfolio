@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.mata649</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>portfolio</name>
     <description>portfolio</description>
     <url/>
@@ -212,6 +212,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
     <profiles>
