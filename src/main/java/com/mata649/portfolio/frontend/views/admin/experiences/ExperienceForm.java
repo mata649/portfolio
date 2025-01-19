@@ -2,9 +2,6 @@ package com.mata649.portfolio.frontend.views.admin.experiences;
 
 import com.mata649.portfolio.experience.dtos.ExperienceResponse;
 import com.mata649.portfolio.experience.dtos.SaveExperienceRequest;
-import com.mata649.portfolio.frontend.views.admin.projects.ProjectForm;
-import com.mata649.portfolio.project.dtos.ProjectResponse;
-import com.mata649.portfolio.project.dtos.SaveProjectRequest;
 import com.mata649.portfolio.skill.dtos.SkillResponse;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.Key;

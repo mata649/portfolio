@@ -6,7 +6,6 @@ import com.mata649.portfolio.user.exceptions.EmailAlreadyTakenException;
 import com.mata649.portfolio.user.exceptions.UserWithEmailNotFoundException;
 import com.mata649.portfolio.user.model.User;
 import com.mata649.portfolio.user.repository.UserRepository;
-import jakarta.validation.Validator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

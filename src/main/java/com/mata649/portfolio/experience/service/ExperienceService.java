@@ -5,7 +5,6 @@ import com.mata649.portfolio.experience.dtos.SaveExperienceRequest;
 import com.mata649.portfolio.experience.exceptions.ExperienceNotFoundException;
 import com.mata649.portfolio.experience.model.Experience;
 import com.mata649.portfolio.experience.repository.ExperienceRepository;
-import com.mata649.portfolio.shared.exceptions.BadRequestException;
 import com.mata649.portfolio.skill.model.Skill;
 import com.mata649.portfolio.skill.repository.SkillRepository;
 import org.hibernate.Hibernate;

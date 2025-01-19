@@ -9,7 +9,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.router.*;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 import com.vaadin.flow.theme.lumo.LumoUtility.FontSize;
 import org.springframework.security.core.userdetails.UserDetails;

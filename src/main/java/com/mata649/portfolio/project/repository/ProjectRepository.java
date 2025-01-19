@@ -1,6 +1,5 @@
 package com.mata649.portfolio.project.repository;
 
-import com.mata649.portfolio.experience.model.Experience;
 import com.mata649.portfolio.project.model.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

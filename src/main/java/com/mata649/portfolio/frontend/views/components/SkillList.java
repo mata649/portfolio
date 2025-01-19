@@ -1,7 +1,6 @@
 package com.mata649.portfolio.frontend.views.components;
 
 import com.mata649.portfolio.skill.dtos.SkillResponse;
-import com.mata649.portfolio.skill.service.SkillService;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;

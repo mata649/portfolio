@@ -1,6 +1,5 @@
 package com.mata649.portfolio.frontend.views.components;
 
-import com.helger.css.ECSSUnit;
 import com.mata649.portfolio.experience.dtos.ExperienceResponse;
 import com.mata649.portfolio.skill.dtos.SkillResponse;
 import com.vaadin.flow.component.html.H2;

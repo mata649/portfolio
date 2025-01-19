@@ -5,7 +5,6 @@ import com.mata649.portfolio.experience.dtos.SaveExperienceRequest;
 import com.mata649.portfolio.experience.exceptions.ExperienceNotFoundException;
 import com.mata649.portfolio.experience.model.Experience;
 import com.mata649.portfolio.experience.repository.ExperienceRepository;
-import com.mata649.portfolio.shared.exceptions.BadRequestException;
 import com.mata649.portfolio.skill.model.Skill;
 import com.mata649.portfolio.skill.repository.SkillRepository;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
