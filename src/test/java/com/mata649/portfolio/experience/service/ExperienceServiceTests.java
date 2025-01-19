@@ -15,10 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -45,7 +42,7 @@ public class ExperienceServiceTests {
                 LocalDate.of(2020, 1, 1),
                 LocalDate.of(2022, 1, 1),
                 false,
-                List.of(UUID.randomUUID())
+                Set.of(UUID.randomUUID())
         );
 
         List<Skill> skills = List.of(Skill.builder().id(UUID.randomUUID()).name("Java").build());
@@ -137,7 +134,7 @@ public class ExperienceServiceTests {
                 LocalDate.of(2021, 1, 1),
                 LocalDate.of(2023, 1, 1),
                 false,
-                Arrays.asList(UUID.randomUUID())
+                Set.of(UUID.randomUUID())
         );
 
         Experience existingExperience = Experience.builder()
@@ -171,7 +168,7 @@ public class ExperienceServiceTests {
                 LocalDate.of(2020, 1, 1),
                 LocalDate.of(2022, 1, 1),
                 false,
-                List.of(UUID.randomUUID())
+                Set.of(UUID.randomUUID())
         );
 
         when(experienceRepository.findById(id)).thenReturn(Optional.empty());

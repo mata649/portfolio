@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,7 +45,7 @@ public class ProjectServiceTests {
                 "Project Name",
                 "Project Description",
                 "https://github.com/example",
-                List.of(UUID.randomUUID())
+                Set.of(UUID.randomUUID())
         );
 
         List<Skill> skills = List.of(Skill.builder().id(UUID.randomUUID()).name("Java").build());
@@ -157,7 +158,7 @@ public class ProjectServiceTests {
                 "Updated Project",
                 "Updated Description",
                 "https://github.com/updated",
-                List.of(UUID.randomUUID())
+                Set.of(UUID.randomUUID())
         );
 
         Project project = Project.builder()
@@ -185,7 +186,7 @@ public class ProjectServiceTests {
     @Test
     public void update_shouldThrowProjectNotFoundException_whenProjectDoesNotExist() {
         UUID id = UUID.randomUUID();
-        SaveProjectRequest request = new SaveProjectRequest("Name", "Description", "https://github.com/example", List.of());
+        SaveProjectRequest request = new SaveProjectRequest("Name", "Description", "https://github.com/example", Set.of());
 
         when(projectRepository.findById(id)).thenReturn(Optional.empty());
 
