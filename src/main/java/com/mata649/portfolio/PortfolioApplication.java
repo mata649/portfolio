@@ -7,19 +7,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.env.Environment;
 
 @SpringBootApplication
 @Slf4j
 public class PortfolioApplication implements CommandLineRunner {
-    @Value("${custom.admin.email}")
-    private String adminEmail;
 
-    @Value("${custom.admin.password}")
-    private String adminPassword;
+    private final Environment environment;
 
     private final UserService userService;
 
-    public PortfolioApplication(UserService userService) {
+    public PortfolioApplication(UserService userService, Environment environment) {
+        this.environment = environment;
         this.userService = userService;
     }
 
@@ -30,6 +29,11 @@ public class PortfolioApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
         try {
+            String adminEmail = environment.getProperty("custom.admin.email");
+            String adminPassword = environment.getProperty("custom.admin.password");
+            if (adminEmail==null || adminPassword == null){
+                throw new RuntimeException(String.format("The admin email or password hasn't been set {email=%s password=%s}",adminEmail, adminPassword));
+            }
             log.info("Creating the Administrator User {}", adminEmail);
             userService.create(new CreateUserRequest(adminEmail, adminPassword));
             log.info("The administrator user has been created successfully");
