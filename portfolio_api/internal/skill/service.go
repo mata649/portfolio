@@ -15,7 +15,7 @@ type CreateSkillRequest struct {
 	Name string    `json:"name" validate:"required,min=2,max=24"`
 }
 
-func (s *CreateSkillRequest) Bind(r *http.Request) error {
+func (s *CreateSkillRequest) Bind(_ *http.Request) error {
 	return nil
 }
 
@@ -23,7 +23,7 @@ type UpdateSkillRequest struct {
 	Name string `json:"name" validate:"required,min=2,max=24"`
 }
 
-func (s *UpdateSkillRequest) Bind(r *http.Request) error {
+func (s *UpdateSkillRequest) Bind(_ *http.Request) error {
 	return nil
 }
 
