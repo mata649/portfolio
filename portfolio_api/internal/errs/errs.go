@@ -37,7 +37,7 @@ type ErrorDetail struct {
 	Detail string `json:"detail"`
 }
 
-func (e ErrorDetail) Render(w http.ResponseWriter, r *http.Request) error {
+func (e ErrorDetail) Render(_ http.ResponseWriter, r *http.Request) error {
 	render.Status(r, e.Status)
 	return nil
 }
