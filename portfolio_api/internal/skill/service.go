@@ -2,12 +2,12 @@ package skill
 
 import (
 	"context"
+	"net/http"
+	"time"
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 	"github.com/mata649/portfolio/portfolio_api/internal/errs"
 	"gorm.io/gorm"
-	"net/http"
-	"time"
 )
 
 type CreateSkillRequest struct {
