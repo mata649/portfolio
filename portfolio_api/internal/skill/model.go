@@ -8,7 +8,7 @@ import (
 type Skill struct {
 	gorm.Model
 	ID   uuid.UUID
-	Name string
+	Name string `gorm:"size=24"`
 }
 
 func NewSkill(id uuid.UUID, name string) *Skill {
