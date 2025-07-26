@@ -1,12 +1,12 @@
 package skill
 
 import (
+	"log/slog"
+	"net/http"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"github.com/mata649/portfolio/portfolio_api/internal/response"
 	"gorm.io/gorm"
-	"log/slog"
-	"net/http"
 )
 
 func SetupRouter(db *gorm.DB) http.Handler {
