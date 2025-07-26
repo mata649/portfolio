@@ -2,8 +2,10 @@ package database
 
 import (
 	"fmt"
+
 	"github.com/labstack/gommon/log"
 	"github.com/mata649/portfolio/portfolio_api/internal/config"
+	"github.com/mata649/portfolio/portfolio_api/internal/project"
 	"github.com/mata649/portfolio/portfolio_api/internal/skill"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -23,6 +25,11 @@ func ApplyAutoMigrations(db *gorm.DB) {
 
 	err := db.AutoMigrate(&skill.Skill{})
 	if err != nil {
-		log.Fatalf("%+v", err)
+		log.Fatalf("Error migrating skills: %+v", err)
+	}
+
+	err = db.AutoMigrate(&project.Project{})
+	if err != nil {
+		log.Fatalf("Error migrating projects: %+v", err)
 	}
 }
