@@ -3,7 +3,7 @@ package skill
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
-	"github.com/mata649/portfolio/portfolio_api/internal/utils"
+	"github.com/mata649/portfolio/portfolio_api/internal/response"
 	"gorm.io/gorm"
 	"log/slog"
 	"net/http"
@@ -31,7 +31,7 @@ func createSkillHandler(s Service) http.HandlerFunc {
 		err := s.Create(r.Context(), req)
 		if err != nil {
 			slog.Error("createSkillHandler: Error %s", err)
-			utils.HandleServiceError(w, r, err)
+			response.HandleServiceError(w, r, err)
 			return
 		}
 		render.Status(r, http.StatusCreated)
@@ -44,7 +44,7 @@ func findSkillByHandler(s Service) http.HandlerFunc {
 		resp, err := s.FindById(r.Context(), id)
 		if err != nil {
 			slog.Error("findSkillByHandler: Error %s", err)
-			utils.HandleServiceError(w, r, err)
+			response.HandleServiceError(w, r, err)
 			return
 		}
 		render.Status(r, http.StatusOK)
@@ -58,7 +58,7 @@ func findAllSkillsHandler(s Service) http.HandlerFunc {
 		resp, err := s.FindAll(r.Context())
 		if err != nil {
 			slog.Error("findAllSkillsHandler: Error %s", err)
-			utils.HandleServiceError(w, r, err)
+			response.HandleServiceError(w, r, err)
 			return
 		}
 		render.Status(r, http.StatusOK)
@@ -75,7 +75,7 @@ func updateSkillHandler(s Service) http.HandlerFunc {
 		err := s.Update(r.Context(), id, req)
 		if err != nil {
 			slog.Error("updateSkillHandler: Error %s", err)
-			utils.HandleServiceError(w, r, err)
+			response.HandleServiceError(w, r, err)
 			return
 		}
 		render.Status(r, http.StatusOK)
@@ -87,7 +87,7 @@ func deleteSkillHandler(s Service) http.HandlerFunc {
 		id := chi.URLParam(r, "id")
 		err := s.Delete(r.Context(), id)
 		if err != nil {
-			utils.HandleServiceError(w, r, err)
+			response.HandleServiceError(w, r, err)
 			return
 		}
 		render.Status(r, http.StatusOK)
