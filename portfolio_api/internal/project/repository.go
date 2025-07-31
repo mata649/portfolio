@@ -1,0 +1,72 @@
+package project
+
+import (
+	"context"
+	"errors"
+
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+)
+
+type Repository interface {
+	Create(ctx context.Context, project *Project) error
+	FindById(ctx context.Context, id uuid.UUID) (*Project, error)
+	FindAll(ctx context.Context) ([]Project, error)
+	Update(ctx context.Context, project *Project) error
+	Delete(ctx context.Context, id uuid.UUID) error
+}
+
+type RepositoryImpl struct {
+	db *gorm.DB
+}
+
+func NewRepository(db *gorm.DB) Repository {
+	return &RepositoryImpl{
+		db: db,
+	}
+}
+
+func (s RepositoryImpl) Create(ctx context.Context, project *Project) error {
+	err := s.db.WithContext(ctx).Create(project).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Project, error) {
+	var project *Project
+	err := s.db.WithContext(ctx).First(&project, id).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	return project, nil
+}
+
+func (s RepositoryImpl) FindAll(ctx context.Context) ([]Project, error) {
+	var projects []Project
+	err := s.db.WithContext(ctx).Find(&projects).Error
+	if err != nil {
+		return nil, err
+	}
+	return projects, nil
+}
+
+func (s RepositoryImpl) Update(ctx context.Context, project *Project) error {
+	err := s.db.WithContext(ctx).Save(project).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s RepositoryImpl) Delete(ctx context.Context, id uuid.UUID) error {
+	err := s.db.WithContext(ctx).Delete(&Project{ID: id}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
