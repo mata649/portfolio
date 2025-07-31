@@ -2,12 +2,12 @@ package skill
 
 import (
 	"context"
-	"net/http"
-	"time"
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 	"github.com/mata649/portfolio/portfolio_api/internal/errs"
 	"gorm.io/gorm"
+	"net/http"
+	"time"
 )
 
 type CreateSkillRequest struct {
@@ -35,13 +35,13 @@ type Response struct {
 	DeletedAt gorm.DeletedAt `json:"deletedAt"`
 }
 
-func NewResponse(id uuid.UUID, name string, createdAt time.Time, updatedAt time.Time, deletedAt gorm.DeletedAt) *Response {
+func NewResponse(skill *Skill) *Response {
 	return &Response{
-		ID:        id,
-		Name:      name,
-		CreatedAt: createdAt,
-		UpdatedAt: updatedAt,
-		DeletedAt: deletedAt,
+		ID:        skill.ID,
+		Name:      skill.Name,
+		CreatedAt: skill.CreatedAt,
+		UpdatedAt: skill.UpdatedAt,
+		DeletedAt: skill.DeletedAt,
 	}
 }
 
@@ -82,7 +82,7 @@ func (s Service) FindById(ctx context.Context, id string) (*Response, error) {
 	if err != nil {
 		return nil, NewInternalServerError(err)
 	}
-	return NewResponse(skill.ID, skill.Name, skill.CreatedAt, skill.UpdatedAt, skill.DeletedAt), nil
+	return NewResponse(skill), nil
 }
 
 func (s Service) FindAll(ctx context.Context) ([]Response, error) {
@@ -91,10 +91,9 @@ func (s Service) FindAll(ctx context.Context) ([]Response, error) {
 		return nil, NewInternalServerError(err)
 	}
 
-	skillsResponse := make([]Response, 0)
-	for _, skill := range skills {
-		skillResponse := NewResponse(skill.ID, skill.Name, skill.CreatedAt, skill.UpdatedAt, skill.DeletedAt)
-		skillsResponse = append(skillsResponse, *skillResponse)
+	skillsResponse := make([]Response, len(skills))
+	for index, skill := range skills {
+		skillsResponse[index] = *NewResponse(&skill)
 	}
 	return skillsResponse, nil
 }
