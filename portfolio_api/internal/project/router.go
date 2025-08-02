@@ -1,34 +1,37 @@
-package skill
+package project
 
 import (
+	"log/slog"
+	"net/http"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"github.com/mata649/portfolio/portfolio_api/internal/response"
+	"github.com/mata649/portfolio/portfolio_api/internal/skill"
 	"gorm.io/gorm"
-	"log/slog"
-	"net/http"
 )
 
 func SetupRouter(db *gorm.DB) http.Handler {
 	r := chi.NewRouter()
-	skillRepository := NewRepository(db)
-	service := NewService(skillRepository)
+	skillRepository := skill.NewRepository(db)
+	projectRepository := NewRepository(db)
+	service := NewService(projectRepository, skillRepository)
 
-	r.Post("/", createSkillHandler(service))
-	r.Get("/{id}", findSkillByHandler(service))
-	r.Get("/", findAllSkillsHandler(service))
-	r.Put("/{id}", updateSkillHandler(service))
-	r.Delete("/{id}", deleteSkillHandler(service))
+	r.Post("/", createProjectHandler(service))
+	r.Get("/{id}", findProjectByHandler(service))
+	r.Get("/", findAllProjectsHandler(service))
+	r.Put("/{id}", updateProjectHandler(service))
+	r.Delete("/{id}", deleteProjectHandler(service))
 	return r
 }
 
-func createSkillHandler(s Service) http.HandlerFunc {
+func createProjectHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		req := &CreateSkillRequest{}
+		req := &CreateProjectRequest{}
 		_ = render.Bind(r, req)
 		err := s.Create(r.Context(), req)
 		if err != nil {
-			slog.Error("createSkillHandler: Error %s", err)
+			slog.Error("createProjectHandler: Error %s", err)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -36,12 +39,12 @@ func createSkillHandler(s Service) http.HandlerFunc {
 	}
 }
 
-func findSkillByHandler(s Service) http.HandlerFunc {
+func findProjectByHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 		resp, err := s.FindById(r.Context(), id)
 		if err != nil {
-			slog.Error("findSkillByHandler: Error %s", err)
+			slog.Error("findProjectByHandler: Error %s", err)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -51,11 +54,11 @@ func findSkillByHandler(s Service) http.HandlerFunc {
 	}
 }
 
-func findAllSkillsHandler(s Service) http.HandlerFunc {
+func findAllProjectsHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		resp, err := s.FindAll(r.Context())
 		if err != nil {
-			slog.Error("findAllSkillsHandler: Error %s", err)
+			slog.Error("findAllProjectsHandler: Error %s", err)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -64,15 +67,15 @@ func findAllSkillsHandler(s Service) http.HandlerFunc {
 	}
 }
 
-func updateSkillHandler(s Service) http.HandlerFunc {
+func updateProjectHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 
-		req := &UpdateSkillRequest{}
+		req := &UpdateProjectRequest{}
 		_ = render.Bind(r, req)
 		err := s.Update(r.Context(), id, req)
 		if err != nil {
-			slog.Error("updateSkillHandler: Error %s", err)
+			slog.Error("updateProjectHandler: Error %s", err)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -80,7 +83,7 @@ func updateSkillHandler(s Service) http.HandlerFunc {
 	}
 }
 
-func deleteSkillHandler(s Service) http.HandlerFunc {
+func deleteProjectHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 		err := s.Delete(r.Context(), id)

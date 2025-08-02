@@ -2,15 +2,17 @@ package server
 
 import (
 	"fmt"
+	"log/slog"
+	"net/http"
+	"time"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
 	"github.com/mata649/portfolio/portfolio_api/internal/config"
+	"github.com/mata649/portfolio/portfolio_api/internal/project"
 	"github.com/mata649/portfolio/portfolio_api/internal/skill"
 	"gorm.io/gorm"
-	"log/slog"
-	"net/http"
-	"time"
 )
 
 type Server struct {
@@ -36,7 +38,9 @@ func NewServer(db *gorm.DB) *Server {
 	r := chi.NewRouter()
 	useMiddlewares(r)
 	skillRouter := skill.SetupRouter(db)
-	r.Mount("/api", skillRouter)
+	projectRouter := project.SetupRouter(db)
+	r.Mount("/api/skills", skillRouter)
+	r.Mount("/api/projects", projectRouter)
 	r.Get("/health", healthCheckHandler)
 	return &Server{router: r}
 }
