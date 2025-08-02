@@ -36,7 +36,7 @@ func (s RepositoryImpl) Create(ctx context.Context, project *Project) error {
 
 func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Project, error) {
 	var project *Project
-	err := s.db.WithContext(ctx).First(&project, id).Error
+	err := s.db.WithContext(ctx).Preload("Skills").First(&project, id).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, nil
 	}
@@ -48,7 +48,7 @@ func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Project, e
 
 func (s RepositoryImpl) FindAll(ctx context.Context) ([]Project, error) {
 	var projects []Project
-	err := s.db.WithContext(ctx).Find(&projects).Error
+	err := s.db.WithContext(ctx).Preload("Skills").Find(&projects).Error
 	if err != nil {
 		return nil, err
 	}
