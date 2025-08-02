@@ -2,7 +2,6 @@ package response
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/go-chi/render"
@@ -29,10 +28,8 @@ func HandleServiceError(w http.ResponseWriter, r *http.Request, err error) {
 	}
 
 	if errors.As(err, &internalServerError) {
-		fmt.Println("Int error branch")
 		render.JSON(w, r, &InternalServerErrResp{Message: "Internal Error"})
 	} else {
-		fmt.Println("Other error branch")
 		render.JSON(w, r, err)
 	}
 
