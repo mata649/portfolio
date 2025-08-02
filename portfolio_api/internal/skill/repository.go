@@ -13,7 +13,7 @@ type Repository interface {
 	FindAll(ctx context.Context) ([]Skill, error)
 	Update(ctx context.Context, skill *Skill) error
 	Delete(ctx context.Context, id uuid.UUID) error
-	FindSkillsByIDs(ctx context.Context, ids []uuid.UUID) ([]*Skill, error)
+	FindSkillsByIDs(ctx context.Context, ids []uuid.UUID) ([]Skill, error)
 }
 
 type RepositoryImpl struct {
@@ -71,8 +71,8 @@ func (s RepositoryImpl) Delete(ctx context.Context, id uuid.UUID) error {
 	return nil
 }
 
-func (s RepositoryImpl) FindSkillsByIDs(ctx context.Context, ids []uuid.UUID) ([]*Skill, error) {
-	var skills []*Skill
-
+func (s RepositoryImpl) FindSkillsByIDs(ctx context.Context, ids []uuid.UUID) ([]Skill, error) {
+	var skills []Skill
+	s.db.Where("id IN ?", ids).Find(&skills)
 	return skills, nil
 }
