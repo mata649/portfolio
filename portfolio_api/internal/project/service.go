@@ -3,6 +3,7 @@ package project
 import (
 	"context"
 	"net/http"
+	"slices"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -77,6 +78,21 @@ func NewService(projectRepository Repository, skillRepository skill.Repository) 
 		skillRepository:   skillRepository,
 	}
 }
+func checkIfSkillsWereFound(skills []skill.Skill, ids []uuid.UUID) error {
+	if len(skills) == len(ids) {
+		return nil
+	}
+	skillIds := make([]uuid.UUID, len(skills))
+	for i, s := range skills {
+		skillIds[i] = s.ID
+	}
+	for _, id := range ids {
+		if !slices.Contains(skillIds, id) {
+			return skill.NewNotFoundError(id, "id")
+		}
+	}
+	return nil
+}
 func (s Service) Create(ctx context.Context, request *CreateProjectRequest) error {
 	err := validate.Struct(request)
 	if err != nil {
@@ -84,6 +100,13 @@ func (s Service) Create(ctx context.Context, request *CreateProjectRequest) erro
 		return NewBadRequestError(requestErrors)
 	}
 	skills, err := s.skillRepository.FindSkillsByIDs(ctx, request.Skills)
+	if err != nil {
+		return NewInternalServerError(err)
+	}
+	err = checkIfSkillsWereFound(skills, request.Skills)
+	if err != nil {
+		return err
+	}
 	project := NewProject(request.ID, request.Name, request.Description, request.GithubLink, skills)
 	err = s.projectRepository.Create(ctx, project)
 	if err != nil {
@@ -140,7 +163,10 @@ func (s Service) Update(ctx context.Context, id string, request *UpdateProjectRe
 	}
 
 	skills, err := s.skillRepository.FindSkillsByIDs(ctx, request.Skills)
-
+	err = checkIfSkillsWereFound(skills, request.Skills)
+	if err != nil {
+		return err
+	}
 	project.Name = request.Name
 	project.Description = request.Description
 	project.GithubLink = request.GithubLink
