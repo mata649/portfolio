@@ -36,21 +36,21 @@ func (s *UpdateProjectRequest) Bind(_ *http.Request) error {
 }
 
 type Response struct {
-	ID          uuid.UUID         `json:"id"`
-	Name        string            `json:"name"`
-	Description string            `json:"description"`
-	GithubLink  string            `json:"githubLink"`
-	Skills      []*skill.Response `json:"skills"`
-	CreatedAt   time.Time         `json:"createdAt"`
-	UpdatedAt   time.Time         `json:"updatedAt"`
-	DeletedAt   gorm.DeletedAt    `json:"deletedAt"`
+	ID          uuid.UUID        `json:"id"`
+	Name        string           `json:"name"`
+	Description string           `json:"description"`
+	GithubLink  string           `json:"githubLink"`
+	Skills      []skill.Response `json:"skills"`
+	CreatedAt   time.Time        `json:"createdAt"`
+	UpdatedAt   time.Time        `json:"updatedAt"`
+	DeletedAt   gorm.DeletedAt   `json:"deletedAt"`
 }
 
 func NewResponse(project *Project) *Response {
 
-	parsedSkills := make([]*skill.Response, len(project.Skills))
+	parsedSkills := make([]skill.Response, len(project.Skills))
 	for index, s := range project.Skills {
-		parsedSkills[index] = skill.NewResponse(s)
+		parsedSkills[index] = *skill.NewResponse(&s)
 	}
 	return &Response{
 		ID:          project.ID,
@@ -77,7 +77,6 @@ func NewService(projectRepository Repository, skillRepository skill.Repository) 
 		skillRepository:   skillRepository,
 	}
 }
-
 func (s Service) Create(ctx context.Context, request *CreateProjectRequest) error {
 	err := validate.Struct(request)
 	if err != nil {
