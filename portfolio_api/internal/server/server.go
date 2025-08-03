@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
 	"github.com/mata649/portfolio/portfolio_api/internal/config"
+	"github.com/mata649/portfolio/portfolio_api/internal/experience"
 	"github.com/mata649/portfolio/portfolio_api/internal/project"
 	"github.com/mata649/portfolio/portfolio_api/internal/skill"
 	"gorm.io/gorm"
@@ -39,8 +40,10 @@ func NewServer(db *gorm.DB) *Server {
 	useMiddlewares(r)
 	skillRouter := skill.SetupRouter(db)
 	projectRouter := project.SetupRouter(db)
+	experienceRouter := experience.SetupRouter(db)
 	r.Mount("/api/skills", skillRouter)
 	r.Mount("/api/projects", projectRouter)
+	r.Mount("/api/experiences", experienceRouter)
 	r.Get("/health", healthCheckHandler)
 	return &Server{router: r}
 }
