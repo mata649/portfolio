@@ -1,7 +1,5 @@
 package experience
 
-
-
 import (
 	"context"
 	"errors"
@@ -58,7 +56,23 @@ func (s RepositoryImpl) FindAll(ctx context.Context) ([]Experience, error) {
 }
 
 func (s RepositoryImpl) Update(ctx context.Context, experience *Experience) error {
-	err := s.db.WithContext(ctx).Save(experience).Error
+	tx := s.db.WithContext(ctx).Begin()
+	if tx.Error != nil {
+		tx.Rollback()
+		return tx.Error
+	}
+
+	err := tx.Save(experience).Error
+	if err != nil {
+		return err
+	}
+
+	err = tx.Model(experience).Association("Skills").Replace(experience.Skills)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	err = tx.Commit().Error
 	if err != nil {
 		return err
 	}

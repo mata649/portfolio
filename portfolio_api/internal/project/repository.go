@@ -56,7 +56,23 @@ func (s RepositoryImpl) FindAll(ctx context.Context) ([]Project, error) {
 }
 
 func (s RepositoryImpl) Update(ctx context.Context, project *Project) error {
-	err := s.db.WithContext(ctx).Save(project).Error
+	tx := s.db.WithContext(ctx).Begin()
+	if tx.Error != nil {
+		tx.Rollback()
+		return tx.Error
+	}
+
+	err := tx.Save(project).Error
+	if err != nil {
+		return err
+	}
+
+	err = tx.Model(project).Association("Skills").Replace(project.Skills)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	err = tx.Commit().Error
 	if err != nil {
 		return err
 	}
