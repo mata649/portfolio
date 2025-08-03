@@ -17,6 +17,7 @@ type CreateExperienceRequest struct {
 	ID           uuid.UUID   `json:"id" validate:"required,uuid"`
 	Position     string      `json:"position" validate:"required,min=2,max=48"`
 	Location     string      `json:"location" validate:"required,min=2,max=24"`
+	Company      string      `json:"company" validate:"required,min=2,max=24"`
 	Description  string      `json:"description" validate:"required,min=2,max=2048"`
 	StartDate    time.Time   `json:"startDate" validate:"required,ltfield=EndDate"`
 	EndDate      time.Time   `json:"endDate" validate:"gtfield=StartDate"`
@@ -31,6 +32,7 @@ func (s *CreateExperienceRequest) Bind(_ *http.Request) error {
 type UpdateExperienceRequest struct {
 	Position     string      `json:"position" validate:"required,min=2,max=48"`
 	Location     string      `json:"location" validate:"required,min=2,max=24"`
+	Company      string      `json:"company" validate:"required,min=2,max=24"`
 	Description  string      `json:"description" validate:"required,min=2,max=2048"`
 	StartDate    time.Time   `json:"startDate" validate:"required,ltfield=EndDate"`
 	EndDate      time.Time   `json:"endDate" validate:"gtfield=StartDate"`
@@ -46,6 +48,7 @@ type Response struct {
 	ID           uuid.UUID        `json:"id"`
 	Position     string           `json:"position"`
 	Location     string           `json:"location"`
+	Company      string           `json:"company"`
 	Description  string           `json:"description"`
 	StartDate    time.Time        `json:"startDate"`
 	EndDate      time.Time        `json:"endDate"`
@@ -66,6 +69,7 @@ func NewResponse(experience *Experience) *Response {
 		ID:           experience.ID,
 		Position:     experience.Position,
 		Location:     experience.Location,
+		Company:      experience.Company,
 		Description:  experience.Description,
 		StartDate:    experience.StartDate,
 		EndDate:      experience.EndDate,
@@ -122,6 +126,7 @@ func (s Service) Create(ctx context.Context, request *CreateExperienceRequest) e
 	experience := NewExperience(request.ID,
 		request.Position,
 		request.Location,
+		request.Company,
 		request.Description,
 		request.StartDate,
 		request.EndDate,
@@ -189,6 +194,7 @@ func (s Service) Update(ctx context.Context, id string, request *UpdateExperienc
 	}
 	experience.Position = request.Position
 	experience.Location = request.Location
+	experience.Company = request.Company
 	experience.Description = request.Description
 	experience.StartDate = request.StartDate
 	experience.EndDate = request.EndDate

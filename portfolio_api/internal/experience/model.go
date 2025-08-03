@@ -13,6 +13,7 @@ type Experience struct {
 	ID           uuid.UUID
 	Position     string    `gorm:"size=48"`
 	Location     string    `gorm:"size=24"`
+	Company      string    `gorm:"size=24"`
 	Description  string    `gorm:"size=2048"`
 	StartDate    time.Time `gorm:"type=date"`
 	EndDate      time.Time `gorm:"type=date"`
@@ -20,7 +21,7 @@ type Experience struct {
 	Skills       []skill.Skill `gorm:"many2many:skill_experiences;"`
 }
 
-func NewExperience(id uuid.UUID, position string, location string, description string, startDate time.Time, endDate time.Time, isCurrentJob bool, skills []skill.Skill) *Experience {
+func NewExperience(id uuid.UUID, position string, location string, company string, description string, startDate time.Time, endDate time.Time, isCurrentJob bool, skills []skill.Skill) *Experience {
 	return &Experience{
 		ID:           id,
 		Position:     position,
