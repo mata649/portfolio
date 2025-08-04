@@ -18,7 +18,7 @@ func SetupRouter(db *gorm.DB) http.Handler {
 	service := NewService(experienceRepository, skillRepository)
 
 	r.Post("/", createExperienceHandler(service))
-	r.Get("/{id}", findExperienceByHandler(service))
+	r.Get("/{id}", findExperienceByIDHandler(service))
 	r.Get("/", findAllExperiencesHandler(service))
 	r.Put("/{id}", updateExperienceHandler(service))
 	r.Delete("/{id}", deleteExperienceHandler(service))
@@ -39,7 +39,7 @@ func createExperienceHandler(s Service) http.HandlerFunc {
 	}
 }
 
-func findExperienceByHandler(s Service) http.HandlerFunc {
+func findExperienceByIDHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 		resp, err := s.FindById(r.Context(), id)

@@ -18,7 +18,7 @@ func SetupRouter(db *gorm.DB) http.Handler {
 	service := NewService(projectRepository, skillRepository)
 
 	r.Post("/", createProjectHandler(service))
-	r.Get("/{id}", findProjectByHandler(service))
+	r.Get("/{id}", findProjectByIDHandler(service))
 	r.Get("/", findAllProjectsHandler(service))
 	r.Put("/{id}", updateProjectHandler(service))
 	r.Delete("/{id}", deleteProjectHandler(service))
@@ -39,7 +39,7 @@ func createProjectHandler(s Service) http.HandlerFunc {
 	}
 }
 
-func findProjectByHandler(s Service) http.HandlerFunc {
+func findProjectByIDHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "id")
 		resp, err := s.FindById(r.Context(), id)
