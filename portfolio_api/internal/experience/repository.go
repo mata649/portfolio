@@ -35,7 +35,7 @@ func (s RepositoryImpl) Create(ctx context.Context, experience *Experience) erro
 }
 
 func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Experience, error) {
-	var experience *Experience
+	var experience Experience
 	err := s.db.WithContext(ctx).Preload("Skills").First(&experience, id).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, nil
@@ -43,7 +43,7 @@ func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Experience
 	if err != nil {
 		return nil, err
 	}
-	return experience, nil
+	return &experience, nil
 }
 
 func (s RepositoryImpl) FindAll(ctx context.Context) ([]Experience, error) {

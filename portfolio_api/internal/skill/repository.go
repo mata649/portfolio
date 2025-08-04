@@ -35,7 +35,7 @@ func (s RepositoryImpl) Create(ctx context.Context, skill *Skill) error {
 }
 
 func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Skill, error) {
-	var skill *Skill
+	var skill Skill
 	err := s.db.WithContext(ctx).First(&skill, id).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, nil
@@ -43,7 +43,7 @@ func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Skill, err
 	if err != nil {
 		return nil, err
 	}
-	return skill, nil
+	return &skill, nil
 }
 
 func (s RepositoryImpl) FindAll(ctx context.Context) ([]Skill, error) {
