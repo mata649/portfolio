@@ -41,6 +41,11 @@ func (e ErrorDetail) Render(_ http.ResponseWriter, r *http.Request) error {
 	render.Status(r, e.Status)
 	return nil
 }
+
+func (i ErrorDetail) Error() string {
+	return fmt.Sprintf("%s: %s", i.Title, i.Detail)
+}
+
 func NewErrorDetail(title string, status int, detail string) *ErrorDetail {
 	return &ErrorDetail{
 		Title:  title,
@@ -70,10 +75,6 @@ type NotFoundError struct {
 	*ErrorDetail
 }
 
-func (n NotFoundError) Error() string {
-	return fmt.Sprintf("%s: %s", n.Title, n.Detail)
-}
-
 func NewNotFoundError(title string, status int, detail string) *NotFoundError {
 	return &NotFoundError{
 		ErrorDetail: NewErrorDetail(title, status, detail),
@@ -84,12 +85,18 @@ type InternalServerError struct {
 	*ErrorDetail
 }
 
-func (i InternalServerError) Error() string {
-	return fmt.Sprintf("%s: %s", i.Title, i.Detail)
-}
-
 func NewInternalServerError(title string, status int, detail string) *InternalServerError {
 	return &InternalServerError{
+		ErrorDetail: NewErrorDetail(title, status, detail),
+	}
+}
+
+type ConflictError struct {
+	*ErrorDetail
+}
+
+func NewConflictError(title string, status int, detail string) *ConflictError {
+	return &ConflictError{
 		ErrorDetail: NewErrorDetail(title, status, detail),
 	}
 }

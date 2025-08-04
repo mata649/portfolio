@@ -1,7 +1,6 @@
 package response
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/go-chi/render"
@@ -13,24 +12,15 @@ type InternalServerErrResp struct {
 }
 
 func HandleServiceError(w http.ResponseWriter, r *http.Request, err error) {
-	var badRequestError *errs.BadRequestError
-	var notFoundError *errs.NotFoundError
-	var internalServerError *errs.InternalServerError
-	switch {
-	case errors.As(err, &badRequestError):
-		render.Status(r, http.StatusBadRequest)
-	case errors.As(err, &notFoundError):
-		render.Status(r, http.StatusNotFound)
-	case errors.As(err, &internalServerError):
-		render.Status(r, http.StatusInternalServerError)
-	default:
-		render.Status(r, http.StatusInternalServerError)
-	}
 
-	if errors.As(err, &internalServerError) {
+	errDetail, ok := err.(errs.ErrorDetail)
+
+	if !ok || errDetail.Status == http.StatusInternalServerError {
+		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, &InternalServerErrResp{Message: "Internal Error"})
-	} else {
-		render.JSON(w, r, err)
+		return
 	}
+	render.Status(r, errDetail.Status)
+	render.JSON(w, r, err)
 
 }
