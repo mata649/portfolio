@@ -64,10 +64,10 @@ func (b BadRequestError) Error() string {
 	return fmt.Sprintf("%s: %s - %v", b.ErrorDetail.Title, b.ErrorDetail.Detail, b.Errors)
 }
 
-func NewBadRequestError(errors []RequestError, title string, status int, detail string) *BadRequestError {
+func NewBadRequestError(errors []RequestError, title string, detail string) *BadRequestError {
 	return &BadRequestError{
 		Errors:      errors,
-		ErrorDetail: NewErrorDetail(title, status, detail),
+		ErrorDetail: NewErrorDetail(title, http.StatusBadRequest, detail),
 	}
 }
 
@@ -75,9 +75,9 @@ type NotFoundError struct {
 	*ErrorDetail
 }
 
-func NewNotFoundError(title string, status int, detail string) *NotFoundError {
+func NewNotFoundError(title string, detail string) *NotFoundError {
 	return &NotFoundError{
-		ErrorDetail: NewErrorDetail(title, status, detail),
+		ErrorDetail: NewErrorDetail(title, http.StatusNotFound, detail),
 	}
 }
 
@@ -85,9 +85,9 @@ type InternalServerError struct {
 	*ErrorDetail
 }
 
-func NewInternalServerError(title string, status int, detail string) *InternalServerError {
+func NewInternalServerError(title string, detail string) *InternalServerError {
 	return &InternalServerError{
-		ErrorDetail: NewErrorDetail(title, status, detail),
+		ErrorDetail: NewErrorDetail(title, http.StatusInternalServerError, detail),
 	}
 }
 
@@ -95,8 +95,16 @@ type ConflictError struct {
 	*ErrorDetail
 }
 
-func NewConflictError(title string, status int, detail string) *ConflictError {
+func NewConflictError(title string, detail string) *ConflictError {
 	return &ConflictError{
-		ErrorDetail: NewErrorDetail(title, status, detail),
+		ErrorDetail: NewErrorDetail(title, http.StatusConflict, detail),
 	}
+}
+
+type UnauthorizedError struct {
+	*ErrorDetail
+}
+
+func NewUnauthorizedError(title string, detail string) *UnauthorizedError {
+	return &UnauthorizedError{ErrorDetail: NewErrorDetail(title, http.StatusUnauthorized, detail)}
 }
