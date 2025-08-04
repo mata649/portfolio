@@ -17,7 +17,7 @@ func NewBadRequestError(errors []errs.RequestError) *errs.BadRequestError {
 func NewInternalServerError(err error) *errs.InternalServerError {
 	return errs.NewInternalServerError("Project.InternalError",
 		500,
-		fmt.Sprintf(" An internal server error has occurent: %s",
+		fmt.Sprintf(" An internal server error has ocurred: %s",
 			err.Error()))
 }
 
