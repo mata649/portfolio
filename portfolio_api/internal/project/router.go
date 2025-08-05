@@ -1,6 +1,7 @@
 package project
 
 import (
+	"github.com/mata649/portfolio/portfolio_api/internal/jwt"
 	"log/slog"
 	"net/http"
 
@@ -16,12 +17,15 @@ func SetupRouter(db *gorm.DB) http.Handler {
 	skillRepository := skill.NewRepository(db)
 	projectRepository := NewRepository(db)
 	service := NewService(projectRepository, skillRepository)
-
-	r.Post("/", createProjectHandler(service))
+	r.Route("/", func(pr chi.Router) {
+		pr.Use(jwt.ProtectRoutes())
+		pr.Post("/", createProjectHandler(service))
+		pr.Put("/{id}", updateProjectHandler(service))
+		pr.Delete("/{id}", deleteProjectHandler(service))
+	})
 	r.Get("/{id}", findProjectByIDHandler(service))
 	r.Get("/", findAllProjectsHandler(service))
-	r.Put("/{id}", updateProjectHandler(service))
-	r.Delete("/{id}", deleteProjectHandler(service))
+
 	return r
 }
 

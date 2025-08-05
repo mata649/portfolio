@@ -1,6 +1,7 @@
 package experience
 
 import (
+	"github.com/mata649/portfolio/portfolio_api/internal/jwt"
 	"log/slog"
 	"net/http"
 
@@ -16,12 +17,14 @@ func SetupRouter(db *gorm.DB) http.Handler {
 	skillRepository := skill.NewRepository(db)
 	experienceRepository := NewRepository(db)
 	service := NewService(experienceRepository, skillRepository)
-
-	r.Post("/", createExperienceHandler(service))
+	r.Route("/", func(pr chi.Router) {
+		pr.Use(jwt.ProtectRoutes())
+		pr.Post("/", createExperienceHandler(service))
+		pr.Put("/{id}", updateExperienceHandler(service))
+		pr.Delete("/{id}", deleteExperienceHandler(service))
+	})
 	r.Get("/{id}", findExperienceByIDHandler(service))
 	r.Get("/", findAllExperiencesHandler(service))
-	r.Put("/{id}", updateExperienceHandler(service))
-	r.Delete("/{id}", deleteExperienceHandler(service))
 	return r
 }
 

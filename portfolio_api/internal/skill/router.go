@@ -2,11 +2,13 @@ package skill
 
 import (
 	"github.com/go-chi/chi/v5"
+	"github.com/mata649/portfolio/portfolio_api/internal/jwt"
+	"log/slog"
+	"net/http"
+
 	"github.com/go-chi/render"
 	"github.com/mata649/portfolio/portfolio_api/internal/response"
 	"gorm.io/gorm"
-	"log/slog"
-	"net/http"
 )
 
 func SetupRouter(db *gorm.DB) http.Handler {
@@ -14,11 +16,14 @@ func SetupRouter(db *gorm.DB) http.Handler {
 	skillRepository := NewRepository(db)
 	service := NewService(skillRepository)
 
-	r.Post("/", createSkillHandler(service))
+	r.Route("/", func(pr chi.Router) {
+		pr.Use(jwt.ProtectRoutes())
+		pr.Post("/", createSkillHandler(service))
+		pr.Put("/{id}", updateSkillHandler(service))
+		pr.Delete("/{id}", deleteSkillHandler(service))
+	})
 	r.Get("/{id}", findSkillByIDHandler(service))
 	r.Get("/", findAllSkillsHandler(service))
-	r.Put("/{id}", updateSkillHandler(service))
-	r.Delete("/{id}", deleteSkillHandler(service))
 	return r
 }
 
