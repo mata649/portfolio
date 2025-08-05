@@ -54,6 +54,9 @@ func NewErrorDetail(title string, status int, detail string) *ErrorDetail {
 	}
 }
 
+type ServiceError interface {
+	GetErrorDetail() *ErrorDetail
+}
 type BadRequestError struct {
 	Errors []RequestError
 	*ErrorDetail
@@ -63,7 +66,9 @@ func (b BadRequestError) Error() string {
 
 	return fmt.Sprintf("%s: %s - %v", b.ErrorDetail.Title, b.ErrorDetail.Detail, b.Errors)
 }
-
+func (b BadRequestError) GetErrorDetail() *ErrorDetail {
+	return b.ErrorDetail
+}
 func NewBadRequestError(errors []RequestError, title string, detail string) *BadRequestError {
 	return &BadRequestError{
 		Errors:      errors,
@@ -75,6 +80,9 @@ type NotFoundError struct {
 	*ErrorDetail
 }
 
+func (b NotFoundError) GetErrorDetail() *ErrorDetail {
+	return b.ErrorDetail
+}
 func NewNotFoundError(title string, detail string) *NotFoundError {
 	return &NotFoundError{
 		ErrorDetail: NewErrorDetail(title, http.StatusNotFound, detail),
@@ -83,6 +91,10 @@ func NewNotFoundError(title string, detail string) *NotFoundError {
 
 type InternalServerError struct {
 	*ErrorDetail
+}
+
+func (b InternalServerError) GetErrorDetail() *ErrorDetail {
+	return b.ErrorDetail
 }
 
 func NewInternalServerError(title string, detail string) *InternalServerError {
@@ -95,6 +107,10 @@ type ConflictError struct {
 	*ErrorDetail
 }
 
+func (b ConflictError) GetErrorDetail() *ErrorDetail {
+	return b.ErrorDetail
+}
+
 func NewConflictError(title string, detail string) *ConflictError {
 	return &ConflictError{
 		ErrorDetail: NewErrorDetail(title, http.StatusConflict, detail),
@@ -105,6 +121,23 @@ type UnauthorizedError struct {
 	*ErrorDetail
 }
 
+func (b UnauthorizedError) GetErrorDetail() *ErrorDetail {
+	return b.ErrorDetail
+}
+
 func NewUnauthorizedError(title string, detail string) *UnauthorizedError {
 	return &UnauthorizedError{ErrorDetail: NewErrorDetail(title, http.StatusUnauthorized, detail)}
+}
+
+type ForbiddenError struct {
+	*ErrorDetail
+}
+
+func (b ForbiddenError) GetErrorDetail() *ErrorDetail {
+	return b.ErrorDetail
+}
+
+
+func NewForbiddenError(title string, detail string) *ForbiddenError {
+	return &ForbiddenError{ErrorDetail: NewErrorDetail(title, http.StatusForbidden, detail)}
 }

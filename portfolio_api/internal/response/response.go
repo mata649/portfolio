@@ -13,8 +13,8 @@ type InternalServerErrResp struct {
 
 func HandleServiceError(w http.ResponseWriter, r *http.Request, err error) {
 
-	errDetail, ok := err.(errs.ErrorDetail)
-
+	sErr, ok := err.(errs.ServiceError)
+	errDetail := sErr.GetErrorDetail()
 	if !ok || errDetail.Status == http.StatusInternalServerError {
 		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, &InternalServerErrResp{Message: "Internal Error"})
