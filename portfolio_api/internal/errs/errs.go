@@ -137,7 +137,6 @@ func (b ForbiddenError) GetErrorDetail() *ErrorDetail {
 	return b.ErrorDetail
 }
 
-
 func NewForbiddenError(title string, detail string) *ForbiddenError {
 	return &ForbiddenError{ErrorDetail: NewErrorDetail(title, http.StatusForbidden, detail)}
 }

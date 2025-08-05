@@ -9,9 +9,9 @@ import (
 type Project struct {
 	gorm.Model
 	ID          uuid.UUID
-	Name        string         `gorm:"size=24"`
-	Description string         `gorm:"size=1024"`
-	GithubLink  string         `gorm:"size=64"`
+	Name        string        `gorm:"size=24"`
+	Description string        `gorm:"size=1024"`
+	GithubLink  string        `gorm:"size=64"`
 	Skills      []skill.Skill `gorm:"many2many:skill_projects;"`
 }
 

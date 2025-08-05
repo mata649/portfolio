@@ -155,7 +155,6 @@ func (s Service) FindById(ctx context.Context, id string) (*Response, error) {
 		return nil, NewNotFoundError(experienceId, "id")
 	}
 
-
 	return NewResponse(experience), nil
 }
 

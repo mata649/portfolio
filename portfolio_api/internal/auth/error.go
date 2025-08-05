@@ -38,4 +38,3 @@ func NewInvalidCredentialsError() *errs.UnauthorizedError {
 		"Authentication.InvalidCredentials",
 		"The email or password is wrong")
 }
-

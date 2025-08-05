@@ -61,4 +61,3 @@ func healthCheckHandler(w http.ResponseWriter, r *http.Request) {
 		Message: "OK",
 	})
 }
-
