@@ -150,6 +150,12 @@ func (s Service) FindById(ctx context.Context, id string) (*Response, error) {
 	if err != nil {
 		return nil, NewInternalServerError(err)
 	}
+
+	if experience == nil {
+		return nil, NewNotFoundError(experienceId, "id")
+	}
+
+
 	return NewResponse(experience), nil
 }
 
