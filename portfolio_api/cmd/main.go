@@ -11,7 +11,8 @@ func main() {
 	cfg := config.LoadConfig()
 	db := database.GetDbConnection(cfg)
 	database.ApplyAutoMigrations(db)
-	serv := server.NewServer(db)
+	database.SetUpAdminAccount(db, cfg)
+	serv := server.NewServer(db, cfg)
 	err := serv.RunServer(cfg)
 	if err != nil {
 		log.Fatalf("Error starting server: %+v", err)
