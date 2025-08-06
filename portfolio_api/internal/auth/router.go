@@ -18,7 +18,7 @@ func SetupRouter(db *gorm.DB, config *config.Config) http.Handler {
 	jwtService := jwt.NewService(config.JwtSigningKey)
 	service := NewService(authRepository, jwtService)
 
-	r.Get("/login", loginUserHandler(service))
+	r.Post("/login", loginUserHandler(service))
 	r.Route("/", func(prt chi.Router) {
 		prt.Use(jwt.ProtectRoutes())
 		prt.Post("/validate", validateTokenHandler())
