@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"github.com/go-chi/cors"
 	"log/slog"
 	"net/http"
 	"time"
@@ -33,6 +34,11 @@ func useMiddlewares(r *chi.Mux) {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(10 * time.Second))
 	r.Use(render.SetContentType(render.ContentTypeJSON))
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{"https://*", "http://*"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
+		AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+	}))
 
 }
 
