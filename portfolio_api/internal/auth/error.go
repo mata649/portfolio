@@ -19,13 +19,6 @@ func NewInternalServerError(err error) *errs.InternalServerError {
 			err.Error()))
 }
 
-func NewUserNotFoundError[T fmt.Stringer](identifier, identifierName string) *errs.NotFoundError {
-	return errs.NewNotFoundError(
-		"Authentication.UserNotFound",
-		fmt.Sprintf("The user with the %s %s was not found", identifierName, identifier),
-	)
-}
-
 func NewEmailAlreadyTakenError(email string) *errs.ConflictError {
 	return errs.NewConflictError(
 		"Authentication.EmailAlreadyTaken",
