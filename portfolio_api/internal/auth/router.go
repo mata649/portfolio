@@ -19,6 +19,10 @@ func SetupRouter(db *gorm.DB, config *config.Config) http.Handler {
 	service := NewService(authRepository, jwtService)
 
 	r.Get("/login", loginUserHandler(service))
+	r.Route("/", func(prt chi.Router) {
+		prt.Use(jwt.ProtectRoutes())
+		prt.Post("/validate", validateTokenHandler())
+	})
 	return r
 }
 
@@ -36,5 +40,12 @@ func loginUserHandler(s Service) http.HandlerFunc {
 		render.Status(r, http.StatusOK)
 		render.JSON(w, r, resp)
 
+	}
+}
+
+func validateTokenHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		render.Status(r, http.StatusOK)
+		render.JSON(w, r, nil)
 	}
 }
