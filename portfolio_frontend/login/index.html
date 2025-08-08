@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jose Mata - Portfolio</title>
+</head>
+<body>
+<div class="flex justify-center">
+    <div class="mt-20">
+        <h1 class="text-3xl text-center">Login</h1>
+        <form x-data="{email: '', password:''}" @submit.prevent="login(email, password)"
+              class="flex flex-col gap-3 mt-10">
+            <div x-data="{errorMessage: ''}" @set-error-message.window="errorMessage = $event.detail.errorMessage">
+                <span class="text-error text-sm " x-text="errorMessage"></span>
+            </div>
+            <input type="text" x-model="email" placeholder="Email" class="input"/>
+            <input type="password" x-model="password" placeholder="Password" class="input"/>
+            <button class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+<script type="module" src="/login/login.js"></script>
+</body>
+</html>

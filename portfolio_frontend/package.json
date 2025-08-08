@@ -1,0 +1,22 @@
+{
+  "name": "portfolio_frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "daisyui": "^5.0.50",
+    "vite": "^7.0.4"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "alpinejs": "^3.14.9",
+    "axios": "^1.11.0",
+    "tailwindcss": "^4.1.11",
+    "uuidv7": "^1.0.2"
+  }
+}

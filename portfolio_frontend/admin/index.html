@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jose Mata - Portfolio</title>
+</head>
+<body class="max-w-md mx-auto">
+<h1 class="text-center text-4xl mt-16">Portfolio</h1>
+<section class="mt-10"
+         x-data="
+         {show: false,
+          nameText: '',
+         selectedSkill: {},
+          skills: [],
+          editMode: false}"
+         x-init="$nextTick(()=>{
+            getSkills().then( data=>{
+                skills = data
+            })
+         })">
+    <h2 class="text-2xl">Skills
+        <button class="cursor-pointer" @click="show =! show;cleanSkillsState($data);" :class="show && 'rotate-90 duration-75'">&gt;</button>
+    </h2>
+    <div x-show="show" x-transition class="mt-4">
+        <form @submit.prevent="editMode ? editSkill($data) : addSkill($data)" class=" grid grid-cols-3">
+
+            <label class="col-span-2 flex items-center">
+                <input type="text" x-model="nameText" class="input w-full" placeholder="AWS"/>
+                <span x-show="nameText.length > 0" class="cursor-pointer relative -left-4 z-50"
+                      @click="cleanSkillsState($data)">x</span>
+            </label>
+            <div class="flex gap-3 mx-3">
+                <button class="btn btn-primary" x-text="editMode ? 'Edit' : 'Add'"></button>
+                <button x-show="editMode" class="btn btn-ghost" type="button" @click="deleteSkill($data)">Delete</button>
+            </div>
+        </form>
+        <table class="w-full text-center table">
+            <tr>
+                <th>Name</th>
+            </tr>
+            <template class="" x-for="skill in skills" :key="skill.id">
+                <tr :class="selectedSkill == skill && 'bg-base-200'">
+                    <td x-text="skill.name" @click="setSkillToEdit(skill, $data)" class="cursor-pointer"></td>
+                </tr>
+            </template>
+        </table>
+
+    </div>
+</section>
+<script type="module" src="/admin/admin.js"></script>
+</body>
+</html>
