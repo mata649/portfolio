@@ -40,6 +40,7 @@ func createProjectHandler(s Service) http.HandlerFunc {
 			return
 		}
 		render.Status(r, http.StatusCreated)
+		render.JSON(w, r, nil)
 	}
 }
 
