@@ -21,7 +21,7 @@ type CreateExperienceRequest struct {
 	Description  string      `json:"description" validate:"required,min=2,max=2048"`
 	StartDate    time.Time   `json:"startDate" validate:"required,ltfield=EndDate"`
 	EndDate      time.Time   `json:"endDate" validate:"gtfield=StartDate"`
-	IsCurrentJob bool        `json:"isCurrentJob" validate:"required"`
+	IsCurrentJob bool        `json:"isCurrentJob"`
 	Skills       []uuid.UUID `json:"skills" validate:"required,min=1"`
 }
 
@@ -36,7 +36,7 @@ type UpdateExperienceRequest struct {
 	Description  string      `json:"description" validate:"required,min=2,max=2048"`
 	StartDate    time.Time   `json:"startDate" validate:"required,ltfield=EndDate"`
 	EndDate      time.Time   `json:"endDate" validate:"gtfield=StartDate"`
-	IsCurrentJob bool        `json:"isCurrentJob" validate:"required"`
+	IsCurrentJob bool        `json:"isCurrentJob"`
 	Skills       []uuid.UUID `json:"skills" validate:"required,min=1"`
 }
 
