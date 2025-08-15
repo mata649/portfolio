@@ -1,13 +1,13 @@
 import "./style.css";
 import Alpine from "alpinejs";
 import axios from "axios";
-
+import {API_HOST} from "./src/config";
+import {getSkills} from "./src/skills";
+import {getProjects} from "./src/projects";
+import {getExperiences} from "./src/experiences";
 window.Alpine = Alpine;
 
 Alpine.start();
-
-const API_HOST = import.meta.env.VITE_API_HOST;
-
 async function validateToken() {
     try {
         const token = localStorage.getItem("token");
@@ -32,3 +32,14 @@ export {
     API_HOST,
     validateToken
 };
+
+async function getAboutMeText() {
+    const resp = await axios.get("https://gist.githubusercontent.com/mata649/f1f90149cc08469f2bcecbe0e94c4aec/raw/2f32f05257b0dbede57cbc32c2d1dd541b88fd85/about_me.txt");
+    if (resp.status !== 200) {
+        return "";
+    }
+    return resp.data;
+}
+
+window.getAboutMeText = getAboutMeText;
+
