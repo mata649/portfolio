@@ -3,6 +3,8 @@ package experience
 import (
 	"context"
 	"errors"
+	"fmt"
+	"github.com/mata649/portfolio/portfolio_api/internal/sorting"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -11,7 +13,7 @@ import (
 type Repository interface {
 	Create(ctx context.Context, experience *Experience) error
 	FindById(ctx context.Context, id uuid.UUID) (*Experience, error)
-	FindAll(ctx context.Context) ([]Experience, error)
+	FindAll(ctx context.Context, sort sorting.Sort) ([]Experience, error)
 	Update(ctx context.Context, experience *Experience) error
 	Delete(ctx context.Context, id uuid.UUID) error
 }
@@ -46,9 +48,13 @@ func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Experience
 	return &experience, nil
 }
 
-func (s RepositoryImpl) FindAll(ctx context.Context) ([]Experience, error) {
+func (s RepositoryImpl) FindAll(ctx context.Context, sort sorting.Sort) ([]Experience, error) {
 	var experiences []Experience
-	err := s.db.WithContext(ctx).Preload("Skills").Find(&experiences).Error
+	query := s.db.WithContext(ctx)
+	if sort.By != "" {
+		query = query.Order(fmt.Sprintf("%s %s", sort.By, sort.Order))
+	}
+	err := query.Preload("Skills").Find(&experiences).Error
 	if err != nil {
 		return nil, err
 	}

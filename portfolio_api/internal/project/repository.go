@@ -3,6 +3,8 @@ package project
 import (
 	"context"
 	"errors"
+	"fmt"
+	"github.com/mata649/portfolio/portfolio_api/internal/sorting"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -11,7 +13,7 @@ import (
 type Repository interface {
 	Create(ctx context.Context, project *Project) error
 	FindById(ctx context.Context, id uuid.UUID) (*Project, error)
-	FindAll(ctx context.Context) ([]Project, error)
+	FindAll(ctx context.Context, sort sorting.Sort) ([]Project, error)
 	Update(ctx context.Context, project *Project) error
 	Delete(ctx context.Context, id uuid.UUID) error
 }
@@ -46,9 +48,13 @@ func (s RepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*Project, e
 	return &project, nil
 }
 
-func (s RepositoryImpl) FindAll(ctx context.Context) ([]Project, error) {
+func (s RepositoryImpl) FindAll(ctx context.Context, sort sorting.Sort) ([]Project, error) {
 	var projects []Project
-	err := s.db.WithContext(ctx).Preload("Skills").Find(&projects).Error
+	query := s.db.WithContext(ctx)
+	if sort.By != "" {
+		query = query.Order(fmt.Sprintf("%s %s", sort.By, sort.Order))
+	}
+	err := query.Preload("Skills").Find(&projects).Error
 	if err != nil {
 		return nil, err
 	}

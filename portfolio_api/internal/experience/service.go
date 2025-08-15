@@ -2,6 +2,7 @@ package experience
 
 import (
 	"context"
+	"github.com/mata649/portfolio/portfolio_api/internal/sorting"
 	"net/http"
 	"slices"
 	"time"
@@ -158,8 +159,21 @@ func (s Service) FindById(ctx context.Context, id string) (*Response, error) {
 	return NewResponse(experience), nil
 }
 
-func (s Service) FindAll(ctx context.Context) ([]Response, error) {
-	experiences, err := s.experienceRepository.FindAll(ctx)
+func (s Service) FindAll(ctx context.Context, sort sorting.Sort) ([]Response, error) {
+	err := sort.Validate([]string{
+		"id",
+		"created_at",
+		"start_date",
+		"end_date",
+	})
+	if err != nil {
+		return make([]Response, 0), NewBadRequestError(
+			[]errs.RequestError{
+				{"sortBy", err.Error()},
+			},
+		)
+	}
+	experiences, err := s.experienceRepository.FindAll(ctx, sort)
 	if err != nil {
 		return nil, NewInternalServerError(err)
 	}

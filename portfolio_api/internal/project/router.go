@@ -2,6 +2,7 @@ package project
 
 import (
 	"github.com/mata649/portfolio/portfolio_api/internal/jwt"
+	"github.com/mata649/portfolio/portfolio_api/internal/sorting"
 	"log/slog"
 	"net/http"
 
@@ -61,7 +62,10 @@ func findProjectByIDHandler(s Service) http.HandlerFunc {
 
 func findAllProjectsHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		resp, err := s.FindAll(r.Context())
+		sortBy := r.URL.Query().Get("sortBy")
+		sortOrder := r.URL.Query().Get("sortOrder")
+		sort := sorting.NewSort(sortBy, sortOrder)
+		resp, err := s.FindAll(r.Context(), sort)
 		if err != nil {
 			slog.Error("findAllProjectsHandler: Error %s", err)
 			response.HandleServiceError(w, r, err)

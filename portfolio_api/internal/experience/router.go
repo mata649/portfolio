@@ -2,6 +2,7 @@ package experience
 
 import (
 	"github.com/mata649/portfolio/portfolio_api/internal/jwt"
+	"github.com/mata649/portfolio/portfolio_api/internal/sorting"
 	"log/slog"
 	"net/http"
 
@@ -60,7 +61,10 @@ func findExperienceByIDHandler(s Service) http.HandlerFunc {
 
 func findAllExperiencesHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		resp, err := s.FindAll(r.Context())
+		by := r.URL.Query().Get("sortBy")
+		order := r.URL.Query().Get("sortOrder")
+		sort := sorting.NewSort(by, order)
+		resp, err := s.FindAll(r.Context(), sort)
 		if err != nil {
 			slog.Error("findAllExperiencesHandler: Error %s", err)
 			response.HandleServiceError(w, r, err)
