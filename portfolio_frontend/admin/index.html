@@ -19,7 +19,9 @@
             })
          })">
     <h2 class="text-2xl">Skills
-        <button class="cursor-pointer" @click="show =! show;cleanSkillsState($data);" :class="show && 'rotate-90 duration-75'">&gt;</button>
+        <button class="cursor-pointer" @click="show =! show;cleanSkillsState($data);"
+                :class="show && 'rotate-90 duration-75'">&gt;
+        </button>
     </h2>
     <div x-show="show" x-transition class="mt-4">
         <form @submit.prevent="editMode ? editSkill($data) : addSkill($data)" class=" grid grid-cols-3">
@@ -31,7 +33,8 @@
             </label>
             <div class="flex gap-3 mx-3">
                 <button class="btn btn-primary" x-text="editMode ? 'Edit' : 'Add'"></button>
-                <button x-show="editMode" class="btn btn-ghost" type="button" @click="deleteSkill($data)">Delete</button>
+                <button x-show="editMode" class="btn btn-ghost" type="button" @click="deleteSkill($data)">Delete
+                </button>
             </div>
         </form>
         <table class="w-full text-center table">
@@ -41,6 +44,175 @@
             <template class="" x-for="skill in skills" :key="skill.id">
                 <tr :class="selectedSkill == skill && 'bg-base-200'">
                     <td x-text="skill.name" @click="setSkillToEdit(skill, $data)" class="cursor-pointer"></td>
+                </tr>
+            </template>
+        </table>
+
+    </div>
+</section>
+<section class="mt-10"
+         x-data="
+         {show: false,
+         selectedProject: {},
+         form: {
+         name: '',
+         description: '',
+         githubLink: '',
+         skills: [],
+         },
+         skills: [],
+          projects: [],
+          editMode: false}"
+         x-init="$nextTick(()=>{
+            getSkills().then(data=>{
+                skills = data
+            })
+            getProjects().then( data=>{
+                projects = data
+            })
+         })">
+    <h2 class="text-2xl">Projects
+        <button class="cursor-pointer" @click="show =! show;cleanProjectsState($data);"
+                :class="show && 'rotate-90 duration-75'">&gt;
+        </button>
+    </h2>
+    <div x-show="show" x-transition class="mt-4">
+        <form @submit.prevent="editMode ? editProject($data) : addProject($data)"
+              class="flex flex-col gap-3 items-start">
+
+            <input type="text" x-model="form.name" class="input" placeholder="Project Name"/>
+
+            <textarea type="text" x-model="form.description" class="textarea w-full"
+                      placeholder="Project Description"></textarea>
+
+            <input type="text" x-model="form.githubLink" class="input" placeholder="Project Repository"/>
+            <div class="flex gap-3">
+                <template x-for="skill in skills" :key="skill.id">
+                    <button type="button" class="p-2 btn rounded-2xl"
+                            :class="form.skills.find(s=>s == skill.id) ? 'btn-accent' : 'btn-ghost'"
+                            x-text="skill.name"
+                            @click="
+                                if (form.skills.find(id=>id==skill.id)){
+                                    form.skills = form.skills.filter(id=> id != skill.id)
+                                }else{
+                                    form.skills = [...form.skills, skill.id]
+                                }
+                                "></button>
+                </template>
+            </div>
+
+            <div class="flex gap-3">
+                <button class="btn btn-primary" x-text="editMode ? 'Edit' : 'Add'"></button>
+                <button type="button" class="btn btn-secondary" @click="cleanProjectsState($data)">Clear</button>
+                <button x-show="editMode" class="btn btn-ghost" type="button" @click="deleteProject($data)">Delete
+                </button>
+            </div>
+
+
+        </form>
+        <table class="w-full text-center table">
+            <tr>
+                <th>Name</th>
+            </tr>
+            <template class="" x-for="project in projects" :key="project.id">
+                <tr :class="selectedProject == project && 'bg-base-200'">
+                    <td x-text="project.name" @click="setProjectToEdit(project, $data)" class="cursor-pointer"></td>
+                </tr>
+            </template>
+        </table>
+
+    </div>
+</section>
+
+<section class="mt-10"
+         x-data="
+         {show: false,
+         selectedExperience: {},
+         form: {
+         position: '',
+         location: '',
+         company: '',
+         description: '',
+         startDate: '',
+         endDate: '',
+         isCurrentJob: false,
+         skills: [],
+         },
+         skills: [],
+          experiences: [],
+          editMode: false}"
+         x-init="$nextTick(()=>{
+            getSkills().then(data=>{
+                skills = data;
+            })
+            getExperiences().then( data=>{
+                experiences = data;
+            })
+            form.startDate = getDateYearMonthFormat(new Date())
+            form.endDate = getDateYearMonthFormat(new Date());
+         })">
+    <h2 class="text-2xl">Experiences
+        <button class="cursor-pointer" @click="show =! show;cleanExperiencesState($data);"
+                :class="show && 'rotate-90 duration-75'">&gt;
+        </button>
+    </h2>
+    <div x-show="true" x-transition class="mt-4">
+        <form @submit.prevent="editMode ? editExperience($data) : addExperience($data)"
+              class="flex flex-col gap-3 items-start">
+
+            <input type="text" x-model="form.position" class="input" placeholder="Position"/>
+
+            <input type="text" x-model="form.company" class="input" placeholder="Company"/>
+
+            <input type="text" x-model="form.location" class="input" placeholder="Location"/>
+            <textarea type="text" x-model="form.description" class="textarea w-full"
+                      placeholder="Project Description"></textarea>
+            <label class="flex items-center gap-3">
+                <span class="font-bold">Is Current Job?</span>
+                <input type="checkbox" checked="checked" x-model="form.isCurrentJob" class="toggle"/>
+            </label>
+            <label class="flex flex-col gap-3">
+                <span class="font-bold">Start Date</span>
+                <input type="month" x-model="form.startDate" />
+            </label>
+            <label x-show="!form.isCurrentJob" class="flex flex-col gap-3 mt-2">
+                <span class="font-bold">End Date</span>
+                <input type="month" x-model="form.endDate"/>
+            </label>
+
+            <div class="flex gap-3">
+                <template x-for="skill in skills" :key="skill.id">
+                    <button type="button" class="p-2 btn rounded-2xl"
+                            :class="form.skills.find(s=>s == skill.id) ? 'btn-accent' : 'btn-ghost'"
+                            x-text="skill.name"
+                            @click="
+                                if (form.skills.find(id=>id==skill.id)){
+                                    form.skills = form.skills.filter(id=> id != skill.id)
+                                }else{
+                                    form.skills = [...form.skills, skill.id]
+                                }
+                                "></button>
+                </template>
+            </div>
+
+            <div class="flex gap-3">
+                <button class="btn btn-primary" x-text="editMode ? 'Edit' : 'Add'"></button>
+                <button type="button" class="btn btn-secondary" @click="cleanExperiencesState($data)">Clear</button>
+                <button x-show="editMode" class="btn btn-ghost" type="button" @click="deleteExperience($data)">Delete
+                </button>
+            </div>
+
+
+        </form>
+        <table class="w-full text-center table">
+            <tr>
+                <th>Position</th>
+                <th>Company</th>
+            </tr>
+            <template class="" x-for="experience in experiences" :key="experience.id">
+                <tr :class="selectedExperience == experience && 'bg-base-200'" @click="setExperienceToEdit(experience, $data)" >
+                    <td x-text="experience.position" class="cursor-pointer"></td>
+                    <td x-text="experience.company" class="cursor-pointer"></td>
                 </tr>
             </template>
         </table>
