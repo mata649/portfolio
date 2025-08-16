@@ -1,7 +1,7 @@
 import axios from "axios";
 import {API_HOST} from "./config.js";
 import {uuidv7} from "uuidv7";
-
+const token = localStorage.getItem("token");
 export function getDateYearMonthFormat(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -23,7 +23,7 @@ export function cleanExperiencesState(data) {
 
 export async function getExperiences() {
     try {
-        const resp = await axios.get(API_HOST + "/api/experiences");
+        const resp = await axios.get(API_HOST + "/api/experiences?sortBy=start_date&sortOrder=desc");
         if (resp.status === 200) {
             return resp.data;
         }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import {API_HOST} from "./config.js";
 import {uuidv7} from "uuidv7";
-
+const token = localStorage.getItem("token");
 export function cleanProjectsState(data) {
     data.form.name = "";
     data.form.description = "";
