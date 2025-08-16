@@ -126,6 +126,9 @@ func (s Service) FindById(ctx context.Context, id string) (*Response, error) {
 	if err != nil {
 		return nil, NewInternalServerError(err)
 	}
+	if project == nil {
+		return nil, NewNotFoundError(projectId, "id")
+	}
 	return NewResponse(project), nil
 }
 

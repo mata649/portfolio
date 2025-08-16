@@ -82,6 +82,9 @@ func (s Service) FindById(ctx context.Context, id string) (*Response, error) {
 	if err != nil {
 		return nil, NewInternalServerError(err)
 	}
+	if skill == nil {
+		return nil, NewNotFoundError(skillId, "id")
+	}
 	return NewResponse(skill), nil
 }
 
