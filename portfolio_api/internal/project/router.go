@@ -36,7 +36,7 @@ func createProjectHandler(s Service) http.HandlerFunc {
 		_ = render.Bind(r, req)
 		err := s.Create(r.Context(), req)
 		if err != nil {
-			slog.Error("createProjectHandler: Error %s", err)
+			slog.Error("error creating project", "error", err, "request", req)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -50,7 +50,7 @@ func findProjectByIDHandler(s Service) http.HandlerFunc {
 		id := chi.URLParam(r, "id")
 		resp, err := s.FindById(r.Context(), id)
 		if err != nil {
-			slog.Error("findProjectByHandler: Error %s", err)
+			slog.Error("error finding project by id", "error", err, "id", id)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -67,7 +67,7 @@ func findAllProjectsHandler(s Service) http.HandlerFunc {
 		sort := sorting.NewSort(sortBy, sortOrder)
 		resp, err := s.FindAll(r.Context(), sort)
 		if err != nil {
-			slog.Error("findAllProjectsHandler: Error %s", err)
+			slog.Error("error finding all projects", "error", err, "sort", sort)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -84,7 +84,7 @@ func updateProjectHandler(s Service) http.HandlerFunc {
 		_ = render.Bind(r, req)
 		err := s.Update(r.Context(), id, req)
 		if err != nil {
-			slog.Error("updateProjectHandler: Error %s", err)
+			slog.Error("error updating project", "error", err, "id", id, "request", req)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -97,6 +97,7 @@ func deleteProjectHandler(s Service) http.HandlerFunc {
 		id := chi.URLParam(r, "id")
 		err := s.Delete(r.Context(), id)
 		if err != nil {
+			slog.Error("error deleting project", "error", err, "id", id)
 			response.HandleServiceError(w, r, err)
 			return
 		}

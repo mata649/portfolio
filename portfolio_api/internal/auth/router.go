@@ -33,7 +33,7 @@ func loginUserHandler(s Service) http.HandlerFunc {
 
 		resp, err := s.LoginUser(r.Context(), req)
 		if err != nil {
-			slog.Error("loginUserHandler: Error %s", err)
+			slog.Error("error logging user", "error", err, "request", req)
 			response.HandleServiceError(w, r, err)
 			return
 		}

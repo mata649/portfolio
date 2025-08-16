@@ -33,7 +33,7 @@ func createSkillHandler(s Service) http.HandlerFunc {
 		_ = render.Bind(r, req)
 		err := s.Create(r.Context(), req)
 		if err != nil {
-			slog.Error("createSkillHandler: Error %s", err)
+			slog.Error("error creating skill", "error", err, "request", req)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -47,7 +47,7 @@ func findSkillByIDHandler(s Service) http.HandlerFunc {
 		id := chi.URLParam(r, "id")
 		resp, err := s.FindById(r.Context(), id)
 		if err != nil {
-			slog.Error("findSkillByHandler: Error %s", err)
+			slog.Error("error finding skill by id", "error", err, "id", id)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -61,7 +61,7 @@ func findAllSkillsHandler(s Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		resp, err := s.FindAll(r.Context())
 		if err != nil {
-			slog.Error("findAllSkillsHandler: Error %s", err)
+			slog.Error("error finding all skills", "error", err)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -78,7 +78,7 @@ func updateSkillHandler(s Service) http.HandlerFunc {
 		_ = render.Bind(r, req)
 		err := s.Update(r.Context(), id, req)
 		if err != nil {
-			slog.Error("updateSkillHandler: Error %s", err)
+			slog.Error("error updating skill", "error", err, "id", id, "request", req)
 			response.HandleServiceError(w, r, err)
 			return
 		}
@@ -91,6 +91,7 @@ func deleteSkillHandler(s Service) http.HandlerFunc {
 		id := chi.URLParam(r, "id")
 		err := s.Delete(r.Context(), id)
 		if err != nil {
+			slog.Error("error deleting skill", "error", err, "id", id)
 			response.HandleServiceError(w, r, err)
 			return
 		}

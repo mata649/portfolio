@@ -23,7 +23,7 @@ type Server struct {
 }
 
 func (s Server) RunServer(cfg *config.Config) error {
-	slog.Info("Running server on port %s ...", cfg.WebPort)
+	slog.Info("running server on", "port", cfg.WebPort)
 	return http.ListenAndServe(fmt.Sprintf(":%s", cfg.WebPort), s.router)
 }
 
