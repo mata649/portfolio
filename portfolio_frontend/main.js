@@ -5,9 +5,11 @@ import {API_HOST} from "./src/config";
 import {getSkills} from "./src/skills";
 import {getProjects} from "./src/projects";
 import {getExperiences} from "./src/experiences";
+
 window.Alpine = Alpine;
 
 Alpine.start();
+
 async function validateToken() {
     try {
         const token = localStorage.getItem("token");
@@ -41,5 +43,18 @@ async function getAboutMeText() {
     return resp.data;
 }
 
-window.getAboutMeText = getAboutMeText;
+function formatDate(date) {
+    const options = {
+        year: "numeric",
+        month: "long"
+    };
+    const d = new Date(date);
+    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(d);
+    return formattedDate;
+}
 
+window.getAboutMeText = getAboutMeText;
+window.getSkills = getSkills;
+window.getProjects = getProjects;
+window.getExperiences = getExperiences;
+window.formatDate = formatDate;

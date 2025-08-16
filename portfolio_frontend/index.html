@@ -5,9 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Jose Mata - Portfolio</title>
 </head>
-<body>
-<h1 class="text-5xl text-center mt-10">Jose Alberto Mata</h1>
+<body class="max-w-2xl mx-auto">
+<nav class="flex justify-end gap-3 text-lg">
+    <a class="mt-4 link link-secondary" href="mailto:mata649@hotmail.com">Email</a>
+    <a class="mt-4 link link-info" target="_blank" href="https://www.linkedin.com/in/jose-alberto-mata-mena-a06761198/">Linkedin</a>
+    <a class="mt-4 link link-success mr-2" target="_blank" href="https://github.com/mata649">Github</a>
+</nav>
+<h1 class="text-5xl text-center mt-2 mx-2">Jose Alberto Mata</h1>
+<section class="mt-10" x-data="{aboutMe: ''}" x-init="$nextTick(()=>{
+    getAboutMeText().then(data=>aboutMe=data)
+})">
+    <p class="mx-2 text-justify" x-text="aboutMe"></p>
+</section>
+<section class="mt-10" x-data="{skills: []}" x-init="$nextTick(()=>{
+    getSkills().then(data=>skills=data);
+});">
+    <div class="flex flex-col sm:flex-row items-center gap-3 sm:justify-center mt-5">
+        <template x-for="skill in skills" :key="skill.id">
+            <span class="badge badge-outline" x-text="skill.name"></span>
+        </template>
+    </div>
 
+</section>
+
+<section class="mt-10" x-data="{projects: []}" x-init="$nextTick(()=>{
+    getProjects().then(data=>projects=data);
+});">
+    <h2 class="text-3xl text-center">Projects</h2>
+    <div class="grid md:grid-cols-2 gap-3 justify-center mt-5">
+        <template x-for="project in projects" :key="project.id">
+            <div class="card card-border bg-base-100 w-72">
+                <div class="card-body">
+                    <h2 class="card-title" x-text="project.name"></h2>
+                    <p x-text="project.description" class="text-justify"></p>
+                    <div class="flex gap-1">
+                        <template x-for="skill in project.skills">
+                            <span class="badge badge-outline" x-text="skill.name"></span>
+                        </template>
+                    </div>
+                    <div class="card-actions justify-center">
+                        <a target="_blank" :href="project.githubLink" class="btn btn-primary">Github</a>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</section>
+<section class="mt-10 mx-2" x-data="{experiences: []}" x-init="$nextTick(()=>{
+    getExperiences().then(data=>experiences=data);
+});">
+    <h2 class="text-3xl text-center">Experience</h2>
+    <div class="flex flex-col gap-5">
+        <template x-for="experience in experiences" :key="experience.id">
+            <div>
+                <h4 class="text-xl font-black" x-text="experience.position"></h4>
+                <div class="flex justify-between"><span class="text-lg font-semibold"
+                                                        x-text="experience.company"></span>
+                    <div><span x-text="formatDate(experience.startDate)"></span><span
+                            x-text="' - ' + (experience.isCurrentJob ? 'Current' : formatDate(experience.endDate))"></span>
+                    </div>
+                </div>
+                <p class="text-justify mt-2" x-text="experience.description"></p>
+                <div class="flex gap-3 mt-2">
+                    <template x-for="skill in experience.skills">
+                        <span class="badge badge-outline" x-text="skill.name"></span>
+                    </template>
+                </div>
+
+            </div>
+
+        </template>
+    </div>
+</section>
+<div class="h-16">
+
+</div>
 <script type="module" src="/main.js"></script>
 </body>
 </html>
