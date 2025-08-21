@@ -4,6 +4,7 @@ import (
 	"github.com/caarlos0/env/v6"
 	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/log"
+	"os"
 )
 
 type Config struct {
@@ -19,11 +20,14 @@ type Config struct {
 }
 
 func LoadConfig() *Config {
-	err := godotenv.Load()
-
-	if err != nil {
-		log.Fatalf("Error loading .env file %v", err)
+	_, err := os.Open("./.env")
+	if !os.IsNotExist(err) {
+		err = godotenv.Load()
+		if err != nil {
+			log.Fatalf("Error loading .env file %v", err)
+		}
 	}
+
 	cfg :=
 		&Config{}
 	err = env.Parse(cfg)
