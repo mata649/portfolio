@@ -35,6 +35,6 @@ jobs:
           USER: ${{secrets.PORTFOLIO_INSTANCE_USER}}
         run: |
           mkdir ~/.ssh
-          echo $PRIVATE_KEY > github-ec2.pem && chmod 600 github-ec2.pem
+          echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
           scp -i github-ec2.pem ./bin/portfolio_api ${USER}@${HOST}:/home/${USER}/bin
