@@ -1,0 +1,38 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - portfolio_api/**
+defaults:
+  run:
+    working-directory: ./portfolio_api
+jobs:
+  build:
+    name: Build app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.24
+          cache: 'true'
+      - name: Download Go Modules
+        working-directory: ./portfolio_api
+
+        run: go mod download
+      - name: Run tests
+        run: go test -v ./...
+      - name: Build application
+        run: go build -o output  ./bin/portfolio_api
+      - name: Deploy to EC2
+        env:
+          PRIVATE_KEY: ${{secrets.PORTFOLIO_SSH_KEY}}
+          HOST: ${{secrets.PORTFOLIO_HOST}}
+          USER: ${{secrets.PORTFOLIO_INSTANCE_USER}}
+        run: |
+          echo $PRIVATE_KEY > github-ec2.pem && chmod 600 github-ec2.pem
+          scp -i github-ec2.pem ./bin/portfolio_api ${USER}@${HOST}:/home
