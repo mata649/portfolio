@@ -27,7 +27,7 @@ jobs:
       - name: Run tests
         run: go test -v ./...
       - name: Build application
-        run: go build -o output  ./bin/portfolio_api
+        run: go build -o ./bin/portfolio_api  ./cmd/main.go
       - name: Deploy to EC2
         env:
           PRIVATE_KEY: ${{secrets.PORTFOLIO_SSH_KEY}}
