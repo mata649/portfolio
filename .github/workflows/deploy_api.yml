@@ -35,4 +35,4 @@ jobs:
           USER: ${{secrets.PORTFOLIO_INSTANCE_USER}}
         run: |
           echo $PRIVATE_KEY > github-ec2.pem && chmod 600 github-ec2.pem
-          scp -i github-ec2.pem ./bin/portfolio_api ${USER}@${HOST}:/home
+          scp -i github-ec2.pem ./bin/portfolio_api ${USER}@${HOST}:/home/${USER}/bin
