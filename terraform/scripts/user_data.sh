@@ -40,3 +40,23 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable fetch-ssm-parameters.service
 sudo systemctl start fetch-ssm-parameters.service
+
+sudo tee /etc/systemd/system/portfolio_api.service > /dev/null <<'EOF'
+[Unit]
+Description=Portfolio API
+After=network.target fetch-ssm-parameters.service
+
+[Service]
+User=ec2-user
+WorkingDirectory=/home/ec2-user
+ExecStart=/home/ec2-user/portfolio_api
+Restart=always
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+EnvironmentFile=/etc/profile.d/ssm_parameters.sh
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now portfolio_api
