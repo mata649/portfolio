@@ -1,3 +1,4 @@
+name: Deploy API
 on:
   workflow_dispatch:
   push:
@@ -37,4 +38,12 @@ jobs:
           mkdir ~/.ssh
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
-          scp -i github-ec2.pem ./bin/portfolio_api ${USER}@${HOST}:/home/${USER}/bin
+          
+          scp -i github-ec2.pem ./bin/portfolio_api ${USER}@${HOST}:/home/${USER}/portfolio_api
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST}
+          sudo setcap 'cap_net_bind_service=+ep' ./portfolio_api
+          pgrep -f portfolio_api && pkill -f portfolio_api
+          ./portfolio_api&
+          
+
+          
