@@ -38,6 +38,9 @@ jobs:
           mkdir ~/.ssh
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} '
+            sudo systemctl stop portfolio_api.service
+          '
           scp -i github-ec2.pem ./bin/portfolio_api ${USER}@${HOST}:/home/${USER}/portfolio_api
           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} '
             sudo setcap cap_net_bind_service=+ep /home/${USER}/portfolio_api
