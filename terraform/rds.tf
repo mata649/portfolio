@@ -28,7 +28,7 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 resource "aws_ssm_parameter" "portfolio_db_host" {
   name  = var.ssm_parameter_db_host
   type  = "String"
-  value = aws_db_instance.db.endpoint
+  value = aws_db_instance.db.address
 }
 resource "aws_ssm_parameter" "portfolio_db_port" {
   name = var.ssm_parameter_db_port
