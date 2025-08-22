@@ -57,7 +57,6 @@ variable "rds_db_specs" {
 variable "ssm_parameter_db_username" {
   type = string
 }
-
 variable "ssm_parameter_db_password" {
   type = string
 }
@@ -77,5 +76,8 @@ variable "ssm_parameter_admin_email" {
   type = string
 }
 variable "ssm_parameter_admin_password" {
+  type = string
+}
+variable "ssm_parameter_web_port" {
   type = string
 }

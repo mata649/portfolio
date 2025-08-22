@@ -9,6 +9,7 @@ DB_NAME=$(aws ssm get-parameter --name ${ssm_parameter_db_name} --with-decryptio
 JWT_SIGNING_KEY=$(aws ssm get-parameter --name ${ssm_parameter_jwt_signing_key} --with-decryption --query Parameter.Value --output text)
 ADMIN_EMAIL=$(aws ssm get-parameter --name ${ssm_parameter_admin_email} --with-decryption --query Parameter.Value --output text)
 ADMIN_PASSWORD=$(aws ssm get-parameter --name ${ssm_parameter_admin_password} --with-decryption --query Parameter.Value --output text)
+WEB_PORT=$(aws ssm get-parameter --name ${ssm_parameter_web_port} --with-decryption --query Parameter.Value --output text)
 echo "export DB_USER=$DB_USER" >> /etc/profile.d/ssm_parameters.sh
 echo "export DB_PASSWORD=$DB_PASSWORD" >> /etc/profile.d/ssm_parameters.sh
 echo "export DB_HOST=$DB_HOST" >> /etc/profile.d/ssm_parameters.sh
@@ -17,6 +18,7 @@ echo "export DB_NAME=$DB_NAME" >> /etc/profile.d/ssm_parameters.sh
 echo "export JWT_SIGNING_KEY=$JWT_SIGNING_KEY" >> /etc/profile.d/ssm_parameters.sh
 echo "export ADMIN_EMAIL=$ADMIN_EMAIL" >> /etc/profile.d/ssm_parameters.sh
 echo "export ADMIN_PASSWORD=$ADMIN_PASSWORD" >> /etc/profile.d/ssm_parameters.sh
+echo "export WEB_PORT=$WEB_PORT" >> /etc/profile.d/ssm_parameters.sh
 
 EOF
 sudo chmod +x /usr/local/bin/fetch-ssm-parameters.sh

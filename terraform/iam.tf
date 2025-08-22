@@ -38,6 +38,7 @@ resource "aws_iam_policy" "get_ssm_parameters_policy" {
             data.aws_ssm_parameter.portfolio_jwt_signing_key.arn,
             data.aws_ssm_parameter.portfolio_admin_email.arn,
             data.aws_ssm_parameter.portfolio_admin_password.arn,
+            data.aws_ssm_parameter.portfolio_web_port.arn,
             aws_ssm_parameter.portfolio_db_host.arn,
             aws_ssm_parameter.portfolio_db_port.arn,
             aws_ssm_parameter.portfolio_db_name.arn,
