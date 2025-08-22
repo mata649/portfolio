@@ -42,7 +42,7 @@ jobs:
           scp -i github-ec2.pem ./bin/portfolio_api ${USER}@${HOST}:/home/${USER}/portfolio_api
           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} '
             sudo setcap 'cap_net_bind_service=+ep' ./portfolio_api
-            pgrep -f portfolio_api && pkill -f ./portfolio_api
+            pgrep -f portfolio_api && pkill -f portfolio_api
             ./portfolio_api & 
           '
           
