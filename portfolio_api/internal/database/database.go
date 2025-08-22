@@ -21,7 +21,7 @@ import (
 
 func GetDbConnection(cfg *config.Config) *gorm.DB {
 	db, err := gorm.Open(postgres.New(postgres.Config{
-		DSN: fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", cfg.DbHost, cfg.DbPort, cfg.DbUser, cfg.DbName, cfg.DbPassword),
+		DSN: fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=prefer", cfg.DbHost, cfg.DbPort, cfg.DbUser, cfg.DbName, cfg.DbPassword),
 	}), &gorm.Config{})
 	if err != nil {
 		slog.Error("error connecting to the DB", "error", err)
