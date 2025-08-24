@@ -17,12 +17,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install dependencies
+        working-directory: ./portfolio_frontend
         run: npm ci
 
       - name: Build Vite app
+        working-directory: ./portfolio_frontend
         run: npm run build
 
       - name: Configure AWS credentials
@@ -37,6 +39,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy to S3
+        working-directory: ./portfolio_frontend
         run: |
           aws s3 sync dist/ s3://${AWS_BUCKET} \
             --delete \
