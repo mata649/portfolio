@@ -40,4 +40,3 @@ jobs:
           aws s3 sync dist/ s3://${{secrets.PORTFOLIO_BUCKET_NAME}} \
             --delete \
             --exact-timestamps \
-            --acl public-read
