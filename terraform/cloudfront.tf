@@ -10,23 +10,41 @@ resource "aws_cloudfront_distribution" "portfolio_distribution" {
       origin_ssl_protocols = ["TLSv1.2"]
     }
   }
+  default_root_object = "index.html"
+  origin {
+    origin_id                = aws_s3_bucket.web.id
+    domain_name              = aws_s3_bucket.web.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.web.id
+  }
 
   default_cache_behavior {
-    target_origin_id = aws_instance.api_server.id
+    target_origin_id       = aws_s3_bucket.web.id
+    viewer_protocol_policy = "allow-all"
     allowed_methods = ["GET", "HEAD", "OPTIONS"]
     cached_methods = ["GET", "HEAD"]
-    compress         = true
+    compress               = true
+    cache_policy_id        = data.aws_cloudfront_cache_policy.caching_optimized_policy.id
+
+  }
+
+  ordered_cache_behavior {
+    path_pattern           = "/api/*"
+    target_origin_id       = aws_instance.api_server.id
+    viewer_protocol_policy = "allow-all"
+    allowed_methods = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
+    cached_methods = ["GET", "HEAD"]
+
+    compress = true
     forwarded_values {
-      query_string = false
+      query_string = true
       cookies {
-        forward = "none"
+        forward = "all"
       }
 
     }
-    viewer_protocol_policy = "allow-all"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
+    min_ttl     = 0
+    default_ttl = 3600
+    max_ttl     = 86400
 
   }
 
@@ -38,4 +56,16 @@ resource "aws_cloudfront_distribution" "portfolio_distribution" {
   viewer_certificate {
     cloudfront_default_certificate = true
   }
+}
+
+data "aws_cloudfront_cache_policy" "caching_optimized_policy" {
+  name = "Managed-CachingOptimized"
+}
+
+
+resource "aws_cloudfront_origin_access_control" "web" {
+  name                              = "${local.prefix}OAC"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }

@@ -11,6 +11,11 @@ variable "vpc_cidr_block" {
   type        = string
 }
 
+variable "web_site_bucket_name" {
+  description = "The name of the web site's bucket"
+  type = string
+}
+
 variable "public_subnets" {
   description = "A list of objects containing the public subnets information"
   type = map(

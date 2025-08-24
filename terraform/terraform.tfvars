@@ -1,6 +1,9 @@
 region         = "us-east-1"
 project_name   = "Portfolio"
 vpc_cidr_block = "10.32.0.0/16"
+
+web_site_bucket_name = "mata649.com"
+
 public_subnets = {
   "subnet-1" = {
     cidr = "10.32.0.0/20",

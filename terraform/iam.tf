@@ -84,3 +84,7 @@ resource "aws_iam_instance_profile" "api_instance_profile" {
   name = "ec2-api-instance-profile"
   role = aws_iam_role.api_role.name
 }
+
+data "aws_iam_user" "admin_user" {
+  user_name = "adminuser"
+}
