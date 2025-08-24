@@ -25,6 +25,8 @@ jobs:
 
       - name: Build Vite app
         working-directory: ./portfolio_frontend
+        env:
+          VITE_API_HOST: ${{secrets.API_HOST}}:w
         run: npm run build
 
       - name: Configure AWS credentials
