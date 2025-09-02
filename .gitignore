@@ -325,4 +325,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 .idea
+*.sqlite3
 # End of https://www.toptal.com/developers/gitignore/api/django,windows,pycharm,linux
