@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.portfolio.models import Skill, Project, Experience
+from apps.portfolio.models import Skill, Project, Experience, SiteInfo
 
 
 # Register your models here.
@@ -22,3 +22,9 @@ class ExperienceAdmin(admin.ModelAdmin):
     list_display = ['position', 'company', 'start_date', 'end_date', 'is_current']
     search_fields = ['position', 'company']
     list_filter = ['is_current', 'start_date', 'end_date']
+
+
+@admin.register(SiteInfo)
+class SiteInfoAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return not SiteInfo.objects.exists()
