@@ -31,3 +31,13 @@ class Experience(models.Model):
 
     def __str__(self):
         return f'{self.position} - {self.company}'
+
+
+class SiteInfo(models.Model):
+    about_me = models.TextField(blank=False)
+    github_link = models.URLField(blank=False, max_length=255)
+    linkedin_link = models.URLField(blank=False, max_length=255)
+    email = models.EmailField(blank=False, max_length=255)
+
+    class Meta:
+        verbose_name_plural = 'Site info'
