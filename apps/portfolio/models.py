@@ -14,6 +14,7 @@ class Project(models.Model):
     description = models.TextField(blank=False)
     github_link = models.URLField(blank=False, max_length=255)
     skills = models.ManyToManyField(Skill, related_name='projects')
+    year = models.PositiveSmallIntegerField(blank=False, default=0)
 
     def __str__(self):
         return self.name
