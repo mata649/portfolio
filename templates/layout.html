@@ -1,0 +1,22 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}
+    {% endblock %} - Jose Mata</title>
+    <link rel="stylesheet" href="{% static 'dist/main.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}' class="mx-auto max-w-3/5">
+<nav></nav>
+{% block content %}
+
+{% endblock %}
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
+{% block custom_script %}
+{% endblock %}
+</body>
+</html>
