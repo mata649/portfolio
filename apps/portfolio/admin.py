@@ -22,7 +22,7 @@ class ExperienceAdmin(admin.ModelAdmin):
     list_display = ['position', 'company', 'start_date', 'end_date', 'is_current']
     search_fields = ['position', 'company']
     list_filter = ['is_current', 'start_date', 'end_date']
-
+    filter_horizontal = ['skills']
 
 @admin.register(SiteInfo)
 class SiteInfoAdmin(admin.ModelAdmin):
