@@ -1,6 +1,7 @@
 name: Deploy Django (Docker Compose)
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "master" ]
 
