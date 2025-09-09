@@ -14,20 +14,17 @@ class Config:
         self.DB_HOST = os.getenv('DJANGO_DB_HOST')
         self.DB_PORT = os.getenv('DJANGO_DB_PORT')
         self.DB_NAME = os.getenv('DJANGO_DB_NAME')
-        if not self._is_dev():
-            if self._is_any_db_var_empty():
-                raise RuntimeError('None of the DB variables can be empty')
+        if self._is_any_db_var_empty():
+            print(f'DB_USER {self.DB_USER}')
+            print(f'DB_PASSWORD {self.DB_PASSWORD}')
+            print(f'DB_HOST {self.DB_HOST}')
+            print(f'DB_PORT {self.DB_PORT}')
+            print(f'DB_NAME {self.DB_NAME}')
+            raise RuntimeError('None of the DB variables can be empty')
 
     def _is_any_db_var_empty(self):
-        return (self.DB_USER
+        return not (self.DB_USER
                 and self.DB_PASSWORD
                 and self.DB_HOST
                 and self.DB_PORT
                 and self.DB_NAME)
-
-    @staticmethod
-    def _is_dev() -> bool:
-        settings = os.getenv('DJANGO_SETTINGS_MODULE')
-        if not settings:
-            raise RuntimeError('Setting module not specified')
-        return 'prod' in settings
