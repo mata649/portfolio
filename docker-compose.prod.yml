@@ -6,3 +6,5 @@
       sh -c "python manage.py migrate --noinput &&
              python manage.py collectstatic --noinput &&
              gunicorn --workers 3 --bind 0.0.0.0:8000 config.wsgi:application"
+    ports:
+      - "80:8000"
