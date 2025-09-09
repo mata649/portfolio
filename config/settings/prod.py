@@ -7,7 +7,7 @@ SECRET_KEY = config.SECRET_KEY
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS=[f'https://*.{config.DOMAIN}']
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 

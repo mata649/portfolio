@@ -9,18 +9,17 @@ class Config:
         if not self.SECRET_KEY:
             raise RuntimeError('The django secret key has not been set')
 
+        self.DOMAIN = os.getenv('DOMAIN')
+        if not self.DOMAIN:
+            raise RuntimeError('The domain has not been set')
+
         self.DB_USER = os.getenv('DJANGO_DB_USER')
         self.DB_PASSWORD = os.getenv('DJANGO_DB_PASSWORD')
         self.DB_HOST = os.getenv('DJANGO_DB_HOST')
         self.DB_PORT = os.getenv('DJANGO_DB_PORT')
         self.DB_NAME = os.getenv('DJANGO_DB_NAME')
         if self._is_any_db_var_empty():
-            print(f'DB_USER {self.DB_USER}')
-            print(f'DB_PASSWORD {self.DB_PASSWORD}')
-            print(f'DB_HOST {self.DB_HOST}')
-            print(f'DB_PORT {self.DB_PORT}')
-            print(f'DB_NAME {self.DB_NAME}')
-            raise RuntimeError('None of the DB variables can be empty')
+           raise RuntimeError('None of the DB variables can be empty')
 
     def _is_any_db_var_empty(self):
         return not (self.DB_USER
