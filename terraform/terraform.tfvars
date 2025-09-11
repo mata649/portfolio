@@ -4,6 +4,7 @@ region       = "us-east-1"
 project_name = "Portfolio"
 vpc_cidr     = "10.16.0.0/16"
 domain       = "mata649.com"
+app_user     = "portfolio_app"
 tags = {
   "Enviroment" = "Prod"
   "Project"    = "Portfolio"
@@ -21,6 +22,7 @@ public_subnets = {
   }
 }
 
+bucket_name = "mata649.com"
 
 ec2_instance_specs = {
   ami           = "ami-04360baab2ce7cf8c"

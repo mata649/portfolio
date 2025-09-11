@@ -10,7 +10,11 @@ resource "aws_cloudfront_distribution" "distribution" {
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
-
+  origin {
+    origin_id                = data.aws_s3_bucket.bucket.id
+    domain_name              = data.aws_s3_bucket.bucket.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.web.id
+  }
   default_cache_behavior {
     target_origin_id       = aws_instance.server.id
     viewer_protocol_policy = "allow-all"
@@ -30,7 +34,15 @@ resource "aws_cloudfront_distribution" "distribution" {
     max_ttl     = 86400
 
   }
+  ordered_cache_behavior {
+    path_pattern           = "/static/*"
+    target_origin_id       = data.aws_s3_bucket.bucket.id
+    viewer_protocol_policy = "redirect-to-https"
 
+    allowed_methods = ["GET", "HEAD"]
+    cached_methods  = ["GET", "HEAD"]
+    cache_policy_id = data.aws_cloudfront_cache_policy.caching_optimized_policy.id
+  }
   restrictions {
     geo_restriction {
       restriction_type = "none"
@@ -39,4 +51,15 @@ resource "aws_cloudfront_distribution" "distribution" {
   viewer_certificate {
     cloudfront_default_certificate = true
   }
+}
+
+data "aws_cloudfront_cache_policy" "caching_optimized_policy" {
+  name = "Managed-CachingOptimized"
+}
+
+resource "aws_cloudfront_origin_access_control" "web" {
+  name                              = "${local.prefix}OAC"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }

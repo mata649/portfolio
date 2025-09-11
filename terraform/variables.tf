@@ -3,7 +3,15 @@
   description = "The name of the project"
   type        = string
 }
+variable "bucket_name" {
+  description = "The bucket name"
+  type        = string
+}
 
+variable "app_user" {
+  description = "The iam user name used by the app"
+  type        = string
+}
 variable "region" {
   default = "us-east-1"
   type    = string
