@@ -11,7 +11,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
-        context['skills'] = Skill.objects.all()
+        context['skills'] = Skill.objects.all().filter(display_first=True)
         context['site_info'] = SiteInfo.objects.first()
         context['projects'] = Project.objects.prefetch_related('skills').all().order_by('-year')
         context['experiences'] = Experience.objects.prefetch_related('skills').all().order_by('-start_date')
