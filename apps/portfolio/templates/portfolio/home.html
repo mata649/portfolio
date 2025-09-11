@@ -9,14 +9,19 @@
     <section x-data="{skills:[]}" class="mt-10 grid grid-cols-3 md:grid-cols-6 xl:grid-cols-7 gap-3">
         {% for skill in skills %}
             <div class="flex justify-center">
-                <span @click="toggleSkill('{{ skill.name }}', $data)"
+                <span
                       class="badge cursor-pointer "
                       :class="skills.includes('{{ skill.name }}') ? 'badge-neutral hover:bg-base-100 hover:text-neutral-950' : 'badge-outline hover:bg-neutral-950 hover:text-neutral-50'"
                       hx-get="{% url 'filter_projects' %}"
                       hx-target="#project_list"
                       :hx-vals="JSON.stringify({ skills: skills })"
 
-                >{{ skill.name }}</span>
+                ><span
+                        @click="toggleSkill('{{ skill.name }}', $data)"
+                        hx-get="{% url 'filter_experiences' %}"
+                        hx-target="#experience_list"
+                        :hx-vals="JSON.stringify({ skills: skills })"
+                >{{ skill.name }}</span></span>
             </div>
         {% endfor %}
     </section>
