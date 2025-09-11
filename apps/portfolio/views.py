@@ -30,7 +30,7 @@ class ProjectFilterView(ListView):
             skill_list = skills_param.split(',')
             for skill in skill_list:
                 projects = projects.filter(skills__name__iexact=skill)
-        return projects.order_by('year')
+        return projects.order_by('-year')
 
 
 class ExperienceFilterView(ListView):
