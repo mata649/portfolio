@@ -4,13 +4,13 @@
     Portfolio
 {% endblock %}
 {% block content %}
-    <h1 class="text-4xl text-center">Jose Alberto Mata</h1>
-    <p class="mt-10 text-lg">{{ site_info.about_me }}</p>
-    <section x-data="{skills:[]}" class="mt-10 grid grid-cols-3 md:grid-cols-6 xl:grid-cols-7 gap-3">
+    <h1 class="text-7xl text-center">Jose Alberto Mata</h1>
+    <p class="mt-10 text-justify text-2xl">{{ site_info.about_me }}</p>
+    <section x-data="{skills:[]}" class="mt-10 grid grid-cols-3 md:grid-cols-6 xl:grid-cols-7 gap-1">
         {% for skill in skills %}
             <div class="flex justify-center">
                 <span
-                      class="badge cursor-pointer "
+                      class="badge badge-xl cursor-pointer py-4"
                       :class="skills.includes('{{ skill.name }}') ? 'badge-neutral hover:bg-base-100 hover:text-neutral-950' : 'badge-outline hover:bg-neutral-950 hover:text-neutral-50'"
                       hx-get="{% url 'filter_projects' %}"
                       hx-target="#project_list"
@@ -26,13 +26,13 @@
         {% endfor %}
     </section>
     <section class="mt-10">
-        <h2 class="text-2xl text-center">Projects</h2>
+        <h2 class="text-5xl text-center">Projects</h2>
         <div id="project_list">
             {% include 'portfolio/partials/project_list.html' with projects=projects %}
         </div>
     </section>
     <section class="mt-10 mb-20">
-        <h2 class="text-2xl text-center">Experiences</h2>
+        <h2 class="text-5xl text-center">Experiences</h2>
         <div id="experience_list">
             {% include 'portfolio/partials/experience_list.html' with experiences=experiences %}
         </div>

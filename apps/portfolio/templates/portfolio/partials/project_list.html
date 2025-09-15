@@ -1,15 +1,15 @@
-﻿<div class="grid place-items-center xl:grid-cols-2">
+﻿<div class="grid place-items-center grid-cols-2">
     {% for project in projects %}
         <a target="_blank" href="{{ project.github_link }}">
             <div class="card bg-base-100 w-96 ">
                 <div class="card-body transition hover:bg-neutral hover:text-white">
-                    <h2 class="card-title break-normal">
+                    <h2 class="text-4xl break-normal">
                         {{ project.name }}
                     </h2>
-                    <p>{{ project.description }}</p>
+                    <p class="text-2xl">{{ project.description }}</p>
                     <div class="card-actions mt-2">
                         {% for skill in project.skills.all %}
-                            <div class="badge badge-outline">{{ skill.name }}</div>
+                            <div class="badge badge-xl badge-outline">{{ skill.name }}</div>
                         {% endfor %}
 
                     </div>
