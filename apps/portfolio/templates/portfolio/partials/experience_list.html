@@ -2,9 +2,9 @@
     {% for experience in experiences %}
         <div>
             <h4 class="text-4xl font-semibold">{{ experience.position }}</h4>
-            <div class="flex justify-between"><span class="text-lg font-semibold">{{ experience.company }}</span>
+            <div class="flex justify-between"><span class="text-2xl font-semibold">{{ experience.company }}</span>
                 <div>
-                     <span>
+                     <span class="text-2xl">
                         {{ experience.start_date }} -
                          {% if experience.is_current %}
                              Current
@@ -14,7 +14,7 @@
                          </span>
                 </div>
             </div>
-            <p class="text-justify mt-2">{{ experience.description }}</p>
+            <p class="text-justify mt-2 text-xl">{{ experience.description }}</p>
             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-y-2 mt-5">
                 {% for skill in experience.skills.all %}
                     <span class="badge badge-outline">{{ skill.name }}</span>
