@@ -1,7 +1,7 @@
-﻿<div class="grid place-items-center grid-cols-2">
+﻿<div class="flex flex-col gap-3 w-full">
     {% for project in projects %}
         <a target="_blank" href="{{ project.github_link }}">
-            <div class="card bg-base-100 w-96 ">
+            <div class="card bg-base-100 w-full ">
                 <div class="card-body transition hover:bg-neutral hover:text-white">
                     <h2 class="text-4xl break-normal">
                         {{ project.name }}
