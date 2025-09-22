@@ -1,8 +1,8 @@
-﻿<div class="grid grid-cols-3 gap-3 w-full">
+﻿<div class="grid justify-items-center lg:grid lg:grid-cols-2 2xl:grid-cols-3 gap-3 w-full">
     {% for project in page_obj %}
         <div x-data="{ showModal: false }"
              class="border w-64 h-64 flex flex-col justify-center items-center border-orange-300 relative">
-            <h4 class="text-center px-4">{{ project.name | upper }}</h4>
+            <h4 class="text-center px-4 text-2xl">{{ project.name | upper }}</h4>
             <button @click="showModal = true"
                     class="px-4 py-2 text-orange-300 border cursor-pointer border-orange-300 absolute bottom-4 shadow hover:shadow-orange-300">
                 VIEW
