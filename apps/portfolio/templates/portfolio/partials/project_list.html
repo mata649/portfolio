@@ -1,21 +1,44 @@
-﻿<div class="flex flex-col gap-3 w-full">
-    {% for project in projects %}
-        <a target="_blank" href="{{ project.github_link }}">
-            <div class="card bg-base-100 w-full ">
-                <div class="card-body transition hover:bg-neutral hover:text-white">
-                    <h2 class="text-4xl break-normal">
-                        {{ project.name }}
-                    </h2>
-                    <p class="text-2xl">{{ project.description }}</p>
-                    <div class="card-actions mt-2">
-                        {% for skill in project.skills.all %}
-                            <div class="badge badge-xl badge-outline">{{ skill.name }}</div>
-                        {% endfor %}
+﻿<div class="grid grid-cols-3 gap-3 w-full">
+    {% for project in page_obj %}
+        <div x-data="{ showModal: false }"
+             class="border w-64 h-64 flex flex-col justify-center items-center border-orange-300 relative">
+            <h4 class="text-center px-4">{{ project.name | upper }}</h4>
+            <button @click="showModal = true"
+                    class="px-4 py-2 text-orange-300 border cursor-pointer border-orange-300 absolute bottom-4 shadow hover:shadow-orange-300">
+                VIEW
+            </button>
 
+            <div x-show="showModal"
+                 class="fixed inset-0 bg-neutral-900 bg-opacity-75 flex items-center justify-center z-50">
+                <div @click.away="showModal = false"
+                     class="border border-orange-300 p-6 rounded-lg shadow-lg max-w-sm w-full">
+                    <h2 class="text-xl font-bold mb-4">{{ project.name | upper }}</h2>
+                    <p class="mb-4">{{ project.description }}</p>
+                    <div class="grid grid-cols-4 my-2">
+                        {% for skill in project.skills.all %}
+                            <span class="text-center">{{ skill.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="flex w-full justify-around items-center mt-2">
+                        <a target="_blank" href="{{ project.github_link }}"
+                           class="px-4 py-2  text-orange-300 border border-orange-300 cursor-pointer shadow hover:shadow-orange-300">GITHUB</a>
+                        <button @click="showModal = false"
+                                class="px-4 py-2  text-orange-300 border border-orange-300 cursor-pointer shadow hover:shadow-orange-300">
+                            CLOSE
+                        </button>
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     {% endfor %}
 
+</div>
+<div class="flex justify-center gap-3 mt-4 w-full">
+    {% for page in page_obj.paginator.page_range %}
+        <button class="text-yellow-800 font-semibold cursor-pointer"
+                hx-get="{% url 'filter_projects' %}?page={{ page }}"
+                hx-target="#project_list"
+                :hx-vals="JSON.stringify({ skills: skills })"
+        >{{ page }}</button>
+    {% endfor %}
 </div>

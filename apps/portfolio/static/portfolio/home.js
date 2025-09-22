@@ -4,7 +4,7 @@
     } else {
         data.skills = [...data.skills, skill]
     }
-    console.log(data.skills)
+    data.page = 1
 }
 
 window.toggleSkill = toggleSkill
