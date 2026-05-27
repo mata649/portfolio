@@ -1,6 +1,6 @@
 ﻿namespace Portfolio.Web.Entities;
 
-public class Experiences
+public class Experience
 {
 
     public Guid Id { get; set; }
@@ -19,7 +19,7 @@ public class Experiences
 
     public List<Skill> Skills { get; set; } = [];
 
-    public Experiences(
+    public Experience(
         Guid id,
         string positionName,
         string company,
@@ -38,7 +38,7 @@ public class Experiences
         CurrentJob = currentJob;
     }
 
-    public Experiences()
+    public Experience()
     {
     }
 
