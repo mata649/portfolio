@@ -10,6 +10,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
                            throw new ArgumentNullException("DefaultConnection");
     options.UseSqlite(connectionString);
 });
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
