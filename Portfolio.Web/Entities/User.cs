@@ -1,4 +1,4 @@
-﻿namespace Portfolio.Web.Users.Domain;
+﻿namespace Portfolio.Web.Entities;
 
 public class User
 {

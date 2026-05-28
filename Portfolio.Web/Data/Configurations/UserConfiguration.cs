@@ -1,8 +1,8 @@
 ﻿namespace Portfolio.Web.Data.Configurations;
 
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Users.Domain;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {

@@ -2,7 +2,6 @@
 
 using Entities;
 using Microsoft.EntityFrameworkCore;
-using Users.Domain;
 
 public class ApplicationDbContext(DbContextOptions options) :DbContext(options)
 {
