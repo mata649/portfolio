@@ -5,7 +5,9 @@ public class Experience
 
     public Guid Id { get; set; }
 
-    public required string PositionName { get; set; }
+    public required string Name { get; set; }
+
+    public required string Location { get; set; }
 
     public required string Company { get; set; }
 
@@ -19,18 +21,11 @@ public class Experience
 
     public List<Skill> Skills { get; set; } = [];
 
-    public Experience(
-        Guid id,
-        string positionName,
-        string company,
-        string description,
-        DateOnly startDate,
-        DateOnly endDate,
-        bool currentJob
-    )
+    public Experience(Guid id, string name, string location, string company, string description, DateOnly startDate, DateOnly endDate, bool currentJob)
     {
         Id = id;
-        PositionName = positionName;
+        Name = name;
+        Location = location;
         Company = company;
         Description = description;
         StartDate = startDate;
