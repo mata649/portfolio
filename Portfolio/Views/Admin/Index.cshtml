@@ -1,0 +1,30 @@
+﻿@model Portfolio.Web.Models.Admin.AdminViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="tabs tabs-box">
+    <input type="radio" name="my_tabs_6" class="tab" aria-label="Skills"/>
+    <div class="tab-content p-6">
+        <partial name="Skills/_SkillsTab" model="Model.Skills"/>
+    </div>
+
+    <input type="radio" name="my_tabs_6" class="tab" aria-label="Projects" checked="checked"/>
+    <div class="tab-content p-6">Tab content 2</div>
+
+    <input type="radio" name="my_tabs_6" class="tab" aria-label="Experiences"/>
+    <div class="tab-content p-6">Tab content 3</div>
+</div>
+
+<dialog id="admin_modal" class="modal">
+    <div class="modal-box">
+        <div id="modal-body">
+        </div>
+    </div>
+</dialog>
+
+@section Scripts{
+    <script>
+        document.addEventListener("closeModal", () => admin_modal.close())
+    </script>
+}

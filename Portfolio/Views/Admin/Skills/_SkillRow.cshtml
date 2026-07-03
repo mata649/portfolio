@@ -1,0 +1,15 @@
+﻿@model Portfolio.Web.Models.Admin.SkillViewModel
+
+<tr id="skill-@Model.Id" hx-swap-oob="beforeend:#skill-list">
+    <td>@Model.Name</td>
+    <td>
+        <button class="btn btn-ghost btn-xs text-error"
+                hx-delete="@Url.Action("DeleteSkill", new {id = Model.Id})"
+                hx-confirm="Are you sure?"
+                hx-target="#skill-@Model.Id"
+                hx-swap="delete"
+        > Delete</button>
+        
+    </td>
+</tr>
+

@@ -1,0 +1,38 @@
+﻿@model Portfolio.Web.Models.Login.LoginInputModel
+
+        <form asp-action="Login" class="space-y-6" method="post">
+                <h3 class="font-bold text-lg uppercase border-b-2 border-sys-dark pb-1">Log In</h3>
+
+                <div class="flex w-full flex-col gap-2">
+                        <label asp-for="Email" class="font-bold text-sm uppercase"></label>
+                        <input
+                                asp-for="Email"
+                                placeholder="Email"
+                                class="w-full border-2 border-sys-dark bg-sys-paper px-3 py-2 outline-none transition-all focus:border-sys-blue focus:shadow-retro-focus focus:bg-sys-focus placeholder:text-sys-muted"
+                        >
+                        <span asp-validation-for="Email"></span>
+                </div>
+                <div class="flex w-full flex-col gap-2">
+                        <label asp-for="Password" class="font-bold text-sm uppercase"> </label>
+                        <input
+                                asp-for="Password"
+                                placeholder="Password"
+                                class="w-full border-2 border-sys-dark bg-sys-paper px-3 py-2 outline-none transition-all focus:border-sys-blue focus:shadow-retro-focus focus:bg-sys-focus placeholder:text-sys-muted"
+                        >
+                        <span asp-validation-for="Password"></span>
+                </div>
+
+                <div asp-validation-summary="ModelOnly">
+                </div>
+                <button
+                        type="submit"
+                        class="bg-sys-blue text-white font-bold uppercase px-8 py-2 border-2 border-sys-dark shadow-retro hover:shadow-retro-sm hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all cursor-pointer text-center">
+                        &gt;
+                        Log In
+                </button>
+        </form>
+
+@section Scripts
+{
+        <partial name="_ValidationScriptsPartial"/>
+}

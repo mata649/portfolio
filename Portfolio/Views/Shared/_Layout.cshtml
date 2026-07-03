@@ -1,0 +1,28 @@
+@using Microsoft.AspNetCore.Identity;
+@using Portfolio.Web.Entities
+@inject SignInManager<User> SignInManager;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true"/>
+    <meta name="htmx-config" includeAspNetAntiforgeryToken="true"/>
+</head>
+<body class="min-h-screen bg-base-100 text-sys-dark p-8 flex flex-col items-center">
+<nav class="flex w-full justify-end">@if (SignInManager.IsSignedIn(User))
+    {
+        <li>@User.Identity?.Name</li>
+        <form asp-action="logout" asp-controller="Users">
+            <button type="submit">Log out</button>
+        </form>
+    }
+</nav>
+<section>
+    @RenderBody()
+</section>
+<script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/htmx/htmx.min.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

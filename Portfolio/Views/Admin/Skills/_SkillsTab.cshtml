@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Portfolio.Web.Models.Admin.SkillViewModel>
+<div>
+    <div class="flex justify-end">
+        <button class="btn btn-primary" hx-get="@Url.Action("Create", "Skills")" hx-target="#modal-body"
+                onclick="admin_modal.showModal()">+ Add Skill
+        </button>
+    </div>
+    <table>
+        <div class="overflow-x-auto">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="skill-list">
+                @foreach (var skill in Model)
+                {
+                    <partial name="Skills/_SkillRow" model="skill"/>
+                }
+                </tbody>
+            </table>
+        </div>
+    </table>
+</div>

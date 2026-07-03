@@ -1,0 +1,12 @@
+﻿@model Portfolio.Web.Models.Admin.SkillInputModel
+<h3 class="font-bold text-lg">Add New Skill</h3>
+<form hx-post="@Url.Action("Create","Skills")" hx-target="#skill-list" hx-swap="outerHTML">
+    <div class="form">
+        <input asp-for="Name" class="input" />
+        <span asp-validation-for="Name" class="text-error text-sm"></span>
+    </div>
+    <div class="modal-action">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn" onclick="admin_modal.close()">Cancel</button>
+    </div>
+</form>
