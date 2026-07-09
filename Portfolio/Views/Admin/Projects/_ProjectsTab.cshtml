@@ -1,19 +1,19 @@
-@model IEnumerable<Portfolio.Web.Models.Admin.SkillViewModel>
+@model IEnumerable<Portfolio.Web.Models.Admin.ProjectViewModel>
 
 <div class="space-y-6">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h2 class="text-2xl font-bold">Skills</h2>
-            <p class="text-sm opacity-60">Manage your technical skills, programming languages, and tools.</p>
+            <h2 class="text-2xl font-bold">Projects</h2>
+            <p class="text-sm opacity-60">Add, edit, or delete projects to display in your portfolio showcase.</p>
         </div>
         <button class="btn btn-primary gap-2" 
-                hx-get="@Url.Action("Create", "Skills")" 
+                hx-get="@Url.Action("Create", "Projects")" 
                 hx-target="#modal-body"
                 onclick="admin_modal.showModal()">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            Add Skill
+            Add Project
         </button>
     </div>
 
@@ -21,30 +21,32 @@
         <table class="table table-md w-full">
             <thead>
                 <tr class="bg-base-200">
-                    <th>Skill Name</th>
+                    <th>Project Info</th>
+                    <th>Description</th>
+                    <th>Associated Skills</th>
                     <th class="text-right">Actions</th>
                 </tr>
             </thead>
-            <tbody id="skill-list">
+            <tbody id="project-list">
                 @if (!Model.Any())
                 {
-                    <tr id="no-skills-row">
-                        <td colspan="2" class="text-center py-10 opacity-60">
+                    <tr id="no-projects-row">
+                        <td colspan="4" class="text-center py-10 opacity-60">
                             <div class="flex flex-col items-center justify-center space-y-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-12 h-12 text-base-content/40">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21m0 0l-.813-5.096L9 21zm0 0h-.75m.75 0h.75m-.75 0l3.03-1.515m-.385-8.419c.907-.907 2.185-1.143 3.32-.708a5.962 5.962 0 013.111 3.111c.435 1.135.199 2.413-.708 3.32L9 21m0 0L3.13 15.13a5.962 5.962 0 01-.708-3.32A5.962 5.962 0 015.533 8.7a5.962 5.962 0 013.32-.708L9 21z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.008 1.24l.885 1.77a2.25 2.25 0 0 0 2.007 1.24h1.98a2.25 2.25 0 0 0 2.007-1.24l.885-1.77a2.25 2.25 0 0 1 2.007-1.24h3.86m-18 0h18a2.25 2.25 0 0 1 2.25 2.25v4.5A2.25 2.25 0 0 1 19.5 21h-15A2.25 2.25 0 0 1 2.25 18.75v-4.5A2.25 2.25 0 0 1 2.25 13.5Zm0-4.5h18a2.25 2.25 0 0 0 2.25-2.25V4.5A2.25 2.25 0 0 0 19.5 2.25h-15A2.25 2.25 0 0 0 2.25 4.5v2.25A2.25 2.25 0 0 0 2.25 9Z" />
                                 </svg>
-                                <span class="font-semibold text-lg">No skills yet</span>
-                                <span class="text-sm">Click "+ Add Skill" to define a new skill.</span>
+                                <span class="font-semibold text-lg">No projects yet</span>
+                                <span class="text-sm">Click "+ Add Project" to insert your first portfolio project.</span>
                             </div>
                         </td>
                     </tr>
                 }
                 else
                 {
-                    @foreach (var skill in Model)
+                    @foreach (var project in Model)
                     {
-                        <partial name="Skills/_SkillRow" model="skill" />
+                        <partial name="Projects/_ProjectRow" model="project" />
                     }
                 }
             </tbody>

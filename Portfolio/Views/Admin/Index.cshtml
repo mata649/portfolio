@@ -1,24 +1,97 @@
-﻿@model Portfolio.Web.Models.Admin.AdminViewModel
+@model Portfolio.Web.Models.Admin.AdminViewModel
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<div class="tabs tabs-box">
-    <input type="radio" name="my_tabs_6" class="tab" aria-label="Skills"/>
-    <div class="tab-content p-6">
-        <partial name="Skills/_SkillsTab" model="Model.Skills"/>
+<div class="w-full max-w-7xl mx-auto space-y-8 p-4">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-base-300">
+        <div>
+            <h1 class="text-4xl font-extrabold tracking-tight">Admin Dashboard</h1>
+            <p class="text-base opacity-70 mt-1">Control panel for managing your portfolio content, projects, and career milestones.</p>
+        </div>
+        <div class="flex gap-2">
+            <a href="/" class="btn btn-outline btn-sm md:btn-md gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+                View Website
+            </a>
+        </div>
     </div>
 
-    <input type="radio" name="my_tabs_6" class="tab" aria-label="Projects" checked="checked"/>
-    <div class="tab-content p-6">Tab content 2</div>
+    <!-- Statistics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Stat: Skills -->
+        <div class="stats shadow border border-base-300 bg-base-100">
+            <div class="stat">
+                <div class="stat-figure text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21m0 0l-.813-5.096L9 21zm0 0h-.75m.75 0h.75m-.75 0l3.03-1.515m-.385-8.419c.907-.907 2.185-1.143 3.32-.708a5.962 5.962 0 013.111 3.111c.435 1.135.199 2.413-.708 3.32L9 21m0 0L3.13 15.13a5.962 5.962 0 01-.708-3.32A5.962 5.962 0 015.533 8.7a5.962 5.962 0 013.32-.708L9 21z" />
+                    </svg>
+                </div>
+                <div class="stat-title text-base-content/70 font-semibold">Total Skills</div>
+                <div class="stat-value text-primary font-black">@Model.Skills.Count()</div>
+                <div class="stat-desc opacity-50">Technologies, languages & tools</div>
+            </div>
+        </div>
 
-    <input type="radio" name="my_tabs_6" class="tab" aria-label="Experiences"/>
-    <div class="tab-content p-6">Tab content 3</div>
+        <!-- Stat: Projects -->
+        <div class="stats shadow border border-base-300 bg-base-100">
+            <div class="stat">
+                <div class="stat-figure text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.008 1.24l.885 1.77a2.25 2.25 0 0 0 2.007 1.24h1.98a2.25 2.25 0 0 0 2.007-1.24l.885-1.77a2.25 2.25 0 0 1 2.007-1.24h3.86m-18 0h18a2.25 2.25 0 0 1 2.25 2.25v4.5A2.25 2.25 0 0 1 19.5 21h-15A2.25 2.25 0 0 1 2.25 18.75v-4.5A2.25 2.25 0 0 1 2.25 13.5Zm0-4.5h18a2.25 2.25 0 0 0 2.25-2.25V4.5A2.25 2.25 0 0 0 19.5 2.25h-15A2.25 2.25 0 0 0 2.25 4.5v2.25A2.25 2.25 0 0 0 2.25 9Z" />
+                    </svg>
+                </div>
+                <div class="stat-title text-base-content/70 font-semibold">Projects Showcase</div>
+                <div class="stat-value text-secondary font-black">@Model.Projects.Count()</div>
+                <div class="stat-desc opacity-50">Featured and sandbox applications</div>
+            </div>
+        </div>
+
+        <!-- Stat: Experiences -->
+        <div class="stats shadow border border-base-300 bg-base-100">
+            <div class="stat">
+                <div class="stat-figure text-accent">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M22.5 21L1.5 21m2.25-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3.75-6h.75m-.75 3h.75m-.75 3h.75m9-3h.75m-.75 3h.75m-.75 3h.75" />
+                    </svg>
+                </div>
+                <div class="stat-title text-base-content/70 font-semibold">Career Experiences</div>
+                <div class="stat-value text-accent font-black">@Model.Experiences.Count()</div>
+                <div class="stat-desc opacity-50">Professional timeline records</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <div class="tabs tabs-lifted w-full">
+        <!-- Skills Tab -->
+        <input type="radio" name="dashboard_tabs" class="tab font-semibold" aria-label="Skills" checked="checked" />
+        <div class="tab-content bg-base-100 border-base-300 rounded-box p-6 md:p-8">
+            <partial name="Skills/_SkillsTab" model="Model.Skills" />
+        </div>
+
+        <!-- Projects Tab -->
+        <input type="radio" name="dashboard_tabs" class="tab font-semibold" aria-label="Projects" />
+        <div class="tab-content bg-base-100 border-base-300 rounded-box p-6 md:p-8">
+            <partial name="Projects/_ProjectsTab" model="Model.Projects" />
+        </div>
+
+        <!-- Experiences Tab -->
+        <input type="radio" name="dashboard_tabs" class="tab font-semibold" aria-label="Experiences" />
+        <div class="tab-content bg-base-100 border-base-300 rounded-box p-6 md:p-8">
+            <partial name="Experiences/_ExperiencesTab" model="Model.Experiences" />
+        </div>
+    </div>
 </div>
 
-<dialog id="admin_modal" class="modal">
-    <div class="modal-box">
-        <div id="modal-body">
+<dialog id="admin_modal" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box max-w-2xl border border-base-300 shadow-2xl">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="admin_modal.close()">✕</button>
+        <div id="modal-body" class="py-4">
+            <!-- Dynamic Form Loaded Here via HTMX -->
         </div>
     </div>
 </dialog>

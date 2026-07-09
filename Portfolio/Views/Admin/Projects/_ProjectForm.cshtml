@@ -1,0 +1,76 @@
+@model Portfolio.Web.Models.Admin.ProjectInputModel
+
+<h3 class="font-bold text-xl mb-4">@(Model.Id == null ? "Add New Project" : "Edit Project")</h3>
+
+<form hx-post="@(Model.Id == null ? Url.Action("Create", "Projects") : Url.Action("Edit", "Projects", new { id = Model.Id }))" 
+      hx-target="@(Model.Id == null ? "#project-list" : $"#project-{Model.Id}")" 
+      hx-swap="@(Model.Id == null ? "beforeend" : "outerHTML")"
+      class="space-y-4">
+    
+    @if (Model.Id != null)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <div class="form-control w-full">
+        <label asp-for="Name" class="label">
+            <span class="label-text font-semibold">Project Name</span>
+        </label>
+        <input asp-for="Name" type="text" placeholder="e.g. Portfolio Website" class="input input-bordered w-full" required />
+        <span asp-validation-for="Name" class="text-error text-xs mt-1"></span>
+    </div>
+
+    <div class="form-control w-full">
+        <label asp-for="GitHubLink" class="label">
+            <span class="label-text font-semibold">GitHub Repository Link (Optional)</span>
+        </label>
+        <input asp-for="GitHubLink" type="url" placeholder="https://github.com/username/project" class="input input-bordered w-full" />
+        <span asp-validation-for="GitHubLink" class="text-error text-xs mt-1"></span>
+    </div>
+
+    <div class="form-control w-full">
+        <label asp-for="Description" class="label">
+            <span class="label-text font-semibold">Description</span>
+        </label>
+        <textarea asp-for="Description" placeholder="Provide a brief description of the project, features, technologies used..." class="textarea textarea-bordered h-28 w-full" required></textarea>
+        <span asp-validation-for="Description" class="text-error text-xs mt-1"></span>
+    </div>
+
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Select Associated Skills</span>
+        </label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 bg-base-200 rounded-lg max-h-48 overflow-y-auto border border-base-300">
+            @if (ViewBag.AllSkills != null)
+            {
+                var allSkills = (IEnumerable<Portfolio.Web.Models.Admin.SkillViewModel>)ViewBag.AllSkills;
+                if (!allSkills.Any())
+                {
+                    <span class="text-xs opacity-50 col-span-full py-4 text-center">No skills available. Create them in the Skills tab first!</span>
+                }
+                else
+                {
+                    foreach (var skill in allSkills)
+                    {
+                        var isChecked = Model.SelectedSkillIds != null && Model.SelectedSkillIds.Contains(skill.Id) ? "checked" : "";
+                        <label class="label cursor-pointer justify-start gap-3 py-1 hover:bg-base-300 rounded px-2">
+                            <input type="checkbox" name="SelectedSkillIds" value="@skill.Id" class="checkbox checkbox-primary checkbox-sm" @isChecked />
+                            <span class="label-text text-sm">@skill.Name</span>
+                        </label>
+                    }
+                }
+            }
+            else
+            {
+                <span class="text-xs opacity-50 col-span-full py-4 text-center">No skills available. Create them in the Skills tab first!</span>
+            }
+        </div>
+    </div>
+
+    <div class="modal-action mt-6">
+        <button type="submit" class="btn btn-primary">
+            Save Project
+        </button>
+        <button type="button" class="btn btn-ghost" onclick="admin_modal.close()">Cancel</button>
+    </div>
+</form>

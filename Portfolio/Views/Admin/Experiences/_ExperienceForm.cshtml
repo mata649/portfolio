@@ -1,0 +1,129 @@
+@model Portfolio.Web.Models.Admin.ExperienceInputModel
+
+<h3 class="font-bold text-xl mb-4">@(Model.Id == null ? "Add New Experience" : "Edit Experience")</h3>
+
+<form hx-post="@(Model.Id == null ? Url.Action("Create", "Experiences") : Url.Action("Edit", "Experiences", new { id = Model.Id }))" 
+      hx-target="@(Model.Id == null ? "#experience-list" : $"#experience-{Model.Id}")" 
+      hx-swap="@(Model.Id == null ? "beforeend" : "outerHTML")"
+      class="space-y-4">
+    
+    @if (Model.Id != null)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+            <label asp-for="Name" class="label">
+                <span class="label-text font-semibold">Job Title / Role</span>
+            </label>
+            <input asp-for="Name" type="text" placeholder="e.g. Senior Software Engineer" class="input input-bordered w-full" required />
+            <span asp-validation-for="Name" class="text-error text-xs mt-1"></span>
+        </div>
+
+        <div class="form-control w-full">
+            <label asp-for="Company" class="label">
+                <span class="label-text font-semibold">Company / Organization</span>
+            </label>
+            <input asp-for="Company" type="text" placeholder="e.g. Acme Corp" class="input input-bordered w-full" required />
+            <span asp-validation-for="Company" class="text-error text-xs mt-1"></span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+            <label asp-for="Location" class="label">
+                <span class="label-text font-semibold">Location</span>
+            </label>
+            <input asp-for="Location" type="text" placeholder="e.g. New York, NY (or Remote)" class="input input-bordered w-full" required />
+            <span asp-validation-for="Location" class="text-error text-xs mt-1"></span>
+        </div>
+
+        <div class="form-control w-full justify-end pb-3">
+            <label class="label cursor-pointer justify-start gap-3">
+                <input asp-for="CurrentJob" type="checkbox" class="checkbox checkbox-primary" id="CurrentJobCheckbox" onchange="toggleEndDateField()" />
+                <span class="label-text font-semibold">I currently work here</span>
+            </label>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+            <label asp-for="StartDate" class="label">
+                <span class="label-text font-semibold">Start Date</span>
+            </label>
+            <input asp-for="StartDate" type="date" class="input input-bordered w-full" required />
+            <span asp-validation-for="StartDate" class="text-error text-xs mt-1"></span>
+        </div>
+
+        <div class="form-control w-full" id="EndDateContainer">
+            <label asp-for="EndDate" class="label">
+                <span class="label-text font-semibold">End Date</span>
+            </label>
+            <input asp-for="EndDate" type="date" class="input input-bordered w-full" />
+            <span asp-validation-for="EndDate" class="text-error text-xs mt-1"></span>
+        </div>
+    </div>
+
+    <div class="form-control w-full">
+        <label asp-for="Description" class="label">
+            <span class="label-text font-semibold">Role Description / Achievements</span>
+        </label>
+        <textarea asp-for="Description" placeholder="Describe your key responsibilities, achievements, and impact..." class="textarea textarea-bordered h-28 w-full" required></textarea>
+        <span asp-validation-for="Description" class="text-error text-xs mt-1"></span>
+    </div>
+
+    <div class="form-control w-full">
+        <label class="label">
+            <span class="label-text font-semibold">Select Skills Used</span>
+        </label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 p-3 bg-base-200 rounded-lg max-h-48 overflow-y-auto border border-base-300">
+            @if (ViewBag.AllSkills != null)
+            {
+                var allSkills = (IEnumerable<Portfolio.Web.Models.Admin.SkillViewModel>)ViewBag.AllSkills;
+                if (!allSkills.Any())
+                {
+                    <span class="text-xs opacity-50 col-span-full py-4 text-center">No skills available. Create them in the Skills tab first!</span>
+                }
+                else
+                {
+                    foreach (var skill in allSkills)
+                    {
+                        var isChecked = Model.SelectedSkillIds != null && Model.SelectedSkillIds.Contains(skill.Id) ? "checked" : "";
+                        <label class="label cursor-pointer justify-start gap-3 py-1 hover:bg-base-300 rounded px-2">
+                            <input type="checkbox" name="SelectedSkillIds" value="@skill.Id" class="checkbox checkbox-primary checkbox-sm" @isChecked />
+                            <span class="label-text text-sm">@skill.Name</span>
+                        </label>
+                    }
+                }
+            }
+            else
+            {
+                <span class="text-xs opacity-50 col-span-full py-4 text-center">No skills available. Create them in the Skills tab first!</span>
+            }
+        </div>
+    </div>
+
+    <div class="modal-action mt-6">
+        <button type="submit" class="btn btn-primary">
+            Save Experience
+        </button>
+        <button type="button" class="btn btn-ghost" onclick="admin_modal.close()">Cancel</button>
+    </div>
+</form>
+
+<script>
+    function toggleEndDateField() {
+        const checkbox = document.getElementById('CurrentJobCheckbox');
+        const endDateContainer = document.getElementById('EndDateContainer');
+        if (checkbox && endDateContainer) {
+            if (checkbox.checked) {
+                endDateContainer.style.display = 'none';
+            } else {
+                endDateContainer.style.display = 'block';
+            }
+        }
+    }
+    // Run once on load to initialize state
+    toggleEndDateField();
+</script>

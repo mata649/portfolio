@@ -1,4 +1,4 @@
-﻿namespace Portfolio.Web.Controllers;
+namespace Portfolio.Web.Controllers;
 
 using Data;
 using Entities;
@@ -13,10 +13,25 @@ public class AdminController(ApplicationDbContext dbContext) : Controller
 {
     public async Task<IActionResult> Index()
     {
-        var skills = await (from s in dbContext.Skills select SkillViewModel.FromSkill(s)).ToListAsync();
+        var skills = await dbContext.Skills
+            .Select(s => SkillViewModel.FromSkill(s))
+            .ToListAsync();
+
+        var projects = await dbContext.Projects
+            .Include(p => p.Skills)
+            .Select(p => ProjectViewModel.FromProject(p))
+            .ToListAsync();
+
+        var experiences = await dbContext.Experiences
+            .Include(e => e.Skills)
+            .Select(e => ExperienceViewModel.FromExperience(e))
+            .ToListAsync();
+
         var model = new AdminViewModel()
         {
-            Skills = skills
+            Skills = skills,
+            Projects = projects,
+            Experiences = experiences
         };
         return View(model);
     }
